@@ -1,0 +1,621 @@
+{
+	"compiler": {
+		"version": "0.8.24+commit.e11b9ed9"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_hash",
+						"type": "string"
+					}
+				],
+				"name": "addManufacturer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_manufacturer_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_supplier_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_hash",
+						"type": "string"
+					}
+				],
+				"name": "addProduct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_hash",
+						"type": "string"
+					}
+				],
+				"name": "addSupplier",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_product_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_transaction_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_transaction_type",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_hash",
+						"type": "string"
+					}
+				],
+				"name": "addTransaction",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "deleteManufacturer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "deleteProduct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "deleteSupplier",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_product_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_transaction_id",
+						"type": "uint256"
+					}
+				],
+				"name": "deleteTransaction",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "getManufacturer",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "is_deleted",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "hash",
+								"type": "string"
+							}
+						],
+						"internalType": "struct ProductContract.Manufacturer",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "getProduct",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "manufacturer_id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "supplier_id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "is_deleted",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "hash",
+								"type": "string"
+							}
+						],
+						"internalType": "struct ProductContract.Product",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "getSupplier",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "is_deleted",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "hash",
+								"type": "string"
+							}
+						],
+						"internalType": "struct ProductContract.Supplier",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_product_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_trans_id",
+						"type": "uint256"
+					}
+				],
+				"name": "getTransaction",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "transaction_type",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "is_deleted",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "hash",
+								"type": "string"
+							}
+						],
+						"internalType": "struct ProductContract.Transaction",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "manufacturers",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "is_deleted",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "hash",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "products",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "manufacturer_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "supplier_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "is_deleted",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "hash",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "suppliers",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "is_deleted",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "hash",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_hash",
+						"type": "string"
+					}
+				],
+				"name": "updateManufacturer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_manufacturer_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_supplier_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_hash",
+						"type": "string"
+					}
+				],
+				"name": "updateProduct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_hash",
+						"type": "string"
+					}
+				],
+				"name": "updateSupplier",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_product_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_transaction_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_transaction_type",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_hash",
+						"type": "string"
+					}
+				],
+				"name": "updateTransaction",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"ProductContract.sol": "ProductContract"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"ProductContract.sol": {
+			"keccak256": "0x121abd062383ff43e240693b9367fc1c231cb05e41105c332ac12722ae0cccfd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://40fa7208adbe3847b4c19bc996681e640f5556cf387ca6c29572a8db056f31cf",
+				"dweb:/ipfs/QmfQj7NRcit9f1imenfKyHYWAb52BmxmBzzuYVryjocLXH"
+			]
+		}
+	},
+	"version": 1
+}
