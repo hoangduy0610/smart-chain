@@ -594,7 +594,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"ProductContract.sol": "ProductContract"
+			"SmartContract/ProductContract.sol": "ProductContract"
 		},
 		"evmVersion": "shanghai",
 		"libraries": {},
@@ -608,7 +608,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"ProductContract.sol": {
+		"SmartContract/ProductContract.sol": {
 			"keccak256": "0x121abd062383ff43e240693b9367fc1c231cb05e41105c332ac12722ae0cccfd",
 			"license": "MIT",
 			"urls": [
