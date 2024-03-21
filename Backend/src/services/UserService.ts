@@ -5,11 +5,14 @@ import { CreateUserDto } from 'src/dtos/CreateUserDto';
 import { UserInterfaces } from 'src/interfaces/UserInterfaces';
 import { UserModal } from 'src/modals/UserModals';
 import { UserRepository } from '../repositories/UserRepository';
+import { StringUtils } from 'src/utils/StringUtils';
+import { AccountService } from './AccountService';
 
 @Injectable()
 export class UserService {
     constructor(
-        private readonly userRepository: UserRepository
+        private readonly userRepository: UserRepository,
+        private readonly accountService: AccountService,
     ) { }
 
     async listUser(user: UserInterfaces): Promise<UserModal[]> {
@@ -34,13 +37,11 @@ export class UserService {
 
     async createUser(user: UserInterfaces, dto: CreateUserDto): Promise<UserModal> {
         if (Object.values(dto).some(o => !o)) throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.USER_CREATE_ERROR);
-        const auth = await this.userRepository.findAuthInfo(dto.username);
-        // chỗ này phải thêm check xem có phải trường mình đang làm amdinko 
-        if (!auth) {
-            throw new ApplicationException(HttpStatus.UNAUTHORIZED, MessageCode.USER_NOT_FOUND);
+        const auth = await this.userRepository.findAuthInfo(StringUtils.xssPrevent(dto.username));
+        if (auth) {
+            throw new ApplicationException(HttpStatus.UNAUTHORIZED, MessageCode.USER_ALREADY_EXISTED);
         }
-
-        if (auth.userId && auth.userId != '') throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.USER_ALREADY_EXISTED)
+        await this.accountService.register(StringUtils.xssPrevent(dto.username), StringUtils.xssPrevent(dto.password));
 
         const create = await this.userRepository.createUser(dto);
         if (!create) throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.USER_CREATE_ERROR)

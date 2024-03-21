@@ -40,7 +40,11 @@ export class UserRepository {
 
     async createUser(dto: CreateUserDto): Promise<UserInterfaces> {
         // const res = await this.userDocs.add({ schoolId: dto.schoolId })
-        return await this.userModel.create({ name: dto.name });
+        return await this.userModel.create({
+            name: dto.name,
+            phoneNumber: dto.phoneNumber,
+            roles: [dto.roles],
+        });
     }
 
     async createAuth(dto: AuthDto): Promise<any> {
