@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, Res, UseGu
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { EnumRoles } from 'src/commons/EnumRoles';
+import { HistoryDto } from 'src/dtos/HistoryDtos';
 import { Roles } from 'src/guards/RoleDecorator';
 import { RolesGuard } from 'src/guards/RoleGuard';
 import { HistoryInterfaces } from 'src/interfaces/HistoryInterfaces';
@@ -20,6 +21,13 @@ export class HistoryController {
         return res.status(200).json(await this.historyService.findAll());
     }
 
+    @Get('/by-batch/:id')
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @ApiBearerAuth()
+    async listByBatch(@Req() req, @Res() res, @Param('id') id: string) {
+        return res.status(200).json(await this.historyService.findByBatchId(id));
+    }
+
     @Get('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
@@ -30,16 +38,15 @@ export class HistoryController {
     @Post('/')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN)
-    async create(@Req() req, @Res() res, @Body() historyDto: HistoryInterfaces) {
-        return res.status(200).json(await this.historyService.create(historyDto));
+    async create(@Req() req, @Res() res, @Body() historyDto: HistoryDto) {
+        return res.status(200).json(await this.historyService.create(historyDto, req.user.roles[0]));
     }
 
     @Put('/')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    async update(@Req() req, @Res() res, @Query('id') id: string, @Body() historyDto: HistoryInterfaces) {
-        return res.status(200).json(await this.historyService.update(id, historyDto));
+    async update(@Req() req, @Res() res, @Query('id') id: string, @Body() historyDto: HistoryDto) {
+        return res.status(200).json(await this.historyService.update(id, historyDto, req.user.roles[0]));
     }
 
     @Delete('/')

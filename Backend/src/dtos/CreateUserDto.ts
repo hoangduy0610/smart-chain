@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, OmitType } from '@nestjs/swagger'
 
 export class CreateUserDto {
     @ApiProperty({ type: String, required: true }) readonly username: string;
@@ -7,3 +7,5 @@ export class CreateUserDto {
     @ApiProperty({ type: String, required: true }) readonly phoneNumber: string;
     @ApiProperty({ type: String, required: true }) readonly roles: string;
 }
+
+export class UpdateUserDto extends OmitType(CreateUserDto, ['password', 'username'] as const) { }

@@ -5,12 +5,14 @@ export class UserModal {
     roles: string[];
     name: string;
     phoneNumber: string;
+    username?: string;
 
-    constructor(user: UserInterfaces) {
+    constructor(user: UserInterfaces, username?: string) {
         this.id = user._id;
         this.roles = user.roles;
         this.name = user.name;
         this.phoneNumber = user.phoneNumber;
+        this.username = username;
     }
 
     public static fromUsers(users: UserInterfaces[]) {

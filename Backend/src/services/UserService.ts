@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { MessageCode } from 'src/commons/MessageCode';
 import { ApplicationException } from 'src/controllers/ExceptionController';
-import { CreateUserDto } from 'src/dtos/CreateUserDto';
+import { CreateUserDto, UpdateUserDto } from 'src/dtos/CreateUserDto';
 import { UserInterfaces } from 'src/interfaces/UserInterfaces';
 import { UserModal } from 'src/modals/UserModals';
 import { UserRepository } from '../repositories/UserRepository';
@@ -32,7 +32,7 @@ export class UserService {
         if (!user) {
             throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.USER_NOT_REGISTER);
         }
-        return new UserModal(user);
+        return new UserModal(user, username);
     }
 
     async createUser(user: UserInterfaces, dto: CreateUserDto): Promise<UserModal> {
@@ -50,6 +50,10 @@ export class UserService {
         if (!authInfo) throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.USER_CREATE_ERROR)
 
         return new UserModal(await this.userRepository.findOneByUsername(dto.username));
+    }
+
+    async updateUser(dto: UpdateUserDto, id: string): Promise<UserModal> {
+        return new UserModal(await this.userRepository.update(dto, id));
     }
 
     async setDefault(user: UserInterfaces, id: string): Promise<UserModal> {

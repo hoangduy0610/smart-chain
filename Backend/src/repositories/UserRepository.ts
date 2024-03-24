@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuthDto } from 'src/dtos/AuthDto';
-import { CreateUserDto } from 'src/dtos/CreateUserDto';
+import { CreateUserDto, UpdateUserDto } from 'src/dtos/CreateUserDto';
 import { UserInterfaces } from 'src/interfaces/UserInterfaces';
 
 @Injectable()
@@ -60,5 +60,9 @@ export class UserRepository {
 
     async setDefault(uid: string, defaultSchool: string): Promise<UserInterfaces> {
         return await this.userModel.findOneAndUpdate({ _id: uid }, { defaultSchool }, { returnOriginal: false })
+    }
+
+    async update(dto: UpdateUserDto, id: string): Promise<UserInterfaces> {
+        return await this.userModel.findByIdAndUpdate(id, dto, { new: true }).exec();
     }
 }

@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Post, Put, Query, Req, Res, UseGuards } 
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { EnumRoles } from 'src/commons/EnumRoles';
-import { CreateUserDto } from 'src/dtos/CreateUserDto';
+import { CreateUserDto, UpdateUserDto } from 'src/dtos/CreateUserDto';
 import { Roles } from 'src/guards/RoleDecorator';
 import { RolesGuard } from 'src/guards/RoleGuard';
 import { UserService } from 'src/services/UserService';
@@ -39,14 +39,14 @@ export class UserController {
     @Put('/')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    async update(@Req() req, @Res() res, @Query('id') id: string) {
-        return res.status(200).json(await this.userService.findUserById(id));
+    async update(@Req() req, @Res() res, @Query('id') id: string, @Body() userDto: UpdateUserDto) {
+        return res.status(200).json(await this.userService.updateUser(userDto, id));
     }
 
-    @Delete('/')
-    @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @ApiBearerAuth()
-    async delete(@Req() req, @Res() res, @Query('id') id: string) {
-        return res.status(200).json(await this.userService.findUserById(id));
-    }
+    // @Delete('/')
+    // @UseGuards(AuthGuard('jwt'), RolesGuard)
+    // @ApiBearerAuth()
+    // async delete(@Req() req, @Res() res, @Query('id') id: string) {
+    //     return res.status(200).json(await this.userService.findUserById(id));
+    // }
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { ProductDto } from 'src/dtos/ProductDtos';
 import { ProductInterfaces } from 'src/interfaces/ProductInterfaces';
 import { ProductRepository } from 'src/repositories/ProductRepository';
+import { IdUtils } from 'src/utils/IdUtils';
 
 @Injectable()
 export class ProductService {
@@ -8,8 +10,13 @@ export class ProductService {
         private readonly productRepository: ProductRepository,
     ) { }
     
-    async create(product: ProductInterfaces): Promise<ProductInterfaces> {
-        return await this.productRepository.create(product);
+    async create(owner: string, product: ProductDto): Promise<ProductInterfaces> {
+        const createProduct = {
+            ...product,
+            owner,
+            productId: IdUtils.generateId(12),
+        }
+        return await this.productRepository.create(createProduct);
     }
 
     async findAll(): Promise<ProductInterfaces[]> {
@@ -20,7 +27,7 @@ export class ProductService {
         return await this.productRepository.findById(id);
     }
 
-    async update(id: string, product: ProductInterfaces): Promise<ProductInterfaces> {
+    async update(id: string, product: ProductDto): Promise<ProductInterfaces> {
         return await this.productRepository.update(id, product);
     }
 

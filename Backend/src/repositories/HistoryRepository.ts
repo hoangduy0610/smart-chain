@@ -1,6 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { MessageCode } from 'src/commons/MessageCode';
+import { ApplicationException } from 'src/controllers/ExceptionController';
+import { HistoryDto } from 'src/dtos/HistoryDtos';
 import { HistoryInterfaces } from 'src/interfaces/HistoryInterfaces';
 
 @Injectable()
@@ -9,21 +12,35 @@ export class HistoryRepository {
         @InjectModel('History') private readonly historyModel: Model<HistoryInterfaces>,
     ) { }
 
-    async create(history: HistoryInterfaces): Promise<HistoryInterfaces> {
-        const newHistory = new this.historyModel(history);
+    async create(history: HistoryDto, actionBy: string): Promise<HistoryInterfaces> {
+        const createObj = {
+            ...history,
+            actionBy: actionBy,
+            actionAt: new Date(),
+        }
+        const newHistory = new this.historyModel(createObj);
         return await newHistory.save();
     }
 
     async findAll(): Promise<HistoryInterfaces[]> {
-        return await this.historyModel.find().exec();
+        return await this.historyModel.find({ deletedAt: null }).exec();
     }
 
     async findById(id: string): Promise<HistoryInterfaces> {
-        return await this.historyModel.findById(id).exec();
+        const product = await this.historyModel.findById(id).exec();
+        if (!product || product.deletedAt) {
+            throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.HISTORY_NOT_FOUND);
+        }
+        return product;
     }
 
-    async update(id: string, history: HistoryInterfaces): Promise<HistoryInterfaces> {
-        return await this.historyModel.findByIdAndUpdate(id, history, { new: true }).exec();
+    async update(id: string, history: HistoryDto, actionBy: string): Promise<HistoryInterfaces> {
+        const updateObj = {
+            ...history,
+            actionBy: actionBy,
+            actionAt: new Date(),
+        }
+        return await this.historyModel.findByIdAndUpdate(id, updateObj, { new: true }).exec();
     }
 
     async delete(username: string, id: string): Promise<HistoryInterfaces> {
@@ -34,6 +51,6 @@ export class HistoryRepository {
     }
 
     async findByBatchId(batchId: string): Promise<HistoryInterfaces[]> {
-        return await this.historyModel.find({ batchId: batchId }).exec();
+        return await this.historyModel.find({ batchId: batchId, deletedAt: null }).exec();
     }
 }
