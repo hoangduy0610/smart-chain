@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 *{
     box-sizing: border-box;
     padding : 0;
@@ -9,7 +6,7 @@
 }
 
 #login,
-#register{
+#register {
     height: 100vh;
     display: grid;
     position: relative;
@@ -19,13 +16,13 @@
 }
 
 
-.form{
+.form {
     max-width: 500px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
     padding: 2.5rem 2rem;
-    border-radius: 2.4rem ;
+    border-radius: 2.4rem;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
@@ -55,17 +52,17 @@
     display: block;
 } */
 
-.title{
+.title {
     width: 100%;
     text-align: center;
-    padding-bottom : 2% ;
+    padding-bottom: 2%;
     margin-bottom: 9%;
     font-weight: 800;
     font-size: 50px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-.box{ 
+.box {
     display: flex;
     align-items: center;
     padding-bottom: 1%;
@@ -73,13 +70,13 @@
     margin-bottom: 2rem;
 }
 
-.icon{
+.icon {
     margin-right: 10px;
     font-weight: 1000;
     font-size: 1.2rem;
 }
 
-.box_input{
+.box_input {
     position: relative;
     width: 100%;
 }
@@ -93,7 +90,7 @@
     outline: 0;
 }
 
-.login_eye{
+.login_eye {
     font-size: larger;
     position: absolute;
     right: 3px;
@@ -103,7 +100,7 @@
 
 .box:nth-child(2) input {
     padding-right: 1.8rem;
-  }
+}
 
 .button {
     width: 100%;
@@ -118,7 +115,7 @@
     background-color: #488df5;
 }
 
-.button:hover{
+.button:hover {
     background-color: blue;
 }
 
@@ -129,24 +126,23 @@
 }
 
 .login_regis a,
-.regis_login a{
+.regis_login a {
     margin-left: 3px;
     text-decoration: none;
-    font-style: italic ;
+    font-style: italic;
 }
 
 .login_regis a:hover,
-.regis_login a:hover{
+.regis_login a:hover {
     text-decoration: underline;
 }
 
-::placeholder{
+::placeholder {
     color: black;
     font-weight: 600;
     font-size: 1rem;
 }
 
-input:focus::-webkit-input-placeholder{
-    opacity: 0.3;    
+input:focus::-webkit-input-placeholder {
+    opacity: 0.3;
 }
-
