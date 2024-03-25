@@ -1,19 +1,8 @@
-(function($) {
-
-	"use strict";
-
-	var fullHeight = function() {
-
-		$('.js-fullheight').css('height', $(window).height());
-		$(window).resize(function(){
-			$('.js-fullheight').css('height', $(window).height());
-		});
-
-	};
-	fullHeight();
-
-	$('#sidebarCollapse').on('click', function () {
-      $('#sidebar').toggleClass('active');
-  });
-
-})(jQuery);
+$('#sidebarCollapse').on('click', function () {
+	$('#sidebar').toggleClass('active').promise().done(() => {
+		// check if window is small enough so sidebar is hidden
+		if ($(window).width() <= 768) {
+			$('#content').toggleClass('d-none');
+		}
+	});
+});
