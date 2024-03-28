@@ -26,32 +26,6 @@
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
-/* .form.register{
-    width: 100%;
-    height: fit-content;
-    background: none;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-} */
-
-/* .form.register.open{
-    display: block ;
-}
-
-.form.login.hidden{
-    display: none;
-}
-
-.form.register.hidden{
-    display: none ;
-}
-
-.form.login.open{
-    display: block;
-} */
-
 .title {
     width: 100%;
     text-align: center;

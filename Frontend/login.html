@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="./css/login.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="login">
+    <form id="login">
         <div class="form login">
             <h1 class="title login">Login</h1>
 
@@ -19,7 +19,7 @@
                 <div class="box login">
                     <i class="ri-user-3-line icon"></i>
                     <div class="box_input login">
-                        <input type="email" class="input login" id="login_email" placeholder="Username">
+                        <input type="text" class="input login" id="login_email" placeholder="Username">
                     </div>
                 </div>
 
@@ -38,9 +38,12 @@
                 </p>
             </div>
         </div>
-    </div>
+    </form>
 
-    <script src="js/login.js"></script>
+    <script src="./js/login.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./js/login_api.js"></script>
+
 </body>
 
 </html>
