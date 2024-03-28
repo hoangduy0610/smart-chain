@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { EnumRoles } from 'src/commons/EnumRoles';
@@ -16,17 +16,17 @@ export class ProductController {
     @Get('/list')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN)
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_FARMER)
     async list(@Req() req, @Res() res) {
-        return res.status(200).json(await this.productService.findAll());
+        return res.status(200).json(await this.productService.findAllByRoleAndId(req.user.role, req.user.id));
     }
 
-    @Get('/')
+    @Get('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
     @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_FARMER)
-    async findOne(@Req() req, @Res() res) {
-        return res.status(200).json(await this.productService.findByOwnerId(req.user.id));
+    async findOne(@Req() req, @Res() res, @Param('id') id: string) {
+        return res.status(200).json(await this.productService.findById(id));
     }
 
     @Post('/')
@@ -37,19 +37,19 @@ export class ProductController {
         return res.status(200).json(await this.productService.create(req.user.id, productDto));
     }
 
-    @Put('/')
+    @Put('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
     @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_FARMER)
-    async update(@Req() req, @Res() res, @Query('id') id: string, @Body() productDto: ProductDto) {
+    async update(@Req() req, @Res() res, @Param('id') id: string, @Body() productDto: ProductDto) {
         return res.status(200).json(await this.productService.update(id, productDto));
     }
 
-    @Delete('/')
+    @Delete('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
     @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_FARMER)
-    async delete(@Req() req, @Res() res, @Query('id') id: string) {
+    async delete(@Req() req, @Res() res, @Param('id') id: string) {
         console.log(req.user);
         return res.status(200).json(await this.productService.delete(req.user.username, id));
     }

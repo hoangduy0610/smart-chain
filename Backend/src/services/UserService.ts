@@ -16,7 +16,9 @@ export class UserService {
     ) { }
 
     async listUser(user: UserInterfaces): Promise<UserModal[]> {
-        return UserModal.fromUsers(await this.userRepository.listUser());
+        const temp = await this.userRepository.listUser();
+        console.log(temp);
+        return UserModal.fromUsers(temp);
     }
 
     async findUserById(id: string): Promise<UserModal> {
@@ -58,5 +60,9 @@ export class UserService {
 
     async setDefault(user: UserInterfaces, id: string): Promise<UserModal> {
         return new UserModal(await this.userRepository.setDefault(user.id, id));
+    }
+
+    async deleteUser(id: string): Promise<UserInterfaces> {
+        return await this.userRepository.delete(id);
     }
 }

@@ -1,6 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+import { MessageCode } from 'src/commons/MessageCode';
+import { ApplicationException } from 'src/controllers/ExceptionController';
 import { AuthDto } from 'src/dtos/AuthDto';
 import { CreateUserDto, UpdateUserDto } from 'src/dtos/CreateUserDto';
 import { UserInterfaces } from 'src/interfaces/UserInterfaces';
@@ -13,7 +15,52 @@ export class UserRepository {
     ) { }
 
     async listUser(): Promise<UserInterfaces[]> {
-        return await this.userModel.find({})
+        const res = await this.userModel.aggregate([
+            { "$addFields": { "userId": { "$toString": "$_id" } } },
+            {
+                "$lookup": {
+                    "from": "auths",
+                    let: {
+                        userId: "$userId"
+                    },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: [
+                                        "$userId",
+                                        "$$userId"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            $project: {
+                                username: 1
+                            }
+                        }
+                    ],
+                    as: "user"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$user",
+                    preserveNullAndEmptyArrays: false
+                }
+            },
+            {
+                $set: {
+                    username: "$user.username"
+                }
+            },
+            {
+                $project: {
+                    user: 0
+                }
+            }
+        ]);
+        return res
     }
 
     async listUserForRoot(): Promise<UserInterfaces[]> {
@@ -25,7 +72,54 @@ export class UserRepository {
     }
 
     async findUserById(id: string): Promise<UserInterfaces> {
-        return await this.userModel.findById(id)
+        const objId = new mongoose.mongo.ObjectId(id);
+        const res = await this.userModel.aggregate([
+            { "$match": { "_id": objId } },
+            { "$addFields": { "userId": { "$toString": "$_id" } } },
+            {
+                "$lookup": {
+                    "from": "auths",
+                    let: {
+                        userId: "$userId"
+                    },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: [
+                                        "$userId",
+                                        "$$userId"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            $project: {
+                                username: 1
+                            }
+                        }
+                    ],
+                    as: "user"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$user",
+                    preserveNullAndEmptyArrays: false
+                }
+            },
+            {
+                $set: {
+                    username: "$user.username"
+                }
+            },
+            {
+                $project: {
+                    user: 0
+                }
+            }
+        ]);
+        return res[0];
     }
 
     async findOneByUsername(username: string): Promise<UserInterfaces> {
@@ -64,5 +158,16 @@ export class UserRepository {
 
     async update(dto: UpdateUserDto, id: string): Promise<UserInterfaces> {
         return await this.userModel.findByIdAndUpdate(id, dto, { new: true }).exec();
+    }
+
+    async delete(id: string): Promise<UserInterfaces> {
+        const user = await this.userModel.findById(id);
+        if (!user) throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.USER_NOT_FOUND);
+
+        user.deletedAt = new Date();
+        await user.save();
+
+        await this.authModel.findOneAndUpdate({ userId: id }, { deletedAt: new Date() });
+        return user;
     }
 }

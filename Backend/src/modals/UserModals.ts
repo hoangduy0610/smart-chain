@@ -12,7 +12,7 @@ export class UserModal {
         this.roles = user.roles;
         this.name = user.name;
         this.phoneNumber = user.phoneNumber;
-        this.username = username;
+        this.username = username || user.username;
     }
 
     public static fromUsers(users: UserInterfaces[]) {
