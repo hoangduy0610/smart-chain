@@ -8,5 +8,9 @@ export enum MessageCode {
 	USER_NOT_HAVE_PERMISSION = 'Bạn không có quyền truy cập chức năng này',
 	USER_INVALID_TOKEN = 'Token không hợp lệ hoặc đã hết hạn',
 
+	PRODUCT_NOT_FOUND = 'Không tìm thấy thông tin sản phẩm',
+
+	HISTORY_NOT_FOUND = 'Không tìm thấy thông tin lịch sử',
+
 	UNKNOWN_ERROR = 'Lỗi không xác định'
 }
