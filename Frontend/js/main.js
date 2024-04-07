@@ -11,7 +11,7 @@ $('#sidebarCollapse').on('click', function () {
 });
 
 $(document).ready(function () {
-	if (!token) {
+	if (!ACCESS_TOKEN) {
 		window.location.href = 'login.html';
 	}
 });
