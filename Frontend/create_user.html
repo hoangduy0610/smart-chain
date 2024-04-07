@@ -49,9 +49,40 @@
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-      <h2 class="mb-4">Provanence Tracking</h2>
-      <p>OUR CONTENT</p>
-    </div>
+        <h2 class="mb-4">Provenance Tracking</h2>
+        <p>Fill out the form below to create a new user:</p>
+      
+        <form id="userForm">
+          <div class="mb-3">
+            <label for="fullName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter full name" required>
+          </div>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+          </div>
+          <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone number</label>
+            <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phoneNumber" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+          </div>
+          <div class="mb-3">
+            <label for="roles" class="form-label">Role</label>
+            <select class="form-select" id="roles" required>
+                <option value="">Select role</option>
+                <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_FARMER">Farmer</option>
+                <option value="ROLE_TRANSPORTER">Transporter</option>
+                <option value="ROLE_SELLER">Seller</option>
+            </select>
+        </div>
+
+          <button type="submit" class="btn btn-primary">Create User</button>
+        </form>
+      </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -62,6 +93,7 @@
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/create_user.js"></script>
 </body>
 
 </html>

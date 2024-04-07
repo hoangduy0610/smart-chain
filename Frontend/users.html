@@ -23,7 +23,7 @@
           <a href="#"><span class="fa fa-home"></span> Home</a>
         </li>
         <li>
-          <a href="users.html"><span class="fa fa-user"></span> User</a>
+          <a href="#"><span class="fa fa-user"></span> User</a>
         </li>
         <li>
           <a href="#"><span class="fa fa-sticky-note"></span> Blog</a>
@@ -50,7 +50,39 @@
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
       <h2 class="mb-4">Provanence Tracking</h2>
-      <p>OUR CONTENT</p>
+      <div class="text-center">
+        <a class="btn btn-primary" href="create_user.html" role="button">Create user</a>
+        <div class="table-responsive">
+          <!--Table-->
+          <table id="usersTable" class="table table-hover table-bordered mb-0">
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th scope="col">Tên</th>
+                <th scope="col">Username</th>
+                <th scope="col">SDT</th>
+              </tr>
+            </thead>
+            <!--Table head-->
+            <!--Table body-->
+            <tbody>
+              <!-- Table rows will go here -->
+            </tbody>
+            <!--Table body-->
+            
+            <!--Table foot-->
+            <tfoot>
+              <tr>
+                <th scope="col">Tên</th>
+                <th scope="col">Username</th>
+                <th scope="col">SDT</th>
+              </tr>
+            </tfoot>
+            <!--Table foot-->
+          </table>
+          <!--Table-->
+        </div>
+      </div>
     </div>
   </div>
 
@@ -62,6 +94,7 @@
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/users.js"></script>
 </body>
 
 </html>
