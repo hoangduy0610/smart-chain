@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CreateBatchProductDto, EditBatchProductDto } from 'src/dtos/BatchProductDtos';
 import { BatchProductInterfaces } from 'src/interfaces/BatchProductInterfaces';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class BatchProductRepository {
         @InjectModel('BatchProduct') private readonly batchProductModel: Model<BatchProductInterfaces>,
     ) { }
 
-    async create(batchProduct: BatchProductInterfaces): Promise<BatchProductInterfaces> {
+    async create(batchProduct: CreateBatchProductDto): Promise<BatchProductInterfaces> {
         const newBatchProduct = new this.batchProductModel(batchProduct);
         return await newBatchProduct.save();
     }
@@ -22,7 +23,7 @@ export class BatchProductRepository {
         return await this.batchProductModel.findById(id).exec();
     }
 
-    async update(id: string, batchProduct: BatchProductInterfaces): Promise<BatchProductInterfaces> {
+    async update(id: string, batchProduct: EditBatchProductDto): Promise<BatchProductInterfaces> {
         return await this.batchProductModel.findByIdAndUpdate(id, batchProduct, { new: true }).exec();
     }
 
@@ -48,5 +49,8 @@ export class BatchProductRepository {
             await batchProduct.save();
         });
         return deletedBatchProduct;
+    }
+    async findByOwnerId(ownerId: string): Promise<BatchProductInterfaces[]> {
+        return await this.batchProductModel.find({ owner: ownerId, deletedAt: null }).exec();
     }
 }

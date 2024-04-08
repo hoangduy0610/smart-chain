@@ -5,6 +5,7 @@ import { UserModule } from './modules/UserModule';
 import { AuthModule } from './modules/AuthModule';
 import { ProductModule } from './modules/ProductModule';
 import { HistoryModule } from './modules/HistoryModule';
+import { BatchProductModule } from './modules/BatchProductModule';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { HistoryModule } from './modules/HistoryModule';
     AuthModule,
     ProductModule,
     HistoryModule,
+    BatchProductModule,
   ]
 })
 export class AppModule { }
