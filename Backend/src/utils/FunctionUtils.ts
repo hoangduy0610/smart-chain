@@ -29,10 +29,6 @@ export class FunctionUtils {
         return roles && (roles.includes(EnumRoles.ROLE_ADMIN));
     }
 
-    public static fnCheckRoleRoot(roles: any[]) {
-        return roles && (roles.includes(EnumRoles.ROLE_ROOT));
-    }
-
     public static getKeyByValue(object, value) {
         return Object.keys(object).find(key => object[key] === value);
     }
