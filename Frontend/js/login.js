@@ -27,7 +27,7 @@ $(document).ready(function () {
 
         // Call API login here
         $.ajax({
-            url: API_ENDPOINT.LOGIN,
+            url: 'https://hongdi.ddns.net/auth/signin',
             method: 'POST',
             data: {
                 username: username,
@@ -37,6 +37,7 @@ $(document).ready(function () {
                 // Save token to local storage
                 localStorage.setItem('token', response.token);
                 alert('Login successful!');
+                window.location.href = 'index.html';
             },
             error: function () {
                 alert('Login failed!');
