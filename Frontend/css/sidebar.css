@@ -33,12 +33,15 @@ body {
 
 #sidebar.active ul.components li a {
   padding: 10px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 #sidebar.active ul.components li a span {
   margin-right: 0;
   display: block;
   font-size: 24px;
+  align-self: center;
 }
 
 #sidebar.active .logo {

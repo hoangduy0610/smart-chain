@@ -15,75 +15,20 @@
 </head>
 
 <body>
-  <div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar" class="active">
-      <h1><a href="index.html" class="logo">M.</a></h1>
-      <ul class="list-unstyled components mb-5">
-        <li class="active">
-          <a href="#"><span class="fa fa-home"></span> Home</a>
-        </li>
-        <li>
-          <a href="#"><span class="fa fa-user"></span> About</a>
-        </li>
-        <li>
-          <a href="#"><span class="fa fa-sticky-note"></span> Blog</a>
-        </li>
-        <li>
-          <a href="#"><span class="fa fa-cogs"></span> Services</a>
-        </li>
-        <li>
-          <a href="#"><span class="fa fa-paper-plane"></span> Contacts</a>
-        </li>
-        <li>
-          <a href="#" id="sidebarCollapse"><span class="fa fa-bars"></span> Toggle Menu</a>
-        </li>
-      </ul>
-
-      <div class="footer">
-        <p>
-          Copyright &copy;2024 All rights reserved | This template is made with <i class="fa-solid fa-heart"
-            aria-hidden="true"></i> by <a class="text-light" href="#" target="_blank">UIT</a>
-        </p>
-      </div>
-    </nav>
-
+  <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
       <h2 class="mb-4">Provanence Tracking</h2>
-      <button type="button" class="btn btn-info m-2 btn-link-creat"><i style="color: white;" class="fa-solid fa-circle-plus"></i></button>
+      <button type="button" class="btn btn-info m-2 btn-link-create"><i style="color: white;"
+          class="fa-solid fa-circle-plus"></i></button>
       <div class="text-center">
-        
         <div class="table-responsive">
-          <div class="modal fade" id="P-AttributesModal" tabindex="-1" role="dialog" aria-labelledby="P-AttributesModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="P-AttributesModalLabel">Attributes</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="productAttributeModalBody">
-                  <p></p>
-                </div>
-                <div class="modal-footer">
-                  <button  type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
           <!--Table-->
           <table id="productTable" class="table table-hover table-bordered mb-0">
 
             <!--Table head-->
             <thead>
               <tr>
-                <th class="th-lg">
-                  <a href="#">ID
-                  </a>
-                </th>
-                <th class="th-lg">
-                  <a href="#">Owner
-                  </a>
-                </th>
                 <th class="th-lg">
                   <a href="#">Product ID
                   </a>
@@ -96,7 +41,7 @@
                   <a href="#">Price
                   </a>
                 </th>
-                <th class="th-lg"> 
+                <th class="th-lg">
                   <a href="#">Quantity
                   </a>
                 </th>
@@ -112,7 +57,7 @@
                   <a href="#">ImagesUrl
                   </a>
                 </th>
-                
+
               </tr>
             </thead>
             <!--Table head-->
@@ -126,14 +71,6 @@
             <tfoot>
               <tr>
                 <th class="th-lg">
-                  <a href="#">ID
-                  </a>
-                </th>
-                <th class="th-lg">
-                  <a href="#">Owner
-                  </a>
-                </th>
-                <th class="th-lg">
                   <a href="#">Product ID
                   </a>
                 </th>
@@ -145,7 +82,7 @@
                   <a href="#">Price
                   </a>
                 </th>
-                <th class="th-lg"> 
+                <th class="th-lg">
                   <a href="#">Quantity
                   </a>
                 </th>
@@ -167,7 +104,23 @@
           </table>
           <!--Table-->
         </div>
-
+        <div class="modal fade" id="P-AttributesModal" tabindex="-1" role="dialog"
+          aria-labelledby="P-AttributesModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="P-AttributesModalLabel">Attributes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="productAttributeModalBody">
+                <p></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -180,7 +133,7 @@
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>
-  <script src="./js/product_R.js"></script>
+  <script src="./js/pages/products.js"></script>
 </body>
 
 </html>
