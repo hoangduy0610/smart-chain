@@ -9,7 +9,7 @@ $(document).ready(function () {
         username: $('#username').val(),
         phoneNumber: $('#phoneNumber').val(),
         password: $('#password').val(),
-        role: $('#roles').val()
+        roles: $('#roles').val()
       };
 
       $.ajax({
