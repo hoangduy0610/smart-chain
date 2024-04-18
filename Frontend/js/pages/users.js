@@ -43,6 +43,6 @@ $(document).ready(function () {
     // console.log(id);
 
     // Điều hướng đến trang chỉnh sửa người dùng và truyền ID của người dùng
-    window.location.href = `edit_user.html?user_id=${id}`;
+    window.location.href = `form-user.html?user_id=${id}`;
   });
 });
