@@ -5,10 +5,10 @@ $(document).ready(function () {
 
     // Gọi API để lấy dữ liệu của người dùng cần chỉnh sửa
     $.ajax({
-        url: API_ENDPOINT.GET_USER+ `${userId}`,
+        url: fillEndpointPlaceholder(API_ENDPOINT.USER.GET_USER, { id: userId }),
         type: 'GET',
-        beforeSend: function (request) {
-            request.setRequestHeader('Authorization', ACCESS_TOKEN); 
+        headers: {
+            'Authorization': ACCESS_TOKEN,
         },
         success: function (userData) {
             // Điền dữ liệu vào các trường trong form
@@ -25,20 +25,18 @@ $(document).ready(function () {
     // Xử lý sự kiện submit form
     $('#userForm').submit(function (event) {
         event.preventDefault(); // Ngăn chặn chuyển hướng trang khi submit form
-        var updatedUserData = {
-            name: $('#name').val(),
-            phoneNumber: $('#phoneNumber').val()
-        };
 
         // Gọi API để cập nhật thông tin người dùng
         $.ajax({
-            url: API_ENDPOINT.GET_USER+`${userId}`, 
+            url: fillEndpointPlaceholder(API_ENDPOINT.USER.UPDATE_USER, { id: userId }),
             type: 'PUT',
-            beforeSend: function (request) {
-                request.setRequestHeader('Authorization', ACCESS_TOKEN); // Thêm header Authorization
-                request.setRequestHeader('Content-Type', 'application/json'); // Đặt kiểu dữ liệu của request là JSON
+            headers: {
+                'Authorization': ACCESS_TOKEN,
             },
-            data: JSON.stringify(updatedUserData), // Chuyển dữ liệu sang định dạng JSON
+            data: {
+                name: $('#name').val(),
+                phoneNumber: $('#phoneNumber').val()
+            }, // Chuyển dữ liệu sang định dạng JSON
             success: function (response) {
                 // Xử lý khi cập nhật thành công
                 console.log('Update successful:', response);
