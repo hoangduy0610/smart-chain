@@ -10,11 +10,13 @@ $(document).ready(function () {
         'Authorization': ACCESS_TOKEN,
       },
       success: function (userData) {
-        $("#password").remove();
-        $('#roles').remove();
+        $("#password").parent().remove();
+        $('#roles').parent().remove();
         $('#name').val(userData.name);
         $('#username').val(userData.username).prop('readonly', true); // Không cho chỉnh sửa username
         $('#phoneNumber').val(userData.phoneNumber);
+
+        $('form button[type="submit"]').html('Update User')
       },
       error: function (error) {
         console.log('Error:', error);

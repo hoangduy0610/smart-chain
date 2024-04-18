@@ -1,7 +1,5 @@
 $(document).ready(function () {
   const tableRenderColumns = [
-    '_id',
-    'owner',
     'productId',
     'name',
     'price',
