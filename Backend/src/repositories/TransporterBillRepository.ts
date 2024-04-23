@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CreateTransporterBillDto, EditTransporterBillDto } from 'src/dtos/TransporterBillDtos';
 import { TransporterBillInterfaces } from 'src/interfaces/TransporterBillInterfaces';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class TransporterBillRepository {
         @InjectModel('TransporterBill') private readonly transporterBillModel: Model<TransporterBillInterfaces>,
     ) { }
 
-    async create(transporterBill: TransporterBillInterfaces): Promise<TransporterBillInterfaces> {
+    async create(transporterBill: CreateTransporterBillDto): Promise<TransporterBillInterfaces> {
         const newTransporterBill = new this.transporterBillModel(transporterBill);
         return await newTransporterBill.save();
     }
@@ -22,7 +23,7 @@ export class TransporterBillRepository {
         return await this.transporterBillModel.findById(id).exec();
     }
 
-    async update(id: string, transporterBill: TransporterBillInterfaces): Promise<TransporterBillInterfaces> {
+    async update(id: string, transporterBill: EditTransporterBillDto): Promise<TransporterBillInterfaces> {
         return await this.transporterBillModel.findByIdAndUpdate(id, transporterBill, { new: true }).exec();
     }
 
