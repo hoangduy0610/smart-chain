@@ -16,6 +16,7 @@ export class UserRepository {
 
     async listUser(): Promise<UserInterfaces[]> {
         const res = await this.userModel.aggregate([
+            { "$match": { "deletedAt": null } },
             { "$addFields": { "userId": { "$toString": "$_id" } } },
             {
                 "$lookup": {
