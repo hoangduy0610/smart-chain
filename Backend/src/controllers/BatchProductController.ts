@@ -16,7 +16,6 @@ export class BatchProductController {
     @Get('/list')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_FARMER)
     async list(@Req() req, @Res() res) {
         return res.status(200).json(await this.batchProductService.findAllByRoleAndId(req.user.role, req.user.id));
     }
@@ -24,7 +23,6 @@ export class BatchProductController {
     @Get('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_FARMER)
     async findOne(@Req() req, @Res() res, @Param('id') id: string) {
         return res.status(200).json(await this.batchProductService.findById(id));
     }
@@ -40,7 +38,6 @@ export class BatchProductController {
     @Put('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_FARMER)
     async update(@Req() req, @Res() res, @Param('id') id: string, @Body() batchProductDto: EditBatchProductDto) {
         return res.status(200).json(await this.batchProductService.update(id, batchProductDto));
     }
