@@ -13,18 +13,25 @@ $(document).ready(function () {
     },
     'imageUrl',
     {
-      "data": null,
+      "data": 'null',
       render: function (data, type, row, meta) {
         return `
-          <div class="d-flex p-2" >
+          <div class="d-flex p-2">
             <button type="button" class="btn btn-danger btn-delete-product m-1" aria-disabled="true">Delete</button>
             <button type="button" class="btn btn-primary btn-update-product m-1">Update</button>
           </div>
         `;
       }
     },
+    {
+      "data": 'null',
+      render: function (data, type, row, meta) {
+        return `
+          <button type="button" class="btn btn-success btn-create-batch m-1" >Create Batch</button>
+        `;
+      }
+    }
   ];
-
   const productTable = initDataTable(
     '#productTable',
     { ajaxUrl: API_ENDPOINT.PRODUCT.LIST_PRODUCT },
@@ -83,6 +90,12 @@ $(document).ready(function () {
     // console.log(id);
 
     window.location.href = `form-product.html?id=${id}`
+  });
+  $('#productTable tbody').on('click', '.btn-create-batch', function () {
+    const row = $(this).parents('tr')[0];
+    const data = productTable.row(row).data();
+    const id = data._id;
+    window.location.href = `form-batch.html?product_id=${id}`;
   });
 
 });
