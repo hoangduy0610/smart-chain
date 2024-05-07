@@ -4,23 +4,13 @@ import { StampRepository } from '../repositories/StampRepository';
 import { InjectModel } from '@nestjs/mongoose';
 import { BatchProductInterfaces } from 'src/interfaces/BatchProductInterfaces';
 import { Model } from 'mongoose';
+import { AnalysisInterface } from 'src/interfaces/AnalysisInterfaces';
 
 @Injectable()
 export class StampService {
     constructor(
         private readonly stampRepository: StampRepository,
-        @InjectModel('BatchProduct') private readonly batchProductModel: Model<BatchProductInterfaces>,
     ) { }
-
-    async scanStamp(batchId: string): Promise<any> {
-        return await this.batchProductModel.aggregate([
-            {
-                $match:{
-                    batchId: batchId
-                }
-            },
-        ]);
-    }
 
     async create(stamp: StampInterfaces): Promise<StampInterfaces> {
         return await this.stampRepository.create(stamp);

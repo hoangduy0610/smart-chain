@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Ip, Param, Post, Put, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { EnumRoles } from 'src/commons/EnumRoles';
@@ -14,7 +14,6 @@ import { StampService } from 'src/services/StampService';
 export class BatchProductController {
     constructor(
         private readonly batchProductService: BatchProductService,
-        private readonly stampService: StampService,
     ) { }
 
     @Get('/list')
@@ -25,8 +24,8 @@ export class BatchProductController {
     }
 
     @Get('/scan/:id')
-    async scanStamp(@Req() req, @Res() res, @Param('id') id: string) {
-        return res.status(200).json(await this.stampService.scanStamp(id));
+    async scanStamp(@Req() req, @Res() res, @Param('id') id: string, @Ip() ip) {
+        return res.status(200).json(await this.batchProductService.scanStamp(id, ip));
     }
 
     @Get('/:id')
