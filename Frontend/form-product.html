@@ -17,6 +17,11 @@
 </head>
 
 <body>
+  <div class="loader-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
   <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
@@ -32,15 +37,9 @@
               </div>
             </div>
             <div class="box">
-              <label for="price">Price:</label>
+              <label for="imgurl">Image</label>
               <div>
-                <input type="number" id="price" class="shape_input">
-              </div>
-            </div>
-            <div class="box">
-              <label for="qty">Quantity:</label>
-              <div>
-                <input type="text" id="qty" class="shape_input">
+                <input style="border:none" type="file" id="imgurl" class="custom-file-input">
               </div>
             </div>
             <div class="box">
@@ -53,23 +52,32 @@
               <label for="attributes">Attributes:</label>
               <div class="show-item-attr" id="form-attributes">
                 <div class="box-item">
-                  <input type="text" id="name_at" class="shape_input name" placeholder="Name">
-                  <input type="text" id="value_at" class="shape_input value" placeholder="Value">
-                  <button type="button" class="btn btn-danger m-2 remove-item-btn"><i
-                      class="fa-solid fa-square-minus"></i></button>
+                  <div class="d-flex">
+                    <div style="flex: 1;justify-content: center;align-items: center;display: flex;">
+                      <input type="text" id="name_at" class="shape_input name" placeholder="Name">
+                      <input type="text" id="value_at" class="shape_input value" placeholder="Value">
+                    </div>
+                    <button type="button" class="btn btn-danger m-2 remove-item-btn"><i
+                        class="fa-solid fa-square-minus"></i></button>
+                  </div>
                 </div>
               </div>
-              <button type="button" class="btn btn-info m-2 add-item-btn"><i style="color:white"
+              <button type="button" class="btn btn-success m-2 add-item-btn"><i style="color:white"
                   class="fa-solid fa-square-plus"></i></button>
             </div>
             <div class="box">
-              <label for="imgurl">ImagesUrl:</label>
+              <label for="price">Price:</label>
               <div>
-                <input type="text" id="imgurl" class="shape_input">
+                <input type="number" id="price" class="shape_input">
               </div>
             </div>
-
-            <div class="btn">
+            <div class="box">
+              <label for="qty">Quantity:</label>
+              <div>
+                <input type="text" id="qty" class="shape_input">
+              </div>
+            </div>
+            <div class="box ms-1">
               <button class="btn btn-info mt-3 " id="btn-submit">Submit</button>
             </div>
           </div>
