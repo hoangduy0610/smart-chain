@@ -7,17 +7,26 @@ import { Roles } from 'src/guards/RoleDecorator';
 import { RolesGuard } from 'src/guards/RoleGuard';
 import { BatchProductInterfaces } from 'src/interfaces/BatchProductInterfaces';
 import { BatchProductService } from 'src/services/BatchProductService';
+import { StampService } from 'src/services/StampService';
 
 @ApiTags('batch-product')
 @Controller('batch-product')
 export class BatchProductController {
-    constructor(private readonly batchProductService: BatchProductService) { }
+    constructor(
+        private readonly batchProductService: BatchProductService,
+        private readonly stampService: StampService,
+    ) { }
 
     @Get('/list')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
     async list(@Req() req, @Res() res) {
         return res.status(200).json(await this.batchProductService.findAllByRoleAndId(req.user.role, req.user.id));
+    }
+
+    @Get('/scan/:id')
+    async scanStamp(@Req() req, @Res() res, @Param('id') id: string) {
+        return res.status(200).json(await this.stampService.scanStamp(id));
     }
 
     @Get('/:id')
