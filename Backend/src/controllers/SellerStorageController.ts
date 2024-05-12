@@ -20,7 +20,7 @@ export class SellerStorageController {
     @Get('/list')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_TRANSPORTER)
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
     async list(@Req() req, @Res() res) {
         return res.status(200).json(await this.sellerStorageService.findAllByRoleAndId(req.user.role, req.user.id));
     }
@@ -28,7 +28,7 @@ export class SellerStorageController {
     @Get('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_TRANSPORTER)
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
     async findOne(@Req() req, @Res() res, @Param('id') id: string) {
         return res.status(200).json(await this.sellerStorageService.findById(id));
     }
@@ -36,7 +36,7 @@ export class SellerStorageController {
     @Post('/')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_TRANSPORTER)
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
     async create(@Req() req, @Res() res, @Body() dto: CreateSellerStorageDto) {
         return res.status(200).json(await this.sellerStorageService.create(dto));
     }
@@ -44,7 +44,7 @@ export class SellerStorageController {
     @Put('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_TRANSPORTER)
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
     async update(@Req() req, @Res() res, @Param('id') id: string, @Body() dto: EditSellerStorageDto) {
         return res.status(200).json(await this.sellerStorageService.update(id, dto));
     }
@@ -52,7 +52,7 @@ export class SellerStorageController {
     @Delete('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_TRANSPORTER)
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
     async delete(@Req() req, @Res() res, @Param('id') id: string) {
         console.log(req.user);
         return res.status(200).json(await this.sellerStorageService.delete(req.user.username, id));

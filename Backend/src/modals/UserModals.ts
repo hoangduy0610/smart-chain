@@ -4,6 +4,7 @@ export class UserModal {
     id: string;
     roles: string[];
     name: string;
+    email: string;
     phoneNumber: string;
     username?: string;
 
@@ -11,6 +12,7 @@ export class UserModal {
         this.id = user._id;
         this.roles = user.roles;
         this.name = user.name;
+        this.email = user.email;
         this.phoneNumber = user.phoneNumber;
         this.username = username || user.username;
     }

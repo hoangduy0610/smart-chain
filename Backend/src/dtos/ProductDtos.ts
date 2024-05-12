@@ -16,9 +16,6 @@ export class ProductDto {
     readonly price: string;
 
     @ApiProperty({ type: String, required: true })
-    readonly quantity: string;
-
-    @ApiProperty({ type: String, required: true })
     readonly description: string;
 
     @ApiProperty({ type: [AttributeDto], required: true })
