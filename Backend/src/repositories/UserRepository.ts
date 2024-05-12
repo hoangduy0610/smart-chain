@@ -171,4 +171,8 @@ export class UserRepository {
         await this.authModel.findOneAndUpdate({ userId: id }, { deletedAt: new Date() });
         return user;
     }
+
+    async resetPassword(id: string, hashPass: string): Promise<any> {
+        return await this.authModel.findOneAndUpdate({ userId: id }, { password: hashPass });
+    }
 }

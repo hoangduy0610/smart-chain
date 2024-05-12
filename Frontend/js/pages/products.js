@@ -10,7 +10,6 @@ $(document).ready(function () {
     'productId',
     'name',
     'price',
-    'quantity',
     'description',
     {
       data: 'attributes',
