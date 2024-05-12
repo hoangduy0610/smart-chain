@@ -16,7 +16,7 @@ export class HistoryRepository {
         const createObj = {
             ...history,
             actionBy: actionBy,
-            actionAt: new Date(),
+            actionDate: new Date(),
         }
         const newHistory = new this.historyModel(createObj);
         return await newHistory.save();
@@ -38,7 +38,7 @@ export class HistoryRepository {
         const updateObj = {
             ...history,
             actionBy: actionBy,
-            actionAt: new Date(),
+            actionDate: new Date(),
         }
         return await this.historyModel.findByIdAndUpdate(id, updateObj, { new: true }).exec();
     }

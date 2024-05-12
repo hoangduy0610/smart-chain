@@ -17,7 +17,6 @@ $(document).ready(function () {
 
                 $('#name').val(response.name);
                 $('#price').val(response.price);
-                $('#qty').val(response.quantity);
                 $('#dscript').val(response.description);
                 // $('#imgurl').val(response.imageUrl);
                 imgurl = response.imageUrl;
@@ -102,7 +101,6 @@ $(document).ready(function () {
 
         const name = $('#name').val();
         const price = $('#price').val();
-        const quantity = $('#qty').val();
         const description = $('#dscript').val();
         // const imgurl = $('#imgurl').val();
 
@@ -125,7 +123,6 @@ $(document).ready(function () {
             data: {
                 name: name,
                 price: price,
-                quantity: quantity,
                 description: description,
                 attributes: arr,
                 imageUrl: imgurl,
