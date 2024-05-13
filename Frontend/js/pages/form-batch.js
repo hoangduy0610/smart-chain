@@ -1,55 +1,52 @@
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("creat-box").addEventListener("submit", function(event) {
-        event.preventDefault();
+$(document).ready(function () {
+    const params = new window.URLSearchParams(window.location.search);
 
-        var urlParams = new URLSearchParams(window.location.search);
-        var productid = urlParams.get('product_id');
-        const headers = {
-            'Authorization': ACCESS_TOKEN,
-        };
+    const prefetch_id = params.get('id')
+    console.log(!!prefetch_id);
 
-        // Using jQuery to perform an AJAX GET request
+    if (!!prefetch_id) {
         $.ajax({
-            url: fillEndpointPlaceholder(API_ENDPOINT.PRODUCT.GET_PRODUCT, { id: productid }),
+            url: fillEndpointPlaceholder(API_ENDPOINT.BATCH.GET_BATCH, { id: prefetch_id }),
             method: 'GET',
             headers: {
                 'Authorization': ACCESS_TOKEN,
             },
-            success: function(response) {
-                // Handle the response data here
-                var name = document.getElementById("name").value;
-                var qty = document.getElementById("qty").value;
-                var status = document.getElementById("status").value;
+            success: function (response) {
+                $('#name').val(response.name);
+                $('#qty').parent().remove();
+                $('#status').parent().remove();
 
-                var data = {
-                    name: name,
-                    quantity: qty,
-                    status: status,
-                    product_id: response.productId
-                };
-                console.log(data);
-                // Further processing, e.g., another AJAX call to POST data
-                $.ajax({
-                    url: API_ENDPOINT.BATCH.CREATE_BATCH,
-                    method: 'POST',
-                    headers: headers,
-                    contentType: 'application/json',
-                    data: JSON.stringify(data),
-                    success: function(response) {
-                        console.log("Data submitted successfully:", response);
-                        // Clear the form fields
-                        document.getElementById("name").value = "";
-                        document.getElementById("qty").value = "";
-                        document.getElementById("status").value = "InFarm";
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error submitting data:", error);
-                    }
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("Error fetching product data:", error);
+                $('form button[type="submit"]').html('Update Batch')
             }
-        });
-    });
+        })
+    }
+
+    $('#btn-submit').click(function (e) {
+        e.preventDefault();
+        const commonField = {
+            name: $('#name').val(),
+          };
+
+        $.ajax({
+            url: !prefetch_id ? API_ENDPOINT.BATCH.CREATE_BATCH : fillEndpointPlaceholder(API_ENDPOINT.BATCH.UPDATE_BATCH, { id: id }),
+            method: !prefetch_id ? 'POST' : 'PUT',
+            headers: {
+                'Authorization': ACCESS_TOKEN,
+            },
+            data: prefetch_id ? commonField : {
+                ...commonField,
+                quantity: $('#qty').val(),
+                status: $('#status').val()
+            },
+            success: function () {
+                alert('thanh cong')
+                // window.location.href = 's.html';
+            },
+            error: function () {
+                alert("that bai")
+            }
+
+        })
+    })
+
 });

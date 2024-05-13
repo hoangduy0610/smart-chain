@@ -26,6 +26,7 @@
             <!--Table head-->
             <thead>
               <tr>
+                <th scope="col">Batch ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Status</th>
                 <th scope="col">Quantity</th>
@@ -41,6 +42,7 @@
             <!--Table foot-->
             <tfoot>
               <tr>
+                <th scope="col">Batch ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Status</th>
                 <th scope="col">Quantity</th>
@@ -49,6 +51,48 @@
             <!--Table foot-->
           </table>
           <!--Table-->
+        </div>
+        <div class="modal fade" id="Batch-change-Modal" tabindex="-1" role="dialog"
+          aria-labelledby="Batch-change-ModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="Batch-change-ModalLabel">Thay đổi số lượng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body " id="Batch-change-ModalBody ">
+                <!-- content modal -->
+                <div class="dropdown d-flex">
+                  <a id="btn-dropdown" class="btn btn-primary fs-5 " href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Điều chỉnh <i class="p-2 fa-solid fa-caret-down"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a id="increase-qty" class="dropdown-item fs-6" href="#">Tăng</a></li>
+                    <li><a id="decrease-qty" class="dropdown-item  fs-6" href="#">Giảm</a></li>
+                  </ul>
+                </div>
+
+                <div class="input-group mb-2 mt-3">
+                  <span class="input-group-text fs-5" id="basic-addon1">Nhập số lượng</span>
+                  <input type="number" class="form-control" aria-label="number" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-2 mt-3">
+                  <span class="input-group-text fs-5" id="basic-addon1">Lý do</span>
+                  <input type="text" class="form-control" aria-label="number" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="btn d-flex">
+                  <button class="btn btn-info mt-3 fs-5 " id="btn-submit" type="submit">Submit</button>
+                </div>
+                <!-- content modal -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
