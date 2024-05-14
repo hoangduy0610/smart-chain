@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Provanence Tracking</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/d6862fa655.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="./css/pages/Product_C.css">
+</head>
+
+<body>
+  <div class="loader-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5">
+      <h2 class="mb-4">Provanence Tracking</h2>
+      <p>Input product details:</p>
+      <form id="creat-box">
+        <div class="form">
+          <div class="content-creat">
+            <div class="box">
+              <label for="name">Name Product:</label>
+              <div>
+                <input type="text" id="name" class="shape_input">
+              </div>
+            </div>
+            <div class="box">
+              <label for="imgurl">Image</label>
+              <div>
+                <input style="border:none" type="file" id="imgurl" class="custom-file-input">
+              </div>
+            </div>
+            <div class="box">
+              <label for="dscript">Description:</label>
+              <div>
+                <input type="text" id="dscript" class="shape_input">
+              </div>
+            </div>
+            <div class="box attribute">
+              <label for="attributes">Attributes:</label>
+              <div class="show-item-attr" id="form-attributes">
+                <div class="box-item">
+                  <div class="d-flex">
+                    <div style="flex: 1;justify-content: center;align-items: center;display: flex;">
+                      <input type="text" id="name_at" class="shape_input name" placeholder="Name">
+                      <input type="text" id="value_at" class="shape_input value" placeholder="Value">
+                    </div>
+                    <button type="button" class="btn btn-danger m-2 remove-item-btn"><i
+                        class="fa-solid fa-square-minus"></i></button>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-success m-2 add-item-btn"><i style="color:white"
+                  class="fa-solid fa-square-plus"></i></button>
+            </div>
+            <div class="box">
+              <label for="price">Price:</label>
+              <div>
+                <input type="number" id="price" class="shape_input">
+              </div>
+            </div>
+            <div class="box ms-1">
+              <button class="btn btn-info mt-3 " id="btn-submit">Submit</button>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+  <script src="./js/apis.js"></script>
+  <script src="./js/utils.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/pages/form-product.js"></script>
+</body>
+
+</html>

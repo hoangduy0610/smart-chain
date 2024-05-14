@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CreateSellerStorageDto, EditSellerStorageDto } from 'src/dtos/SellerStorageDtos';
 import { SellerStorageInterfaces } from 'src/interfaces/SellerStorageInterfaces';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class SellerStorageRepository {
         @InjectModel('SellerStorage') private readonly sellerStorageModel: Model<SellerStorageInterfaces>,
     ) { }
 
-    async create(sellerStorage: SellerStorageInterfaces): Promise<SellerStorageInterfaces> {
+    async create(sellerStorage: CreateSellerStorageDto): Promise<SellerStorageInterfaces> {
         const newSellerStorage = new this.sellerStorageModel(sellerStorage);
         return await newSellerStorage.save();
     }
@@ -22,7 +23,7 @@ export class SellerStorageRepository {
         return await this.sellerStorageModel.findById(id).exec();
     }
 
-    async update(id: string, sellerStorage: SellerStorageInterfaces): Promise<SellerStorageInterfaces> {
+    async update(id: string, sellerStorage: EditSellerStorageDto): Promise<SellerStorageInterfaces> {
         return await this.sellerStorageModel.findByIdAndUpdate(id, sellerStorage, { new: true }).exec();
     }
 

@@ -12,7 +12,6 @@ export interface ProductInterfaces extends Document {
     productId: string;
     price: string;
     attributes: ProductAttributes[];
-    quantity: string;
     description: string;
     imageUrl: string;
     deletedAt?: Date;

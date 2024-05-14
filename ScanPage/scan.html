@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/d6862fa655.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/scan.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Scan</title>
+</head>
+
+<body>
+    <form action="" id="scan-form">
+        <div class="box">
+            <div class="form_image">
+                <div class="title image">Xác thực sản phẩm</div>
+                <div class="bar1"> </div>
+                <div class="box_image">
+                    <img src="https://media.istockphoto.com/id/1280050777/vi/vec-to/m%E1%BB%9F-h%E1%BB%99p-qu%C3%A0-t%E1%BA%B7ng-ruy-b%C4%83ng-v%C3%A0-confetti-%C4%91%C6%B0%E1%BB%A3c-c%C3%A1ch-ly-tr%C3%AAn-n%E1%BB%81n-tr%E1%BA%AFng-l%E1%BB%85-k%E1%BB%B7-ni%E1%BB%87m-s%E1%BB%B1-ki%E1%BB%87n-b%E1%BA%A5t-ng%E1%BB%9D.jpg?s=612x612&w=0&k=20&c=xNeQQyhSJSglkaJ2PIk7NO9GV_A6EXbN7e-75u_JC_g="
+                        alt="image not found">
+                </div>
+                <div class="form_price">
+                    <p style="font-weight: 700;">...</p>
+                    <div class="price"><i class="fa-solid fa-tag"></i> Giá bán:... <p
+                            style="display: inline;font-style:italic; color: red;">đ</p>
+                        <i class="dot fa-solid fa-ellipsis"></i>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form_inform">
+                <div class="inform correct">
+                    <i style="color: white; font-size: larger;" class="fa-solid fa-circle-check"></i>
+                    <div style="color: white;">Sản phẩm chính hãng của công ty ....</div>
+                </div>
+                <div class="inform error">
+                    <i style="color: white; font-size: larger;" class="fa-solid fa-circle-xmark"></i>
+                    <div style="color: white;">Sản phẩm không có nguồn gốc!</div>
+                </div>
+                <div style="font-weight: 700;">Serial: ...</div>
+                <div class="bar1 mt-2"> </div>
+                <div class="box_count d-flex justify-content-center mt-3 ">
+                    <div class="qr w-50 text-secondary">
+                        <i style="padding: 2px;" class="fa-solid fa-qrcode">...</i>
+                        <p>Số lần quét</p>
+                    </div>
+                    <div class="bar2"></div>
+                    <div class="person w-50 text-secondary">
+                        <i style="padding:2px ;" class="fa-solid fa-user">...</i>
+                        <p>Số người quét</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="infor" class="form_infor_title d-flex w-100">
+                <div class="flex-grow-1 text-start ml-2">Thông số sản phẩm</div>
+                <div id="show_para" class="para text-end mr-2">Xem thông số</div>
+            </div>
+
+            <div class="form_infor d-flex flex-column text-start ml-2 p-2 text-secondary">
+                <div class="detail ">
+                    <div class="bar1 mt-1"></div>
+                    <div class="att instruction"> 
+                        Hướng dẫn sử dụng
+                        <i class="icon_right fa-solid fa-angle-right"></i>
+                    </div>
+                </div>
+
+                <div class="detail ">
+                    <div class="bar1 mt-1"> </div>
+                    <div class="att para-detail">Thông số</div>
+                    <i class="icon_right fa-solid fa-angle-right"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="paraModal" tabindex="-1" aria-labelledby="paraModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paraModalLabel">Thông Số</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./js/scan.js"></script>
+</body>
+
+</html>

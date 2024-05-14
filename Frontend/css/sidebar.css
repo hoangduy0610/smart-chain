@@ -25,20 +25,25 @@ body {
   min-width: 80px;
   max-width: 80px;
   text-align: center;
+  -webkit-transition: all 0.3s; /* Thêm prefix cho hiệu ứng chuyển động */
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
 }
-
 #sidebar.active ul.components li {
   font-size: 14px;
 }
 
 #sidebar.active ul.components li a {
   padding: 10px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 #sidebar.active ul.components li a span {
   margin-right: 0;
   display: block;
   font-size: 24px;
+  align-self: center;
 }
 
 #sidebar.active .logo {
@@ -172,4 +177,8 @@ a[data-toggle="collapse"] {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+}
+#sidebar ul.submenu {
+  display: none; /* Initially hide submenus */
+  /* Add other styling for submenus */
 }
