@@ -13,9 +13,15 @@ $(document).ready(function () {
 		}
 	});
 
+	// Toggle submenu when clicking on parent item
+	$('body').on('click', '#sidebar ul.components > li', function () {
+		$(this).find('.submenu').toggleClass('active');
+	});
+
+	// Expand/collapse sidebar
 	$('body').on('click', '#sidebarCollapse', function () {
 		$('#sidebar').toggleClass('active').promise().done(() => {
-			// check if window is small enough so sidebar is hidden
+			// Check if window is small enough so sidebar is hidden
 			if ($(window).width() <= 768) {
 				$('#content').toggleClass('d-none');
 			}
@@ -23,6 +29,13 @@ $(document).ready(function () {
 			const sidebarText = $('#sidebar').hasClass('active') ? 'Expand' : 'Collapse';
 			$("#sidebarCollapse").html(`<span class="fa fa-fw fa-bars"></span> ${sidebarText} Menu`);
 		});
+	});
+
+	// Close submenu when clicking outside of sidebar
+	$(document).on('click', function (e) {
+		if (!$(e.target).closest('#sidebar').length) {
+			$('#sidebar ul.components .submenu').removeClass('active');
+		}
 	});
 });
 
