@@ -16,6 +16,12 @@ export class AuthController {
 		return res.status(HttpStatus.OK).json(await this.authService.login(userAuthDto));
 	}
 
+	// @Post('/forgot-password')
+	// @ApiOperation({ summary: 'Quên MK', description: 'Api Reset password' })
+	// async forgot(@Req() req, @Res() res, @Body() userAuthDto: AuthDto) {
+	// 	return res.status(HttpStatus.OK).json(await this.authService.forgotPassword(userAuthDto));
+	// }
+
 	// @Post('/signup')
 	// @ApiOperation({ summary: 'Đăng ký', description: 'Api đăng ký người dùng' })
 	// async signup(@Req() req, @Res() res, @Body() userAuthDto: AuthDto) {

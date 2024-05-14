@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { StampInterfaces } from '../interfaces/StampInterfaces';
 import { StampRepository } from '../repositories/StampRepository';
+import { InjectModel } from '@nestjs/mongoose';
+import { BatchProductInterfaces } from 'src/interfaces/BatchProductInterfaces';
+import { Model } from 'mongoose';
+import { AnalysisInterface } from 'src/interfaces/AnalysisInterfaces';
 
 @Injectable()
 export class StampService {
     constructor(
         private readonly stampRepository: StampRepository,
     ) { }
-    
+
     async create(stamp: StampInterfaces): Promise<StampInterfaces> {
         return await this.stampRepository.create(stamp);
     }

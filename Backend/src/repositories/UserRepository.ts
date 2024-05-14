@@ -16,6 +16,7 @@ export class UserRepository {
 
     async listUser(): Promise<UserInterfaces[]> {
         const res = await this.userModel.aggregate([
+            { "$match": { "deletedAt": null } },
             { "$addFields": { "userId": { "$toString": "$_id" } } },
             {
                 "$lookup": {
@@ -169,5 +170,9 @@ export class UserRepository {
 
         await this.authModel.findOneAndUpdate({ userId: id }, { deletedAt: new Date() });
         return user;
+    }
+
+    async resetPassword(id: string, hashPass: string): Promise<any> {
+        return await this.authModel.findOneAndUpdate({ userId: id }, { password: hashPass });
     }
 }

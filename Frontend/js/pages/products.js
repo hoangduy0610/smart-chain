@@ -1,24 +1,29 @@
 $(document).ready(function () {
   const tableRenderColumns = [
+    {
+      data: 'imageUrl',
+      render: function (data, type, row, meta) {
+        return `<img style="width: 10rem; height:auto;" src="${data}"/>`
+        // return `<a href="${data}" target='_blank' class="btn btn-success">Open</a>`;
+      }
+    },
     'productId',
     'name',
     'price',
-    'quantity',
     'description',
     {
       data: 'attributes',
       render: function (data, type, row, meta) {
-        return `<button class="btn btn-danger btn-show-attributes">Show</button>`;
+        return `<button class="btn btn-danger btn-show-attributes my-2">Show</button>`;
       }
     },
-    'imageUrl',
     {
       "data": 'null',
       render: function (data, type, row, meta) {
         return `
-          <div class="d-flex p-2">
-            <button type="button" class="btn btn-danger btn-delete-product m-1" aria-disabled="true">Delete</button>
-            <button type="button" class="btn btn-primary btn-update-product m-1">Update</button>
+          <div class="d-flex p-2" >
+            <button type="button" class="btn btn-danger btn-delete-product mx-1" aria-disabled="true">Delete</button>
+            <button type="button" class="btn btn-primary btn-update-product mx-1">Update</button>
           </div>
         `;
       }

@@ -16,7 +16,7 @@ export class BatchProductRepository {
     }
 
     async findAll(): Promise<BatchProductInterfaces[]> {
-        return await this.batchProductModel.find().exec();
+        return await this.batchProductModel.find({ deletedAt: null }).exec();
     }
 
     async findById(id: string): Promise<BatchProductInterfaces> {
@@ -35,11 +35,11 @@ export class BatchProductRepository {
     }
 
     async findByBatchId(batchId: string): Promise<BatchProductInterfaces[]> {
-        return await this.batchProductModel.find({ batchId: batchId }).exec();
+        return await this.batchProductModel.find({ batchId: batchId, deletedAt: null }).exec();
     }
 
     async findByProductId(productId: string): Promise<BatchProductInterfaces[]> {
-        return await this.batchProductModel.find({ productId: productId }).exec();
+        return await this.batchProductModel.find({ productId: productId, deletedAt: null }).exec();
     }
 
     async deleteByBatchId(batchId: string): Promise<BatchProductInterfaces[]> {
