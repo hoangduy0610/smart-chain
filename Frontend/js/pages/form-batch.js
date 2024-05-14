@@ -2,6 +2,7 @@ $(document).ready(function () {
     const params = new window.URLSearchParams(window.location.search);
 
     const prefetch_id = params.get('id')
+    const product_id = params.get('product_id');
     console.log(!!prefetch_id);
 
     if (!!prefetch_id) {
@@ -13,8 +14,8 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $('#name').val(response.name);
-                $('#qty').parent().remove();
-                $('#status').parent().remove();
+                $('#qty').val(response.quantity);
+                $('#status').parent().parent().remove();
 
                 $('form button[type="submit"]').html('Update Batch')
             }
@@ -25,18 +26,19 @@ $(document).ready(function () {
         e.preventDefault();
         const commonField = {
             name: $('#name').val(),
-          };
+            quantity: $('#qty').val(),
+            status: $('#status').val()
+        };
 
         $.ajax({
-            url: !prefetch_id ? API_ENDPOINT.BATCH.CREATE_BATCH : fillEndpointPlaceholder(API_ENDPOINT.BATCH.UPDATE_BATCH, { id: id }),
+            url: !prefetch_id ? API_ENDPOINT.BATCH.CREATE_BATCH : fillEndpointPlaceholder(API_ENDPOINT.BATCH.UPDATE_BATCH, { id: prefetch_id }),
             method: !prefetch_id ? 'POST' : 'PUT',
             headers: {
                 'Authorization': ACCESS_TOKEN,
             },
             data: prefetch_id ? commonField : {
                 ...commonField,
-                quantity: $('#qty').val(),
-                status: $('#status').val()
+                productId: product_id,
             },
             success: function () {
                 alert('thanh cong')

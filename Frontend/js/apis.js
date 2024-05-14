@@ -21,8 +21,8 @@ const API_ENDPOINT = {
     BATCH:{
         CREATE_BATCH: `${API_HOST}/batch-product`,
         LIST_BATCH: `${API_HOST}/batch-product/list`,
-        GET_BATCH: `${API_HOST}/batch/{{id}}`,
-        UPDATE_BATCH: `${API_HOST}/batch/{{id}}`,
-        DELETE_BATCH: `${API_HOST}/batch/{{id}}`,
+        GET_BATCH: `${API_HOST}/batch-product/{{id}}`,
+        UPDATE_BATCH: `${API_HOST}/batch-product/{{id}}`,
+        DELETE_BATCH: `${API_HOST}/batch-product/{{id}}`,
     },
 }
