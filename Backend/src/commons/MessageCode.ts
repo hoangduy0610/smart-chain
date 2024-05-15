@@ -12,5 +12,8 @@ export enum MessageCode {
 
 	HISTORY_NOT_FOUND = 'Không tìm thấy thông tin lịch sử',
 
+	BATCH_NOT_FOUND = 'Không tìm thấy thông tin lô hàng',
+	BATCH_FORWARD_INVALID = 'Không thể chuyển tiếp lô hàng này',
+
 	UNKNOWN_ERROR = 'Lỗi không xác định'
 }
