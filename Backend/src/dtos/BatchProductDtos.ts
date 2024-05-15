@@ -14,4 +14,10 @@ export class CreateBatchProductDto {
     readonly quantity: number;
 }
 
-export class EditBatchProductDto extends OmitType(CreateBatchProductDto, ['productId'] as const) { }
+export class EditBatchProductDto extends OmitType(CreateBatchProductDto, ['productId'] as const) {
+    @ApiProperty({ type: String, required: false })
+    readonly transporter: string;
+
+    @ApiProperty({ type: String, required: false })
+    readonly retailer: string;
+}

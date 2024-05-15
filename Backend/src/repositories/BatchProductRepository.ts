@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { EnumRoles } from 'src/commons/EnumRoles';
 import { CreateBatchProductDto, EditBatchProductDto } from 'src/dtos/BatchProductDtos';
 import { BatchProductInterfaces } from 'src/interfaces/BatchProductInterfaces';
 
@@ -11,7 +12,10 @@ export class BatchProductRepository {
     ) { }
 
     async create(batchProduct: CreateBatchProductDto): Promise<BatchProductInterfaces> {
-        const newBatchProduct = new this.batchProductModel(batchProduct);
+        const newBatchProduct = new this.batchProductModel({
+            ...batchProduct,
+            incharge: EnumRoles.ROLE_FARMER,
+        });
         return await newBatchProduct.save();
     }
 
@@ -52,5 +56,13 @@ export class BatchProductRepository {
     }
     async findByOwnerId(ownerId: string): Promise<BatchProductInterfaces[]> {
         return await this.batchProductModel.find({ owner: ownerId, deletedAt: null }).exec();
+    }
+
+    async findByTransporterId(transporterId: string): Promise<BatchProductInterfaces[]> {
+        return await this.batchProductModel.find({ transporter: transporterId, incharge: EnumRoles.ROLE_TRANSPORTER, deletedAt: null }).exec();
+    }
+
+    async findByRetailerId(retailerId: string): Promise<BatchProductInterfaces[]> {
+        return await this.batchProductModel.find({ retailer: retailerId, deletedAt: null }).exec();
     }
 }
