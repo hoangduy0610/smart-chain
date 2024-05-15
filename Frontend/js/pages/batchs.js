@@ -62,11 +62,63 @@ $(document).ready(function () {
     const row = $(this).parents('tr')[0];
     const data = BatchTable.row(row).data();
     // console.log(data)
+    localStorage.setItem('@batchs/fluctuation/batch', JSON.stringify(data));
 
 
     $('#Batch-change-Modal').modal('show');
   });
 
-  
 
+  $("#submit-fluctuation").click(function () {
+    const batch = JSON.parse(localStorage.getItem('@batchs/fluctuation/batch'));
+    const user = JSON.parse(localStorage.getItem('@auth/userInfo'));
+    const type = $('#fluctuation').val();
+    const reason = $('#fluc-reason').val();
+    const amount = $('#fluc-amount').val();
+    const commonField = {
+      name: batch.name,
+      quantity: parseInt(batch.quantity) + parseInt(amount) * (type === 'INC' ? 1 : -1),
+      status: batch.status
+    };
+    
+    $.ajax({
+      url: fillEndpointPlaceholder(API_ENDPOINT.BATCH.UPDATE_BATCH, { id: batch._id }),
+      method: 'PUT',
+      headers: {
+        'Authorization': ACCESS_TOKEN,
+      },
+      data: commonField,
+      success: function () {
+        const actionText = type === 'INC' ? `Nông dân ${user.name} tăng số lượng thêm ${amount} với lí do: ${reason}` : `Nông dân ${user.name} giảm số lượng đi ${amount} với lí do: ${reason}`
+        $.ajax({
+          url: API_ENDPOINT.HISTORY.CREATE_HISTORY,
+          method: 'POST',
+          headers: {
+            'Authorization': ACCESS_TOKEN,
+          },
+          data: {
+            batchId: batch.batchId,
+            action: actionText,
+          },
+          success: function () {
+            alert("Fluctuation thành công")
+
+            $('#Batch-change-Modal').modal('hide');
+            BatchTable.ajax.reload();
+          },
+          error: function () {
+            alert("Fluctuation that bai")
+
+            $('#Batch-change-Modal').modal('hide');
+            BatchTable.ajax.reload();
+          }
+        });
+      },
+      error: function () {
+        alert("Fluctuation that bai")
+        $('#Batch-change-Modal').modal('hide');
+        BatchTable.ajax.reload();
+      }
+    })
+  });
 });

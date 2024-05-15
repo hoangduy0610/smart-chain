@@ -100,7 +100,8 @@ $(document).ready(function () {
     const row = $(this).parents('tr')[0];
     const data = productTable.row(row).data();
     const id = data._id;
-    window.location.href = `form-batch.html?product_id=${id}`;
+    const productId = data.productId;
+    window.location.href = `form-batch.html?product_id=${productId}`;
   });
 
 });
