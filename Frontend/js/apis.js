@@ -1,4 +1,4 @@
-const API_HOST = 'https://hongdi.ddns.net';
+const API_HOST = 'http://10.10.12.55:8798';
 
 const API_ENDPOINT = {
     LOGIN: `${API_HOST}/auth/signin`,
@@ -18,11 +18,18 @@ const API_ENDPOINT = {
         UPDATE_PRODUCT: `${API_HOST}/product/{{id}}`,
         DELETE_PRODUCT: `${API_HOST}/product/{{id}}`,
     },
-    BATCH:{
+    BATCH: {
         CREATE_BATCH: `${API_HOST}/batch-product`,
         LIST_BATCH: `${API_HOST}/batch-product/list`,
         GET_BATCH: `${API_HOST}/batch-product/{{id}}`,
         UPDATE_BATCH: `${API_HOST}/batch-product/{{id}}`,
         DELETE_BATCH: `${API_HOST}/batch-product/{{id}}`,
     },
+    HISTORY: {
+        CREATE_HISTORY: `${API_HOST}/history`,
+        LIST_HISTORY: `${API_HOST}/history/list`,
+        GET_HISTORY: `${API_HOST}/history/{{id}}`,
+        UPDATE_HISTORY: `${API_HOST}/history/{{id}}`,
+        DELETE_HISTORY: `${API_HOST}/history/{{id}}`,
+    }
 }
