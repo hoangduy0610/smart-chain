@@ -16,3 +16,7 @@ a {
 .loader-container {
     display: none;
 }
+
+.btn.disabled {
+    cursor: not-allowed;
+}

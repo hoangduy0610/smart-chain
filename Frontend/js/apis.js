@@ -24,6 +24,7 @@ const API_ENDPOINT = {
         GET_BATCH: `${API_HOST}/batch-product/{{id}}`,
         UPDATE_BATCH: `${API_HOST}/batch-product/{{id}}`,
         DELETE_BATCH: `${API_HOST}/batch-product/{{id}}`,
+        FORWARD_BATCH: `${API_HOST}/batch-product/scan-forward/{{id}}`,
     },
     HISTORY: {
         CREATE_HISTORY: `${API_HOST}/history`,
