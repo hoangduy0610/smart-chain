@@ -1,28 +1,48 @@
 $(document).ready(function () {
+  const userInfo = JSON.parse(localStorage.getItem('@auth/userInfo'));
   const tableRenderColumns = [
     "batchId",
     "name",
-    "status",
+    {
+      "data": 'status',
+      render: function (data, type, row, meta) {
+        let statusText = 'Đang nuôi trồng tại trang trại';
+        if (row.status == 'InTransportation') {
+          if (row.transporter) {
+            statusText = 'Đang trên đường vận chuyển'
+          } else {
+            statusText = 'Đang chờ nhà vận chuyển nhận lô hàng'
+          }
+        } else if (row.status == 'InStore') {
+          if (row.retailer) {
+            statusText = 'Đã nhập vào kho bán lẻ'
+          } else {
+            statusText = 'Đã vận chuyển đến. Đang chờ nhập kho'
+          }
+        }
+        return `
+          <strong>${statusText}</strong> 
+        `;
+      }
+    },
     "quantity",
     {
-      "data": 'null',
+      "data": 'incharge',
       render: function (data, type, row, meta) {
+        const isDisabled =
+          !userInfo.roles.includes(data) &&
+          !userInfo.roles.includes('ROLE_ADMIN') ||
+          (row.status == 'InStore' && row.retailer)
+
+        const dsb = !isDisabled ? '' : 'disabled';
         return `
             <div class="d-flex p-2 justify-content-center">
               <button type="button" class="btn btn-danger btn-delete-batch m-1" aria-disabled="true">Delete</button>
               <button type="button" class="btn btn-primary btn-update-batch m-1">Update</button>
+              <button type="button" class="btn btn-success btn-change-batch m-1" aria-disabled="true">Biến Động</button>
+              <button type="button" class="btn btn-info btn-forward-batch m-1 ${dsb}" ${dsb} aria-disabled="true">Chuyển tiếp</button>
             </div>
           `;
-      }
-    },
-    {
-      "data": 'null',
-      render: function (data, type, row, meta) {
-        return `
-            <div class="d-flex justify-content-center">
-              <button type="button" class="btn btn-success btn-change-batch m-1" aria-disabled="true">Biến Động</button>
-            </div>
-              `;
       }
     },
   ]
@@ -68,6 +88,25 @@ $(document).ready(function () {
     $('#Batch-change-Modal').modal('show');
   });
 
+  $('#BatchTable tbody').on('click', '.btn-forward-batch', function () {
+    const row = $(this).parents('tr')[0];
+    const data = BatchTable.row(row).data();
+    $.ajax({
+      url: fillEndpointPlaceholder(API_ENDPOINT.BATCH.FORWARD_BATCH, { id: data.batchId }),
+      type: 'PUT',
+      beforeSend: function (request) {
+        request.setRequestHeader("Authorization", ACCESS_TOKEN);
+      },
+      success: function (result) {
+        alert('Chuyển tiếp thành công');
+        BatchTable.ajax.reload();
+      },
+      error: function (error) {
+        alert('Chuyển tiếp thất bại');
+      }
+    });
+  });
+
 
   $("#submit-fluctuation").click(function () {
     const batch = JSON.parse(localStorage.getItem('@batchs/fluctuation/batch'));
@@ -80,7 +119,7 @@ $(document).ready(function () {
       quantity: parseInt(batch.quantity) + parseInt(amount) * (type === 'INC' ? 1 : -1),
       status: batch.status
     };
-    
+
     $.ajax({
       url: fillEndpointPlaceholder(API_ENDPOINT.BATCH.UPDATE_BATCH, { id: batch._id }),
       method: 'PUT',
