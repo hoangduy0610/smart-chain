@@ -62,34 +62,28 @@
               </div>
               <div class="modal-body " id="Batch-change-ModalBody ">
                 <!-- content modal -->
-                <div class="dropdown d-flex">
-                  <a id="btn-dropdown" class="btn btn-primary fs-5 " href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Điều chỉnh <i class="p-2 fa-solid fa-caret-down"></i>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a id="increase-qty" class="dropdown-item fs-6" href="#">Tăng</a></li>
-                    <li><a id="decrease-qty" class="dropdown-item  fs-6" href="#">Giảm</a></li>
-                  </ul>
+                <div class="input-group mb-2 mt-3">
+                  <span class="input-group-text fs-5" id="basic-addon1" style="min-width:13rem;">Biến động</span>
+                  <select id="fluctuation" class="form-select">
+                    <option value="INC" selected>Tăng</option>
+                    <option value="DEC">Giảm</option>
+                  </select>
                 </div>
 
                 <div class="input-group mb-2 mt-3">
-                  <span class="input-group-text fs-5" id="basic-addon1">Nhập số lượng</span>
-                  <input type="number" class="form-control" aria-label="number" aria-describedby="basic-addon1">
+                  <span class="input-group-text fs-5" id="basic-addon1" style="min-width:13rem;">Số lượng</span>
+                  <input type="number" id="fluc-amount" class="form-control" aria-label="number" aria-describedby="basic-addon1">
                 </div>
 
                 <div class="input-group mb-2 mt-3">
-                  <span class="input-group-text fs-5" id="basic-addon1">Lý do</span>
-                  <input type="text" class="form-control" aria-label="number" aria-describedby="basic-addon1">
-                </div>
-
-                <div class="btn d-flex">
-                  <button class="btn btn-info mt-3 fs-5 " id="btn-submit" type="submit">Submit</button>
+                  <span class="input-group-text fs-5" id="basic-addon1" style="min-width:13rem;">Lý do</span>
+                  <input type="text" id="fluc-reason" class="form-control" aria-label="number" aria-describedby="basic-addon1">
                 </div>
                 <!-- content modal -->
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="button" id="submit-fluctuation">Submit</button>
               </div>
             </div>
           </div>
