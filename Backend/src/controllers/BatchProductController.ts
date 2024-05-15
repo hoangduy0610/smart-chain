@@ -43,6 +43,13 @@ export class BatchProductController {
         return res.status(200).json(await this.batchProductService.create(req.user.id, batchProductDto));
     }
 
+    @Put('/scan-forward/:id')
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @ApiBearerAuth()
+    async forwardBatch(@Req() req, @Res() res, @Param('id') id: string) {
+        return res.status(200).json(await this.batchProductService.forwardScan(req.user, id));
+    }
+
     @Put('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
