@@ -36,6 +36,7 @@ $(document).ready(function () {
             success: function (response) {
                 // Save token to local storage
                 localStorage.setItem('token', response.token);
+                localStorage.setItem('@auth/userInfo', JSON.stringify(response.info));
                 alert('Login successful!');
                 window.location.href = 'index.html';
             },
