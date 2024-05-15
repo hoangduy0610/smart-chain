@@ -42,6 +42,43 @@ export class BatchProductService {
                     foreignField: 'batchId',
                     as: 'history'
                 },
+            },
+            {
+                $lookup: {
+                    from: 'analyses',
+                    localField: 'batchId',
+                    foreignField: 'batchId',
+                    as: 'analyses'
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    owner: 1,
+                    name: 1,
+                    batchId: 1,
+                    productId: 1,
+                    status: 1,
+                    quantity: 1,
+                    createdAt: 1,
+                    updatedAt: 1,
+                    product: {
+                        name: 1,
+                        price: 1,
+                        description: 1,
+                        attributes: 1,
+                        imageUrl: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                    },
+                    history: {
+                        action: 1,
+                        actionBy: 1,
+                        actionDate: 1,
+                    },
+                    totalScan: { $size: '$analyses' },
+                    totalUserScan: { $size: { $setUnion: "$analyses.ipAddress" } }
+                }
             }
         ]);
     }
