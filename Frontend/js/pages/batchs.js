@@ -1,6 +1,18 @@
 $(document).ready(function () {
+  $("body").tooltip({ selector: '[data-bs-toggle=tooltip]' });
   const userInfo = JSON.parse(localStorage.getItem('@auth/userInfo'));
   const tableRenderColumns = [
+    {
+      "data": 'batchId',
+      render: function (data, type, row, meta) {
+        return `
+          <div class="d-flex flex-1 justify-content-center">
+            <div id="loader${data}" style="width:5vw;height:5vw;" class="linear-background"></div>
+            <img class='d-none' style="max-width:5vw" id="qr${data}"onload='(function(){document.getElementById("qr${data}").classList.remove("d-none");document.getElementById("loader${data}").classList.add("d-none")})()' src='${QR_HOST}${data}'/>
+          </div>
+        `;
+      }
+    },
     "batchId",
     "name",
     {
@@ -36,13 +48,26 @@ $(document).ready(function () {
 
         const dsb = !isDisabled ? '' : 'disabled';
         return `
-            <div class="d-flex p-2 justify-content-center">
-              <button type="button" class="btn btn-danger btn-delete-batch m-1" aria-disabled="true">Delete</button>
-              <button type="button" class="btn btn-primary btn-update-batch m-1">Update</button>
-              <button type="button" class="btn btn-success btn-change-batch m-1" aria-disabled="true">Biến Động</button>
-              <button type="button" class="btn btn-info btn-forward-batch m-1 ${dsb}" ${dsb} aria-disabled="true">Chuyển tiếp</button>
-            </div>
-          `;
+          <div class="d-flex p-2 justify-content-center">
+            <button
+              type="button"
+              class="btn btn-danger btn-delete-batch m-1"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"
+            ><i class="fa-solid fa-trash"></i></button>
+            <button
+              type="button" class="btn btn-primary btn-update-batch m-1"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Update"
+            ><i class="fa-solid fa-pen-to-square"></i></button>
+            <button
+              type="button" class="btn btn-success btn-change-batch m-1"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Biến động"
+            ><i class="fa-solid fa-bolt"></i></button>
+            <button
+              type="button" class="btn btn-${dsb ? 'secondary' : 'indigo'} btn-forward-batch m-1" ${dsb}
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Chuyển tiếp"
+            ><i class="fa-solid fa-forward-fast"></i></button>
+          </div>
+        `;
       }
     },
   ]
