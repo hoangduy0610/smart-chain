@@ -1,0 +1,22 @@
+{
+    "place_id": "243001944",
+    "licence": "https://locationiq.com/attribution",
+    "osm_type": "way",
+    "osm_id": "560468180",
+    "lat": "10.844735970950506",
+    "lon": "107.1622159001726",
+    "display_name": "Xã Hàng Gòn, Xã Xuân Quế, Huyện Cẩm Mỹ, Tỉnh Đồng Nai, Việt Nam",
+    "address": {
+        "village": "Xã Hàng Gòn",
+        "county": "Huyện Cẩm Mỹ",
+        "state": "Tỉnh Đồng Nai",
+        "country": "Việt Nam",
+        "country_code": "vn"
+    },
+    "boundingbox": [
+        "10.8415192",
+        "10.858735",
+        "107.1613696",
+        "107.2342257"
+    ]
+}

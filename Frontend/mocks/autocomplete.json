@@ -1,0 +1,140 @@
+[
+    {
+        "place_id": "324030440321",
+        "osm_id": "8405614",
+        "osm_type": "relation",
+        "licence": "https://locationiq.com/attribution",
+        "lat": "10.8460961",
+        "lon": "107.165674",
+        "boundingbox": [
+            "10.806026",
+            "10.8959423",
+            "107.1227074",
+            "107.2134613"
+        ],
+        "class": "place",
+        "type": "village",
+        "display_name": "Xuân Quế, Huyện Cẩm Mỹ, Đồng Nai, Việt Nam",
+        "display_place": "Xuân Quế",
+        "display_address": "Huyện Cẩm Mỹ, Đồng Nai, Việt Nam",
+        "address": {
+            "name": "Xuân Quế",
+            "county": "Huyện Cẩm Mỹ",
+            "state": "Đồng Nai",
+            "country": "Việt Nam",
+            "country_code": "vn"
+        }
+    },
+    {
+        "place_id": "322297377280",
+        "osm_id": "623186067",
+        "osm_type": "way",
+        "licence": "https://locationiq.com/attribution",
+        "lat": "15.9066847",
+        "lon": "108.3449492",
+        "boundingbox": [
+            "15.905768",
+            "15.9078757",
+            "108.3426248",
+            "108.3467345"
+        ],
+        "class": "highway",
+        "type": "residential",
+        "display_name": "Đường Vạn Xuân, Cẩm An, Hội An, Quảng Nam, 64000, Việt Nam",
+        "display_place": "Đường Vạn Xuân",
+        "display_address": "Cẩm An, Hội An, Quảng Nam, 64000, Việt Nam",
+        "address": {
+            "name": "Đường Vạn Xuân",
+            "suburb": "Cẩm An",
+            "city": "Hội An",
+            "state": "Quảng Nam",
+            "postcode": "64000",
+            "country": "Việt Nam",
+            "country_code": "vn"
+        }
+    },
+    {
+        "place_id": "321678879241",
+        "osm_id": "89748580",
+        "osm_type": "way",
+        "licence": "https://locationiq.com/attribution",
+        "lat": "10.0231798",
+        "lon": "105.7695868",
+        "boundingbox": [
+            "10.0216784",
+            "10.0251062",
+            "105.7680999",
+            "105.7708625"
+        ],
+        "class": "highway",
+        "type": "tertiary",
+        "display_name": "Trần Ngọc Quế, Hưng Lợi, Ninh Kiều, Cần Thơ, 94108, Việt Nam",
+        "display_place": "Trần Ngọc Quế",
+        "display_address": "Hưng Lợi, Ninh Kiều, Cần Thơ, 94108, Việt Nam",
+        "address": {
+            "name": "Trần Ngọc Quế",
+            "neighbourhood": "Hưng Lợi",
+            "suburb": "Ninh Kiều",
+            "city": "Cần Thơ",
+            "postcode": "94108",
+            "country": "Việt Nam",
+            "country_code": "vn"
+        }
+    },
+    {
+        "place_id": "322476622039",
+        "osm_id": "167956556",
+        "osm_type": "way",
+        "licence": "https://locationiq.com/attribution",
+        "lat": "10.0206098",
+        "lon": "105.7716805",
+        "boundingbox": [
+            "10.0200755",
+            "10.0216784",
+            "105.7708625",
+            "105.7728665"
+        ],
+        "class": "highway",
+        "type": "tertiary",
+        "display_name": "Trần Ngọc Quế, Xuân Khánh, Ninh Kiều, Cần Thơ, 94111, Việt Nam",
+        "display_place": "Trần Ngọc Quế",
+        "display_address": "Xuân Khánh, Ninh Kiều, Cần Thơ, 94111, Việt Nam",
+        "address": {
+            "name": "Trần Ngọc Quế",
+            "neighbourhood": "Xuân Khánh",
+            "suburb": "Ninh Kiều",
+            "city": "Cần Thơ",
+            "postcode": "94111",
+            "country": "Việt Nam",
+            "country_code": "vn"
+        }
+    },
+    {
+        "place_id": "323852073487",
+        "osm_id": "958803288",
+        "osm_type": "way",
+        "licence": "https://locationiq.com/attribution",
+        "lat": "21.04615685",
+        "lon": "105.67848847",
+        "boundingbox": [
+            "21.0461074",
+            "21.0462104",
+            "105.6781055",
+            "105.6788713"
+        ],
+        "class": "building",
+        "type": "school",
+        "display_name": "Trường THPT Vạn Xuân, Đường Quế Dương, Xã Cát Quế, Hà Nội, 34000, Việt Nam",
+        "display_place": "Trường THPT Vạn Xuân",
+        "display_address": "Đường Quế Dương, Xã Cát Quế, Hà Nội, 34000, Việt Nam",
+        "address": {
+            "name": "Trường THPT Vạn Xuân",
+            "road": "Đường Quế Dương",
+            "suburb": "Xã Cát Quế",
+            "city": "Hà Nội",
+            "postcode": "34000",
+            "country": "Việt Nam",
+            "country_code": "vn"
+        }
+    }
+]
