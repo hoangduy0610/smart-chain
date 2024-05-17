@@ -2,19 +2,19 @@ $(document).ready(function () {
   $("body").tooltip({ selector: '[data-bs-toggle=tooltip]' });
   const userInfo = JSON.parse(localStorage.getItem('@auth/userInfo'));
   const tableRenderColumns = [
+    "name",
     {
       "data": 'batchId',
       render: function (data, type, row, meta) {
         return `
           <div class="d-flex flex-1 justify-content-center">
-            <div id="loader${data}" style="width:5vw;height:5vw;" class="linear-background"></div>
-            <img class='d-none' style="max-width:5vw" id="qr${data}"onload='(function(){document.getElementById("qr${data}").classList.remove("d-none");document.getElementById("loader${data}").classList.add("d-none")})()' src='${QR_HOST}${data}'/>
+            <div id="loader${data}" style="width:100px;height:100px;" class="linear-background"></div>
+            <img class='d-none' style="max-width:100px" id="qr${data}"onload='(function(){document.getElementById("qr${data}").classList.remove("d-none");document.getElementById("loader${data}").classList.add("d-none")})()' src='${QR_HOST}${data}'/>
           </div>
         `;
       }
     },
     "batchId",
-    "name",
     {
       "data": 'status',
       render: function (data, type, row, meta) {
@@ -33,7 +33,7 @@ $(document).ready(function () {
           }
         }
         return `
-          <strong>${statusText}</strong> 
+          <strong class="badge bg-primary p-2">${statusText}</strong> 
         `;
       }
     },
