@@ -70,3 +70,13 @@ const initDataTable = (selector, ajaxOptions, columns, columnDefs, callback) => 
         }
     });
 }
+
+const truncate = (input, length = 5) => input.length > length ? `${input.substring(0, length).trim()}...` : input;
+
+function getLocation(callback) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(callback);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}

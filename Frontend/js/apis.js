@@ -1,4 +1,10 @@
-const API_HOST = 'http://10.10.12.55:8798';
+// const API_HOST = 'http://10.10.12.55:8798';
+const API_HOST = 'https://23db-222-253-79-230.ngrok-free.app'
+
+const QR_TARGET_WEB = 'http://192.168.1.77:5500/ScanPage/scan.html?id=';
+const QR_HOST = `https://api.qrserver.com/v1/create-qr-code/?data=${QR_TARGET_WEB}`;
+
+const LOCATIONIQ_KEY = 'pk.1389b74ff08f34d73ab9adbe8dd56d4b';
 
 const API_ENDPOINT = {
     LOGIN: `${API_HOST}/auth/signin`,
@@ -32,5 +38,19 @@ const API_ENDPOINT = {
         GET_HISTORY: `${API_HOST}/history/{{id}}`,
         UPDATE_HISTORY: `${API_HOST}/history/{{id}}`,
         DELETE_HISTORY: `${API_HOST}/history/{{id}}`,
+    },
+
+    TRANSPORTER_BILLS: {
+        CREATE_TRANSPORTER_BILLS: `${API_HOST}/transporter/bills`,
+        LIST_TRANSPORTER_BILLS: `${API_HOST}/transporter/bills/list`,
+        GET_TRANSPORTER_BILLS: `${API_HOST}/transporter/bills/{{id}}`,
+        UPDATE_TRANSPORTER_BILLS: `${API_HOST}/transporter/bills/{{id}}`,
+        DELETE_TRANSPORTER_BILLS: `${API_HOST}/transporter/bills/{{id}}`,
+    },
+
+    GEOCODING: {
+        AUTOCOMPLETE: `https://api.locationiq.com/v1/autocomplete?key=${LOCATIONIQ_KEY}&q={{query}}&limit=5&dedupe=1`,
+        FORWARD_GEOCODING: `https://us1.locationiq.com/v1/search?key=${LOCATIONIQ_KEY}&q={{query}}&format=json`,
+        REVERSE_GEOCODING: `https://us1.locationiq.com/v1/reverse?key=${LOCATIONIQ_KEY}&lat={{lat}}&lon={{lon}}&format=json`,
     }
 }

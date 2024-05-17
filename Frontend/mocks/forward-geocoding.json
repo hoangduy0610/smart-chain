@@ -1,0 +1,21 @@
+[
+    {
+        "place_id": "344079671",
+        "licence": "https://locationiq.com/attribution",
+        "osm_type": "relation",
+        "osm_id": "8405614",
+        "boundingbox": [
+            "10.806026",
+            "10.8959423",
+            "107.1227074",
+            "107.2134613"
+        ],
+        "lat": "10.8460961",
+        "lon": "107.165674",
+        "display_name": "Xã Xuân Quế, Huyện Cẩm Mỹ, Tỉnh Đồng Nai, Việt Nam",
+        "class": "boundary",
+        "type": "administrative",
+        "importance": 0.55001,
+        "icon": "https://locationiq.org/static/images/mapicons/poi_boundary_administrative.p.20.png"
+    }
+]
