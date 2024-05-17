@@ -1,5 +1,4 @@
 // Utils
-const locationType = localStorage.getItem('@transporter-bills/pickingLocationType');
 const userInfo = JSON.parse(localStorage.getItem('@auth/userInfo'));
 const params = new window.URLSearchParams(window.location.search);
 
@@ -16,6 +15,7 @@ function searchLocation(query) {
         url: fillEndpointPlaceholder(API_ENDPOINT.GEOCODING.AUTOCOMPLETE, { query: query }),
         type: 'GET',
         success: function (data) {
+            const locationType = localStorage.getItem('@transporter-bills/pickingLocationType');
             fillLocation(locationType, data[0].lat, data[0].lon, data[0].display_name);
 
             const selectElement = document.createElement('select');
@@ -64,6 +64,7 @@ map.on('click', function (e) {
         url: fillEndpointPlaceholder(API_ENDPOINT.GEOCODING.REVERSE_GEOCODING, { lat: lat, lon: lng }),
         type: 'GET',
         success: function (data) {
+            const locationType = localStorage.getItem('@transporter-bills/pickingLocationType');
             fillLocation(locationType, lat, lng, data.display_name);
             $(".loader-container").removeClass('active');
         }
@@ -91,7 +92,7 @@ $("#btn-geolocation-search").click(function () {
 
 $("#submit-transporter-form").click(function () {
     $(".loader-container").addClass('active');
-    
+
     const userId = userInfo.id
     const batchId = params.get('id')
     const departure = $('#departure').val();
