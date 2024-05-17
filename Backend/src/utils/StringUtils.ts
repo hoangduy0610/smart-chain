@@ -21,4 +21,14 @@ export class StringUtils {
         }
         return retVal;
     }
+
+    public static fillEndpointPlaceholder(endpoint, params) {
+        let result = endpoint;
+        for (const key in params) {
+            result = result.replace(`{{${key}}}`, params[key]);
+        }
+        // Example:
+        // fillEndpointPlaceholder(API_ENDPOINT.PRODUCT.GET_PRODUCT, { id: 1 })
+        return result;
+    }
 }
