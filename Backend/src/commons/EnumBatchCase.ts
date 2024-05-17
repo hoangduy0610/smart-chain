@@ -1,6 +1,6 @@
 export enum EBatchCase {
-    ReadyForTransport,
-    StartTransport,
-    FinishTransport,
-    ImportToStore,
+    ReadyForTransport = 'ReadyForTransport',
+    StartTransport = 'StartTransport',
+    FinishTransport = 'FinishTransport',
+    ImportToStore = 'ImportToStore',
 }

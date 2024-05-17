@@ -38,8 +38,8 @@ export class BatchProductRepository {
         return await deletedBatchProduct.save();
     }
 
-    async findByBatchId(batchId: string): Promise<BatchProductInterfaces[]> {
-        return await this.batchProductModel.find({ batchId: batchId, deletedAt: null }).exec();
+    async findByBatchId(batchId: string): Promise<BatchProductInterfaces> {
+        return await this.batchProductModel.findOne({ batchId: batchId, deletedAt: null }).exec();
     }
 
     async findByProductId(productId: string): Promise<BatchProductInterfaces[]> {
