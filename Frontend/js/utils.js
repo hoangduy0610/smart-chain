@@ -24,6 +24,7 @@ function fillEndpointPlaceholder(endpoint, params) {
 
 const initDataTable = (selector, ajaxOptions, columns, columnDefs, callback) => {
     return $(selector).DataTable({
+        responsive: true,
         "searching": true,
         "paging": true,
         "pagingType": "full_numbers",

@@ -1,38 +1,27 @@
 $(document).ready(function () {
+  $("body").tooltip({ selector: '[data-bs-toggle=tooltip]' });
   const tableRenderColumns = [
+    'name',
     {
       data: 'imageUrl',
       render: function (data, type, row, meta) {
-        return `<img style="width: 10rem; height:auto;" src="${data}"/>`
+        return `<div class="d-flex justify-content-center"><img style="width: 10rem; height:auto;" src="${data}"/></div>`
         // return `<a href="${data}" target='_blank' class="btn btn-success">Open</a>`;
       }
     },
     'productId',
-    'name',
     'price',
     'description',
     {
-      data: 'attributes',
-      render: function (data, type, row, meta) {
-        return `<button class="btn btn-danger btn-show-attributes my-2">Show</button>`;
-      }
-    },
-    {
       "data": 'null',
       render: function (data, type, row, meta) {
         return `
-          <div class="d-flex p-2" >
-            <button type="button" class="btn btn-danger btn-delete-product mx-1" aria-disabled="true">Delete</button>
-            <button type="button" class="btn btn-primary btn-update-product mx-1">Update</button>
+          <div class="d-flex p-2 justify-content-center">
+            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Attributes" class="btn btn-primary btn-show-attributes m-1"><i class="fa-solid fa-circle-info"></i></button>
+            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete" class="btn btn-danger btn-delete-product m-1"><i class="fa-solid fa-trash"></i></button>
+            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Update" class="btn btn-indigo btn-update-product m-1"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Create Batch" class="btn btn-success btn-create-batch m-1"><i class="fa-solid fa-box"></i></button>
           </div>
-        `;
-      }
-    },
-    {
-      "data": 'null',
-      render: function (data, type, row, meta) {
-        return `
-          <button type="button" class="btn btn-success btn-create-batch m-1" >Create Batch</button>
         `;
       }
     }
