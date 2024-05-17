@@ -1,5 +1,5 @@
 // const API_HOST = 'http://10.10.12.55:8798';
-const API_HOST = 'https://23db-222-253-79-230.ngrok-free.app'
+const API_HOST = 'https://hongdi.ddns.net'
 
 const QR_TARGET_WEB = 'http://192.168.1.77:5500/ScanPage/scan.html?id=';
 const QR_HOST = `https://api.qrserver.com/v1/create-qr-code/?data=${QR_TARGET_WEB}`;
