@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateSellerStorageDto, EditSellerStorageDto } from 'src/dtos/SellerStorageDtos';
@@ -87,5 +87,61 @@ export class SellerStorageRepository {
                 }
             }
         ])
+    }
+
+    async findByBatchId(batchId: string): Promise<SellerStorageInterfaces> {
+        return await this.sellerStorageModel.findOne({ batchId }).exec();
+    }
+
+    async analytics(sellerId: string): Promise<any> {
+        return await this.sellerStorageModel.aggregate([
+            {
+                $match: {
+                    owner: sellerId.toString()
+                }
+            },
+            {
+                $lookup: {
+                    from: 'batchproducts',
+                    localField: 'batchId',
+                    foreignField: 'batchId',
+                    as: 'batch'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'products',
+                    localField: 'batch.productId',
+                    foreignField: 'productId',
+                    as: 'product'
+                }
+            },
+            {
+                $unwind: "$product"
+            },
+            {
+                $unwind: "$batch"
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalBatchCount: { $sum: 1 },
+                    totalProductQuantity: { $sum: "$batch.quantity" },
+                    totalSoldProductQuantity: { $sum: "$sold" },
+                    estimateIncome: { $sum: { $multiply: [{ $toDouble: "$product.price" }, "$sold"] } },
+                    distinctProductCount: { $addToSet: "$product.productId" }
+                }
+            },
+            {
+                $addFields:{
+                    distinctProductCount: { $size: "$distinctProductCount" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0
+                }
+            }
+        ]);
     }
 }

@@ -10,6 +10,9 @@ export class CreateSellerStorageDto {
     @ApiProperty({ type: Number, required: true })
     readonly quantity: number;
 
+    @ApiProperty({ type: Number, required: true })
+    readonly pricing: number;
+
     @ApiProperty({ type: Number, required: false })
     readonly sold: number;
 }
