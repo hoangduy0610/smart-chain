@@ -1,5 +1,5 @@
-// const API_HOST = 'http://10.10.12.55:8798';
-const API_HOST = 'https://hongdi.ddns.net'
+const API_HOST = 'http://10.10.12.55:8798';
+// const API_HOST = 'https://hongdi.ddns.net'
 
 const QR_TARGET_WEB = 'http://192.168.1.77:5500/ScanPage/scan.html?id=';
 const QR_HOST = `https://api.qrserver.com/v1/create-qr-code/?data=${QR_TARGET_WEB}`;
@@ -27,6 +27,7 @@ const API_ENDPOINT = {
     BATCH: {
         CREATE_BATCH: `${API_HOST}/batch-product`,
         LIST_BATCH: `${API_HOST}/batch-product/list`,
+        GET_BATCH_BY_BATCHID: `${API_HOST}/batch-product/batch-id/{{id}}`,
         GET_BATCH: `${API_HOST}/batch-product/{{id}}`,
         UPDATE_BATCH: `${API_HOST}/batch-product/{{id}}`,
         DELETE_BATCH: `${API_HOST}/batch-product/{{id}}`,
@@ -46,6 +47,15 @@ const API_ENDPOINT = {
         GET_TRANSPORTER_BILLS: `${API_HOST}/transporter/bills/{{id}}`,
         UPDATE_TRANSPORTER_BILLS: `${API_HOST}/transporter/bills/{{id}}`,
         DELETE_TRANSPORTER_BILLS: `${API_HOST}/transporter/bills/{{id}}`,
+    },
+
+    RETAILER: {
+        IMPORT_RETAILER: `${API_HOST}/seller/storage`,
+        LIST_RETAILER_IMPORT: `${API_HOST}/seller/storage/list`,
+        LIST_RETAILER_PRODUCT: `${API_HOST}/seller/storage/self`,
+        SELL_PRODUCT: `${API_HOST}/seller/storage/sell/{{id}}`,
+        ANALYTICS: `${API_HOST}/seller/storage/analytics`,
+        REVENUE_DETAI: `${API_HOST}/seller/storage/revenue`,
     },
 
     GEOCODING: {
