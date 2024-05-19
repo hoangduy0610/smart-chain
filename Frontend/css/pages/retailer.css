@@ -1,0 +1,14 @@
+.card-body div:has(canvas) {
+    display: flex;
+    justify-content: center;
+    height: 20.75rem;
+}
+
+@media (max-width: 991.98px) {
+
+    #retailerChart,
+    #batchChart,
+    #incomeChart {
+        height: 15.75rem;
+    }
+}
