@@ -199,4 +199,8 @@ export class BatchProductService {
                 throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.BATCH_FORWARD_INVALID);
         }
     }
+
+    async findByBatchId(batchId: string): Promise<BatchProductInterfaces> {
+        return await this.batchProductRepository.findByBatchId(batchId);
+    }
 }
