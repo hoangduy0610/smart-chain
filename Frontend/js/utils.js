@@ -81,3 +81,13 @@ function getLocation(callback) {
         alert("Geolocation is not supported by this browser.");
     }
 }
+
+function getDateArrayLabel(timestamp, count) {
+    const result = [];
+    for (let i = 0; i < count; i++) {
+        const date = new Date(timestamp);
+        date.setDate(date.getDate() - i);
+        result.push(date.toISOString().split('T')[0]);
+    }
+    return result;
+}
