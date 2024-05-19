@@ -18,12 +18,12 @@
                 <div class="title image">Xác thực sản phẩm</div>
                 <div class="bar1"> </div>
                 <div class="box_image">
-                    <img src="https://media.istockphoto.com/id/1280050777/vi/vec-to/m%E1%BB%9F-h%E1%BB%99p-qu%C3%A0-t%E1%BA%B7ng-ruy-b%C4%83ng-v%C3%A0-confetti-%C4%91%C6%B0%E1%BB%A3c-c%C3%A1ch-ly-tr%C3%AAn-n%E1%BB%81n-tr%E1%BA%AFng-l%E1%BB%85-k%E1%BB%B7-ni%E1%BB%87m-s%E1%BB%B1-ki%E1%BB%87n-b%E1%BA%A5t-ng%E1%BB%9D.jpg?s=612x612&w=0&k=20&c=xNeQQyhSJSglkaJ2PIk7NO9GV_A6EXbN7e-75u_JC_g="
+                    <img id="image_product" src="https://media.istockphoto.com/id/1280050777/vi/vec-to/m%E1%BB%9F-h%E1%BB%99p-qu%C3%A0-t%E1%BA%B7ng-ruy-b%C4%83ng-v%C3%A0-confetti-%C4%91%C6%B0%E1%BB%A3c-c%C3%A1ch-ly-tr%C3%AAn-n%E1%BB%81n-tr%E1%BA%AFng-l%E1%BB%85-k%E1%BB%B7-ni%E1%BB%87m-s%E1%BB%B1-ki%E1%BB%87n-b%E1%BA%A5t-ng%E1%BB%9D.jpg?s=612x612&w=0&k=20&c=xNeQQyhSJSglkaJ2PIk7NO9GV_A6EXbN7e-75u_JC_g="
                         alt="image not found">
                 </div>
                 <div class="form_price">
-                    <p style="font-weight: 700;">...</p>
-                    <div class="price"><i class="fa-solid fa-tag"></i> Giá bán:... <p
+                    <p id="name-product" style="font-weight: 700; margin-top: 1rem;">...</p>
+                    <div class="price"><i class="fa-solid fa-tag"></i> Giá bán: <div style="display:  inline;" id="p-price" ></div> <p
                             style="display: inline;font-style:italic; color: red;">đ</p>
                         <i class="dot fa-solid fa-ellipsis"></i>
                     </div>
@@ -44,12 +44,12 @@
                 <div class="bar1 mt-2"> </div>
                 <div class="box_count d-flex justify-content-center mt-3 ">
                     <div class="qr w-50 text-secondary">
-                        <i style="padding: 2px;" class="fa-solid fa-qrcode">...</i>
+                        <i style="padding: 2px;" class="fa-solid fa-qrcode fs-5"> <p id="total-scan" style="display: inline; color: blue;"></p></i>
                         <p>Số lần quét</p>
                     </div>
                     <div class="bar2"></div>
                     <div class="person w-50 text-secondary">
-                        <i style="padding:2px ;" class="fa-solid fa-user">...</i>
+                        <i style="padding:2px ;" class="fa-solid fa-user fs-5"> <p id="total-user"; style="display: inline; color: blue;"></p> </i>
                         <p>Số người quét</p>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                         <h5 class="modal-title" id="paraModalLabel">Thông Số</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div id="paraModalBody" class="modal-body">
                         ...
                     </div>
                     <div class="modal-footer">

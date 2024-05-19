@@ -1,4 +1,4 @@
-const API_HOST = 'http://10.10.12.55:8798';
+const API_HOST = 'https://hongdi.ddns.net';
 
 const API_ENDPOINT = {
     LOGIN: `${API_HOST}/auth/signin`,

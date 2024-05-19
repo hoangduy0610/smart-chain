@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     const prefetch_id = params.get('id')
     const product_id = params.get('product_id');
-    console.log(!!prefetch_id);
+    console.log(typeof(prefetch_id));
 
     if (!!prefetch_id) {
         $.ajax({

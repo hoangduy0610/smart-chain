@@ -61,7 +61,7 @@ $(document).ready(function () {
         request.setRequestHeader("Authorization", ACCESS_TOKEN);
       },
       success: function (result) {
-        alert('xóa batch thành công');
+        alert('Xóa batch thành công');
         BatchTable.ajax.reload();
       },
       error: function (error) {
