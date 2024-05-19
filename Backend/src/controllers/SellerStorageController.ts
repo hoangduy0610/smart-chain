@@ -25,6 +25,30 @@ export class SellerStorageController {
         return res.status(200).json(await this.sellerStorageService.findAllByRoleAndId(req.user.role, req.user.id));
     }
 
+    @Get('/self')
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @ApiBearerAuth()
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
+    async self(@Req() req, @Res() res) {
+        return res.status(200).json(await this.sellerStorageService.findAndGroupByProduct(req.user.id));
+    }
+
+    @Get('/analytics')
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @ApiBearerAuth()
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
+    async analytics(@Req() req, @Res() res) {
+        return res.status(200).json(await this.sellerStorageService.analytics(req.user.id));
+    }
+
+    @Get('/revenue')
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @ApiBearerAuth()
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
+    async revenue(@Req() req, @Res() res) {
+        return res.status(200).json(await this.sellerStorageService.getTotalRevenue(req.user.id));
+    }
+
     @Get('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()
@@ -38,7 +62,15 @@ export class SellerStorageController {
     @ApiBearerAuth()
     @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
     async create(@Req() req, @Res() res, @Body() dto: CreateSellerStorageDto) {
-        return res.status(200).json(await this.sellerStorageService.create(dto));
+        return res.status(200).json(await this.sellerStorageService.create(req.user, dto));
+    }
+
+    @Post('/sell/:id')
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @ApiBearerAuth()
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
+    async sellProduct(@Req() req, @Res() res, @Param('id') id: string) {
+        return res.status(200).json(await this.sellerStorageService.sellProduct(id));
     }
 
     @Put('/:id')

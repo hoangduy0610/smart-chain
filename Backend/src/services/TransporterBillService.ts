@@ -32,7 +32,7 @@ export class TransporterBillService {
 
         const batch = await this.batchProductRepository.findByBatchId(dto.batchId);
         if (batch.status !== EProductStatus.InTransportation || batch.transporter) {
-            throw new ApplicationException(HttpStatus.FORBIDDEN, MessageCode.BILL_NOT_BELONG_TO_YOU);
+            throw new ApplicationException(HttpStatus.FORBIDDEN, MessageCode.BATCH_NOT_BELONG_TO_YOU);
         }
 
         try {
