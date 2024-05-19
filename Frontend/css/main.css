@@ -2,87 +2,14 @@ a {
     text-decoration: none;
 }
 
-.loader-container.active {
-    display: flex;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000000;
-    background: #33333333;
-}
-
-.loader-container {
-    display: none;
-}
 
 .btn.disabled {
     cursor: not-allowed;
 }
 
 .btn-indigo {
-    background-color: var(--bs-indigo)!important;
-    color: #fff!important;
-}
-
-@keyframes placeHolderShimmer {
-    0% {
-        background-position: -468px 0
-    }
-
-    100% {
-        background-position: 468px 0
-    }
-}
-
-.linear-background {
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: infinite;
-    animation-name: placeHolderShimmer;
-    animation-timing-function: linear;
-    background: #f6f7f8;
-    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-    background-size: 1000px 104px;
-    height: 200px;
-    position: relative;
-    overflow: hidden;
-}
-
-.inter-draw {
-    background: #FFF;
-    width: 100%;
-    height: 100px;
-    position: absolute;
-    top: 100px;
-}
-
-.inter-right--top {
-    background: #FFF;
-    width: 100%;
-    height: 20px;
-    position: absolute;
-    top: 20px;
-    left: 100px;
-}
-
-.inter-right--bottom {
-    background: #FFF;
-    width: 100%;
-    height: 50px;
-    position: absolute;
-    top: 60px;
-    left: 100px;
-}
-
-.inter-crop {
-    background: #FFF;
-    width: 20px;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 100px;
+    background-color: var(--bs-indigo) !important;
+    color: #fff !important;
 }
 
 .dataTable {
@@ -91,4 +18,46 @@ a {
     th {
         vertical-align: middle;
     }
+}
+
+table.table-hover.rounded-bottom {
+    tfoot {
+        tr {
+
+            th:first-child,
+            th:last-child {
+                border-radius: var(--bs-border-radius);
+            }
+        }
+    }
+
+    tr {
+        th {
+            padding-left: 0px !important;
+        }
+
+        * {
+            padding-left: 1rem;
+        }
+    }
+}
+
+.dt-container>:not(.dt-layout-table) {
+    margin: 1rem;
+    width: calc(100% - 2rem) !important;
+}
+
+.analytics-gradient-1 {
+    background: linear-gradient(90deg, #0dc1fd 0%, #2448ff 100%);
+    color: #fff;
+}
+
+.analytics-gradient-2 {
+    background: linear-gradient(90deg, #2add8a 0%, #10633c 100%);
+    color: #fff;
+}
+
+.analytics-gradient-3 {
+    background: linear-gradient(90deg, #ff5264 0%, #b91323 100%);
+    color: #fff;
 }

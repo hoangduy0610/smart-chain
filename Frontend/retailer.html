@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Provanence Tracking</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/d6862fa655.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/loader.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/pages/retailer.css">
+</head>
+
+<body>
+  <div class="loader-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5">
+      <h2 class="mb-4">Provanence Tracking</h2>
+      <div class="d-grid gap-2 d-md-block">
+        <button class="btn btn-outline-primary" type="button" id="importProduct">
+          Nhập hàng
+        </button>
+        <button class="btn btn-outline-success" type="button" id="sellProduct">
+          Bán hàng
+        </button>
+      </div>
+      <div class="collapse" id="qrscanCollapse">
+        <div style="max-width:500px;" class="card shadow card-body shadow p-3 mt-2">
+          <div style="width: 100%;" id="reader"></div>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-4 g-4 my-5">
+        <div class="col">
+          <div class="card shadow analytics-gradient-1 mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Total Product</h5>
+              <h1 id="totalProduct">N/A</h1>
+            </div>
+          </div>
+          <div class="card shadow analytics-gradient-2 mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Total Batch</h5>
+              <h1 id="totalBatch">N/A</h1>
+            </div>
+          </div>
+          <div class="card shadow analytics-gradient-3">
+            <div class="card-body">
+              <h5 class="card-title">Estimate Income (Total)</h5>
+              <h1 id="estimateIncome">N/A</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Retailer Chart</h5>
+              <div style="max-height: 20.75rem;">
+                <canvas id="retailerChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Batch Chart</h5>
+              <div style="max-height: 20.75rem;">
+                <canvas id="batchChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Income Chart</h5>
+              <div style="max-height:20.75rem;">
+                <canvas id="incomeChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card shadow my-5">
+        <h5 class="m-3">Store Analytics</h5>
+        <div class="table-responsive">
+          <div class="text-start">
+            <!--Table-->
+            <table id="storeAnalytics" class="table table-hover mb-0 rounded-bottom" style="width:100%">
+              <!--Table head-->
+              <thead>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Attributes</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Sold</th>
+                </tr>
+              </thead>
+              <!--Table head-->
+              <!--Table body-->
+              <tbody>
+                <!-- Table rows will go here -->
+              </tbody>
+              <!--Table body-->
+
+              <!--Table foot-->
+              <tfoot>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Attributes</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Sold</th>
+                </tr>
+              </tfoot>
+              <!--Table foot-->
+            </table>
+            <!--Table-->
+          </div>
+        </div>
+      </div>
+      <div class="card shadow">
+        <h5 class="m-3">Import Batch History</h5>
+        <div class="table-responsive">
+          <div class="text-start">
+            <!--Table-->
+            <table id="importHistory" class="table table-hover mb-0 rounded-bottom" style="width:100%">
+              <!--Table head-->
+              <thead>
+                <tr>
+                  <th scope="col">Batch Name</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Sold</th>
+                  <th scope="col">Import Date</th>
+                </tr>
+              </thead>
+              <!--Table head-->
+              <!--Table body-->
+              <tbody>
+                <!-- Table rows will go here -->
+              </tbody>
+              <!--Table body-->
+
+              <!--Table foot-->
+              <tfoot>
+                <tr>
+                  <th scope="col">Batch Name</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Sold</th>
+                  <th scope="col">Import Date</th>
+                </tr>
+              </tfoot>
+              <!--Table foot-->
+            </table>
+            <!--Table-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./plugins/html5-qrcode.min.js"></script>
+  <script src="./js/apis.js"></script>
+  <script src="./js/utils.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/pages/retailer.js"></script>
+</body>
+
+</html>
