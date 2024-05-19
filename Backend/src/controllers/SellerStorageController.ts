@@ -25,6 +25,14 @@ export class SellerStorageController {
         return res.status(200).json(await this.sellerStorageService.findAllByRoleAndId(req.user.role, req.user.id));
     }
 
+    @Get('/self')
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @ApiBearerAuth()
+    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
+    async self(@Req() req, @Res() res) {
+        return res.status(200).json(await this.sellerStorageService.findAndGroupByProduct(req.user.id));
+    }
+
     @Get('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()

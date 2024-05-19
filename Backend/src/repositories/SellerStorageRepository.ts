@@ -16,7 +16,30 @@ export class SellerStorageRepository {
     }
 
     async findAll(): Promise<SellerStorageInterfaces[]> {
-        return await this.sellerStorageModel.find().exec();
+        // return await this.sellerStorageModel.find().exec();
+        return await this.sellerStorageModel.aggregate([
+            {
+                $lookup: {
+                    from: 'batchproducts',
+                    localField: 'batchId',
+                    foreignField: 'batchId',
+                    as: 'batch'
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    owner: 1,
+                    batchId: 1,
+                    quantity: 1,
+                    sold: 1,
+                    batch: {
+                        $arrayElemAt: ['$batch', 0]
+                    },
+                    createdAt: 1,
+                }
+            }
+        ])
     }
 
     async findById(id: string): Promise<SellerStorageInterfaces> {
@@ -35,6 +58,34 @@ export class SellerStorageRepository {
     }
 
     async findBySellerId(sellerId: string): Promise<SellerStorageInterfaces[]> {
-        return await this.sellerStorageModel.find({ owner: sellerId }).exec();
+        // return await this.sellerStorageModel.find({ owner: sellerId }).exec();
+        return await this.sellerStorageModel.aggregate([
+            {
+                $match: {
+                    owner: sellerId.toString()
+                }
+            },
+            {
+                $lookup: {
+                    from: 'batchproducts',
+                    localField: 'batchId',
+                    foreignField: 'batchId',
+                    as: 'batch'
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    owner: 1,
+                    batchId: 1,
+                    quantity: 1,
+                    sold: 1,
+                    batch: {
+                        $arrayElemAt: ['$batch', 0]
+                    },
+                    createdAt: 1,
+                }
+            }
+        ])
     }
 }
