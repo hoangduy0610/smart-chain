@@ -27,6 +27,13 @@ export class BatchProductController {
     async scanStamp(@Req() req, @Res() res, @Param('id') id: string, @Ip() ip) {
         return res.status(200).json(await this.batchProductService.scanStamp(id, ip));
     }
+    
+    @Get('/batch-id/:id')
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @ApiBearerAuth()
+    async findOneByBatchId(@Req() req, @Res() res, @Param('id') id: string) {
+        return res.status(200).json(await this.batchProductService.findByBatchId(id));
+    }
 
     @Get('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
