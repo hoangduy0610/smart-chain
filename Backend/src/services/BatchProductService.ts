@@ -12,13 +12,17 @@ import { EBatchCase } from 'src/commons/EnumBatchCase';
 import { EProductStatus } from 'src/commons/EnumProductStatus';
 import { ApplicationException } from 'src/controllers/ExceptionController';
 import { MessageCode } from 'src/commons/MessageCode';
+import { HistoryInterfaces } from 'src/interfaces/HistoryInterfaces';
+import { TransporterBillService } from './TransporterBillService';
 
 @Injectable()
 export class BatchProductService {
     constructor(
         private readonly batchProductRepository: BatchProductRepository,
+        private readonly transporterBillService: TransporterBillService,
         @InjectModel('BatchProduct') private readonly batchProductModel: Model<BatchProductInterfaces>,
         @InjectModel('Analysis') private readonly analysisModel: Model<AnalysisInterface>,
+        @InjectModel('History') private readonly historyModel: Model<HistoryInterfaces>,
     ) { }
 
     async scanStamp(batchId: string, ipAddress: string): Promise<any> {
@@ -135,7 +139,7 @@ export class BatchProductService {
     async forwardScan(user: UserInterfaces, id: string): Promise<BatchProductInterfaces> {
         let productHandler: EBatchCase = null;
         const batchProduct: BatchProductInterfaces = await this.batchProductModel.findOne({ batchId: id, deletedAt: null }).exec();
-        
+
         if (!batchProduct) {
             throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.BATCH_NOT_FOUND);
         }
@@ -160,8 +164,15 @@ export class BatchProductService {
 
         switch (productHandler) {
             case EBatchCase.ReadyForTransport:
+                await this.historyModel.create({
+                    action: `Nông dân ${user.name} đã xuất kho lô sản phẩm ${batchProduct.name} với số lượng ${batchProduct.quantity} vào lúc ${new Date().toLocaleString()}`,
+                    actionBy: user.roles[0],
+                    actionDate: new Date(),
+                    batchId: id,
+                })
                 return await this.batchProductModel.findOneAndUpdate({ batchId: id }, {
                     status: EProductStatus.InTransportation,
+                    incharge: EnumRoles.ROLE_TRANSPORTER,
                 }, { new: true }).exec();
             case EBatchCase.StartTransport:
                 return await this.batchProductModel.findOneAndUpdate({ batchId: id }, {
@@ -169,6 +180,13 @@ export class BatchProductService {
                     incharge: EnumRoles.ROLE_TRANSPORTER,
                 }, { new: true }).exec();
             case EBatchCase.FinishTransport:
+                await this.historyModel.create({
+                    action: `Nhà vận chuyển ${user.name} đã hoàn thành đơn vận chuyển lô sản phẩm ${batchProduct.name} với số lượng ${batchProduct.quantity} vào lúc ${new Date().toLocaleString()}`,
+                    actionBy: user.roles[0],
+                    actionDate: new Date(),
+                    batchId: id,
+                })
+                await this.transporterBillService.findByBatchIdAndUpdateStatus(id, EBatchCase.FinishTransport);
                 return await this.batchProductModel.findOneAndUpdate({ batchId: id }, {
                     status: EProductStatus.InStore,
                 }, { new: true }).exec();
@@ -180,5 +198,9 @@ export class BatchProductService {
             default:
                 throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.BATCH_FORWARD_INVALID);
         }
+    }
+
+    async findByBatchId(batchId: string): Promise<BatchProductInterfaces> {
+        return await this.batchProductRepository.findByBatchId(batchId);
     }
 }

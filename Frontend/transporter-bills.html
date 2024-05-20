@@ -4,7 +4,6 @@
 <head>
   <title>Provanence Tracking</title>
   <meta charset="utf-8">
-  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
   <script src="https://kit.fontawesome.com/d6862fa655.js" crossorigin="anonymous"></script>
@@ -15,56 +14,61 @@
   <link rel="stylesheet" href="css/sidebar.css">
   <link rel="stylesheet" href="css/loader.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/pages/products.css">
 </head>
 
 <body>
+  <div class="loader-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
   <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
       <h2 class="mb-4">Provanence Tracking</h2>
-      <div class="card shadow">
-        <div class="card-body">
-          <div class="row">
-            <p class="h5 d-flex align-items-center">Danh sách sản phẩm
-              <!-- <button type="button"
-                style="width: 2rem; height: 2rem; padding: 0; display: flex; justify-content: center; align-items: center;"
-                class="btn btn-info rounded-circle m-2 btn-link-create" data-bs-toggle="tooltip" data-bs-placement="top"
-                data-bs-title="Create new">
-                <i style="color: white;" class="fa-solid fa-circle-plus"></i>
-              </button> -->
-            </p>
-          </div>
-          <div class="text-center">
+      <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#qrscanCollapse"
+        aria-expanded="false" aria-controls="qrscanCollapse">
+        Tạo đơn vận
+      </button>
+      <div class="collapse" id="qrscanCollapse">
+        <div style="max-width:500px;" class="card card-body shadow p-3 mt-2">
+          <div style="width: 100%;" id="reader"></div>
+        </div>
+      </div>
+
+      <div class="text-center mt-2">
+
+        <div class="card shadow">
+          <div class="card-body">
             <div class="table-responsive">
               <!--Table-->
-              <table id="productTable" class="table table-hover table-bordered mb-0">
+              <table id="billsTable" class="table table-hover table-bordered mb-0">
 
                 <!--Table head-->
                 <thead>
                   <tr>
                     <th class="th-lg">
-                      <a href="#">Name
-                      </a>
-                    </th>
-                    <th class="th-lg">
                       <a href="#">Image
                       </a>
                     </th>
                     <th class="th-lg">
-                      <a href="#">Product ID
+                      <a href="#">From
                       </a>
                     </th>
                     <th class="th-lg">
-                      <a href="#">Price
+                      <a href="#">To
                       </a>
                     </th>
                     <th class="th-lg">
-                      <a href="#">Description
+                      <a href="#">Length
                       </a>
                     </th>
                     <th class="th-lg">
-                      <a href="#">Actions
+                      <a href="#">Status
+                      </a>
+                    </th>
+                    <th class="th-lg">
+                      <a href="#">Current Position
                       </a>
                     </th>
                   </tr>
@@ -80,27 +84,27 @@
                 <tfoot>
                   <tr>
                     <th class="th-lg">
-                      <a href="#">Name
-                      </a>
-                    </th>
-                    <th class="th-lg">
                       <a href="#">Image
                       </a>
                     </th>
                     <th class="th-lg">
-                      <a href="#">Product ID
+                      <a href="#">From
                       </a>
                     </th>
                     <th class="th-lg">
-                      <a href="#">Price
+                      <a href="#">To
                       </a>
                     </th>
                     <th class="th-lg">
-                      <a href="#">Description
+                      <a href="#">Length
                       </a>
                     </th>
                     <th class="th-lg">
-                      <a href="#">Actions
+                      <a href="#">Status
+                      </a>
+                    </th>
+                    <th class="th-lg">
+                      <a href="#">Current Position
                       </a>
                     </th>
                   </tr>
@@ -109,36 +113,10 @@
               </table>
               <!--Table-->
             </div>
-            <div class="row">
-              <div class="col">
-                <button type="button" class="btn w-100 btn-outline-dark m-2 btn-link-create" data-bs-toggle="tooltip"
-                  data-bs-placement="top" data-bs-title="Create new">
-                  <i class="fa-solid fa-circle-plus"></i> Create New Product
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="P-AttributesModal" tabindex="-1" role="dialog"
-        aria-labelledby="P-AttributesModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="P-AttributesModalLabel">Attributes</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="productAttributeModalBody">
-              <p></p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -148,10 +126,11 @@
   <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
   <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
   <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
+  <script src="./plugins/html5-qrcode.min.js"></script>
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>
-  <script src="./js/pages/products.js"></script>
+  <script src="./js/pages/transporter-bills.js"></script>
 </body>
 
 </html>

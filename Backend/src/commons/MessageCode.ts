@@ -14,6 +14,14 @@ export enum MessageCode {
 
 	BATCH_NOT_FOUND = 'Không tìm thấy thông tin lô hàng',
 	BATCH_FORWARD_INVALID = 'Không thể chuyển tiếp lô hàng này',
+	BATCH_SOLD_OUT = 'Lô hàng đã bán hết',
+	BATCH_NOT_BELONG_TO_YOU = 'Lô hàng này không thuộc quyền truy cập của bạn',
 
-	UNKNOWN_ERROR = 'Lỗi không xác định'
+	BILL_NOT_FOUND = 'Không tìm thấy thông tin đơn vận',
+	BILL_FOR_THIS_BATCH_FOUND = 'Lô hàng này đã được tạo đơn vận',
+
+	SELLER_STORAGE_ALREADY_EXIST = 'Lô hàng này đã tồn tại trong kho của bạn',
+	SELLER_STORAGE_NOT_FOUND = 'Không tìm thấy thông tin lô hàng trong kho',
+
+	UNKNOWN_ERROR = 'Lỗi không xác định',
 }

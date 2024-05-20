@@ -24,6 +24,7 @@ function fillEndpointPlaceholder(endpoint, params) {
 
 const initDataTable = (selector, ajaxOptions, columns, columnDefs, callback) => {
     return $(selector).DataTable({
+        responsive: true,
         "searching": true,
         "paging": true,
         "pagingType": "full_numbers",
@@ -69,4 +70,24 @@ const initDataTable = (selector, ajaxOptions, columns, columnDefs, callback) => 
             callback && callback(settings, json)
         }
     });
+}
+
+const truncate = (input, length = 5) => input.length > length ? `${input.substring(0, length).trim()}...` : input;
+
+function getLocation(callback) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(callback);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function getDateArrayLabel(timestamp, count) {
+    const result = [];
+    for (let i = 0; i < count; i++) {
+        const date = new Date(timestamp);
+        date.setDate(date.getDate() - i);
+        result.push(date.toISOString().split('T')[0]);
+    }
+    return result;
 }
