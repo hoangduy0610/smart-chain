@@ -1,5 +1,12 @@
 $(document).ready(function () {
   const userInfo = JSON.parse(localStorage.getItem('@auth/userInfo'));
+  let waitLoadedData = 3;
+  function signalLoadedData() {
+    waitLoadedData--;
+    if (waitLoadedData === 0) {
+      signalStopPreloader();
+    }
+  }
   const columnDefs = [
     {
       targets: '_all',
@@ -43,7 +50,7 @@ $(document).ready(function () {
       }
     }
   ]
-  const storeAnalytics = initDataTable('#storeAnalytics', { ajaxUrl: API_ENDPOINT.RETAILER.LIST_RETAILER_PRODUCT }, tableProductRenderColumns, columnDefs);
+  const storeAnalytics = initDataTable('#storeAnalytics', { ajaxUrl: API_ENDPOINT.RETAILER.LIST_RETAILER_PRODUCT }, tableProductRenderColumns, columnDefs, () => { signalLoadedData() });
 
   const tableBatchesRenderColumns = [
     "batch.name",
@@ -66,7 +73,7 @@ $(document).ready(function () {
       }
     }
   ]
-  const importHistory = initDataTable('#importHistory', { ajaxUrl: API_ENDPOINT.RETAILER.LIST_RETAILER_IMPORT }, tableBatchesRenderColumns, columnDefs);
+  const importHistory = initDataTable('#importHistory', { ajaxUrl: API_ENDPOINT.RETAILER.LIST_RETAILER_IMPORT }, tableBatchesRenderColumns, columnDefs, () => { signalLoadedData() });
 
   function importProductQRScanHandler(batchId) {
     $.ajax({
@@ -76,8 +83,9 @@ $(document).ready(function () {
         request.setRequestHeader("Authorization", ACCESS_TOKEN);
       },
       success: function (result) {
-        var answer = window.confirm(`Do you want to import this batch: ${result.name}`);
+        var answer = window.confirm(`Vui lòng xác nhận. Bạn có muốn nhập lô hàng: ${result.name}?`);
         if (answer) {
+          const pricing = prompt("Nhập giá bán dự kiến cho sản phẩm. (Đơn vị tính: VND)", "0");
           $.ajax({
             url: API_ENDPOINT.RETAILER.IMPORT_RETAILER,
             method: 'POST',
@@ -87,7 +95,8 @@ $(document).ready(function () {
             data: {
               owner: userInfo.id,
               batchId: batchId,
-              quantity: result.quantity
+              quantity: result.quantity,
+              pricing: pricing
             },
             success: function (response) {
               alert('Nhập hàng thành công');
@@ -105,7 +114,7 @@ $(document).ready(function () {
         }
       },
       error: function (error) {
-        alert('Không tìm thấy batch');
+        alert('Không tìm thấy mùa vụ');
         timeDebounce = 0;
         $(".loader-container").removeClass('active');
       },
@@ -211,11 +220,11 @@ $(document).ready(function () {
         type: 'doughnut',
         data: {
           labels: [
-            'In Storage',
-            'Sold'
+            'Tồn kho',
+            'Đã bán'
           ],
           datasets: [{
-            label: 'Amount',
+            label: 'Sản phẩm',
             data: [result.totalProductQuantity - result.totalSoldProductQuantity, result.totalSoldProductQuantity],
             backgroundColor: [
               'rgb(255, 99, 132)',
@@ -230,17 +239,19 @@ $(document).ready(function () {
       new Chart(batchCtx, {
         type: 'bar',
         data: {
-          labels: ['Total', 'Sold'],
+          labels: ['Tổng số', 'Đã bán', 'Tồn kho'],
           datasets: [{
-            label: 'Batch',
-            data: [result.totalProductQuantity, result.totalSoldProductQuantity],
+            label: 'Sản phẩm',
+            data: [result.totalProductQuantity, result.totalSoldProductQuantity, result.totalProductQuantity - result.totalSoldProductQuantity],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(75, 192, 192, 0.2)',
+              'rgba(201, 203, 207, 0.2)'
             ],
             borderColor: [
               'rgb(255, 99, 132)',
               'rgb(75, 192, 192)',
+              'rgb(201, 203, 207)'
             ],
             borderWidth: 1
           }]
@@ -274,7 +285,7 @@ $(document).ready(function () {
           labels: revenueBarChartLabels,
           datasets: [{
             type: 'line',
-            label: 'Amount',
+            label: 'Số lượng',
             data: countBarChartData,
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
@@ -284,7 +295,7 @@ $(document).ready(function () {
           },
           {
             type: 'bar',
-            label: 'Income (VND)',
+            label: 'Doanh số (VND)',
             data: revenueBarChartData,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -336,6 +347,9 @@ $(document).ready(function () {
     },
     error: function (error) {
       alert('Không có dữ liệu');
+    },
+    complete: function (data) {
+      signalLoadedData();
     }
   })
 });

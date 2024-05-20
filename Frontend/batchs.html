@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Provanence Tracking</title>
+  <title>SmartChain</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -17,84 +17,91 @@
 </head>
 
 <body>
+  <div class="se-pre-con" id="preloaderLayer"></div>
+  <div class="loader-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
   <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-      <h2 class="mb-4">Provanence Tracking</h2>
-      <div class="card shadow">
-        <div class="card-body">
-          <div class="text-center">
-            <div class="table-responsive">
-              <!--Table-->
-              <table id="BatchTable" class="table table-hover table-bordered mb-0">
-                <!--Table head-->
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">QR</th>
-                    <th scope="col">Batch ID</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Quantity</th>
-                  </tr>
-                </thead>
-                <!--Table head-->
-                <!--Table body-->
-                <tbody>
-                  <!-- Table rows will go here -->
-                </tbody>
-                <!--Table body-->
+      <h2 class="mb-4">SmartChain</h2>
+      <div class="card shadow my-5">
+        <h5 class="m-3">Danh sách lô hàng</h5>
+        <div class="table-responsive">
+          <div class="text-start">
+            <!--Table-->
+            <table id="BatchTable" class="table table-hover mb-0 rounded-bottom" style="width:100%">
+              <!--Table head-->
+              <thead>
+                <tr>
+                  <th scope="col">Tên lô hàng</th>
+                  <th scope="col">QR</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Số lượng</th>
+                  <th scope="col">Hành động</th>
+                </tr>
+              </thead>
+              <!--Table head-->
+              <!--Table body-->
+              <tbody>
+                <!-- Table rows will go here -->
+              </tbody>
+              <!--Table body-->
 
-                <!--Table foot-->
-                <tfoot>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">QR</th>
-                    <th scope="col">Batch ID</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Quantity</th>
-                  </tr>
-                </tfoot>
-                <!--Table foot-->
-              </table>
-              <!--Table-->
+              <!--Table foot-->
+              <tfoot>
+                <tr>
+                  <th scope="col">Tên lô hàng</th>
+                  <th scope="col">QR</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Số lượng</th>
+                  <th scope="col">Hành động</th>
+                </tr>
+              </tfoot>
+              <!--Table foot-->
+            </table>
+            <!--Table-->
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL -->
+      <div class="modal fade" id="Batch-change-Modal" tabindex="-1" role="dialog"
+        aria-labelledby="Batch-change-ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Batch-change-ModalLabel">Biến động số lượng</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal fade" id="Batch-change-Modal" tabindex="-1" role="dialog"
-              aria-labelledby="Batch-change-ModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="Batch-change-ModalLabel">Thay đổi số lượng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body " id="Batch-change-ModalBody ">
-                    <!-- content modal -->
-                    <div class="input-group mb-2 mt-3">
-                      <span class="input-group-text fs-5" id="basic-addon1" style="min-width:13rem;">Biến động</span>
-                      <select id="fluctuation" class="form-select">
-                        <option value="INC" selected>Tăng</option>
-                        <option value="DEC">Giảm</option>
-                      </select>
-                    </div>
-
-                    <div class="input-group mb-2 mt-3">
-                      <span class="input-group-text fs-5" id="basic-addon1" style="min-width:13rem;">Số lượng</span>
-                      <input type="number" id="fluc-amount" class="form-control" aria-label="number"
-                        aria-describedby="basic-addon1">
-                    </div>
-
-                    <div class="input-group mb-2 mt-3">
-                      <span class="input-group-text fs-5" id="basic-addon1" style="min-width:13rem;">Lý do</span>
-                      <input type="text" id="fluc-reason" class="form-control" aria-label="number"
-                        aria-describedby="basic-addon1">
-                    </div>
-                    <!-- content modal -->
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="button" id="submit-fluctuation">Submit</button>
-                  </div>
-                </div>
+            <div class="modal-body " id="Batch-change-ModalBody ">
+              <div class="input-group mb-2 mt-3">
+                <span class="input-group-text fs-5" id="basic-addon1" style="min-width:13rem;">Biến động</span>
+                <select id="fluctuation" class="form-select">
+                  <option value="INC" selected>Tăng</option>
+                  <option value="DEC">Giảm</option>
+                </select>
               </div>
+
+              <div class="input-group mb-2 mt-3">
+                <span class="input-group-text fs-5" id="basic-addon1" style="min-width:13rem;">Số lượng</span>
+                <input type="number" id="fluc-amount" class="form-control" aria-label="number"
+                  aria-describedby="basic-addon1">
+              </div>
+
+              <div class="input-group mb-2 mt-3">
+                <span class="input-group-text fs-5" id="basic-addon1" style="min-width:13rem;">Lý do</span>
+                <input type="text" id="fluc-reason" class="form-control" aria-label="number"
+                  aria-describedby="basic-addon1">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+              <button class="btn btn-primary" type="button" id="submit-fluctuation">Lưu</button>
             </div>
           </div>
         </div>
@@ -112,6 +119,7 @@
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/sidebar.js"></script>
   <script src="./js/pages/batchs.js"></script>
 </body>
 

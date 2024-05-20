@@ -78,7 +78,7 @@ function getLocation(callback) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(callback);
     } else {
-        alert("Geolocation is not supported by this browser.");
+        alert("Geolocation không được hỗ trợ bởi trình duyệt.");
     }
 }
 
@@ -90,4 +90,8 @@ function getDateArrayLabel(timestamp, count) {
         result.push(date.toISOString().split('T')[0]);
     }
     return result;
+}
+
+function signalStopPreloader() {
+    $("#preloaderLayer").fadeOut("slow")
 }

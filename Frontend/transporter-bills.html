@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Provanence Tracking</title>
+  <title>SmartChain</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -17,6 +17,7 @@
 </head>
 
 <body>
+  <div class="se-pre-con" id="preloaderLayer"></div>
   <div class="loader-container">
     <div class="spinner-border text-primary" role="status">
       <span class="sr-only">Loading...</span>
@@ -25,10 +26,10 @@
   <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-      <h2 class="mb-4">Provanence Tracking</h2>
+      <h2 class="mb-4">SmartChain</h2>
       <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#qrscanCollapse"
         aria-expanded="false" aria-controls="qrscanCollapse">
-        Tạo đơn vận
+        <p class="m-0 d-flex align-items-center"><i class="fa-solid fa-circle-plus"></i> &nbsp;Tạo đơn vận</p>
       </button>
       <div class="collapse" id="qrscanCollapse">
         <div style="max-width:500px;" class="card card-body shadow p-3 mt-2">
@@ -36,83 +37,46 @@
         </div>
       </div>
 
-      <div class="text-center mt-2">
+      <div class="card shadow my-5">
+        <h5 class="m-3">Danh sách lô hàng</h5>
+        <div class="table-responsive">
+          <div class="text-start">
+            <!--Table-->
+            <table id="billsTable" class="table table-hover mb-0 rounded-bottom" style="width:100%">
+              <!--Table head-->
+              <thead>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                  <th scope="col">Length</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Current Position</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <!--Table head-->
+              <!--Table body-->
+              <tbody>
+                <!-- Table rows will go here -->
+              </tbody>
+              <!--Table body-->
 
-        <div class="card shadow">
-          <div class="card-body">
-            <div class="table-responsive">
-              <!--Table-->
-              <table id="billsTable" class="table table-hover table-bordered mb-0">
-
-                <!--Table head-->
-                <thead>
-                  <tr>
-                    <th class="th-lg">
-                      <a href="#">Image
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">From
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">To
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Length
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Status
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Current Position
-                      </a>
-                    </th>
-                  </tr>
-                </thead>
-                <!--Table head-->
-
-                <!--Table body-->
-                <tbody>
-                </tbody>
-                <!--Table body-->
-
-                <!--Table foot-->
-                <tfoot>
-                  <tr>
-                    <th class="th-lg">
-                      <a href="#">Image
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">From
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">To
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Length
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Status
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Current Position
-                      </a>
-                    </th>
-                  </tr>
-                </tfoot>
-                <!--Table foot-->
-              </table>
-              <!--Table-->
-            </div>
+              <!--Table foot-->
+              <tfoot>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                  <th scope="col">Length</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Current Position</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </tfoot>
+              <!--Table foot-->
+            </table>
+            <!--Table-->
           </div>
         </div>
       </div>
@@ -130,6 +94,7 @@
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/sidebar.js"></script>
   <script src="./js/pages/transporter-bills.js"></script>
 </body>
 

@@ -6,17 +6,25 @@ $(document).ready(function () {
     {
       data: 'id',
       render: function (data, type, row, meta) {
-        return `<button class="btn btn-danger btn-xoa-user" data-id="${data}">Xóa</button>`;
-      }
-    },
-    {
-      data: 'id',
-      render: function (data, type, row, meta) {
-        return `<button class="btn btn-success btn-sua-user" data-id="${data}">Sửa</button>`;
+        return `
+          <div class="d-flex p-2 justify-content-center">
+            <button
+              type="button"
+              data-id="${data}"
+              class="btn btn-danger btn-xoa-user m-1"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Xóa"
+            ><i class="fa-solid fa-trash"></i></button>
+            <button
+              data-id="${data}"
+              type="button" class="btn btn-primary btn-sua-user m-1"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sửa"
+            ><i class="fa-solid fa-pen-to-square"></i></button>
+          </div>
+        `;
       }
     },
   ]
-  const userTable = initDataTable('#usersTable', { ajaxUrl: API_ENDPOINT.USER.LIST_USER }, tableRenderColumns);
+  const userTable = initDataTable('#usersTable', { ajaxUrl: API_ENDPOINT.USER.LIST_USER }, tableRenderColumns, [], () => { signalStopPreloader(); });
 
   $('#usersTable tbody').on('click', '.btn-xoa-user', function () {
     var id = $(this).data('id');

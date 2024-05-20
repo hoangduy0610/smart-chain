@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Provanence Tracking</title>
+  <title>SmartChain</title>
   <meta charset="utf-8">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,101 +19,63 @@
 </head>
 
 <body>
+  <div class="se-pre-con" id="preloaderLayer"></div>
+  <div class="loader-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
   <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-      <h2 class="mb-4">Provanence Tracking</h2>
-      <div class="card shadow">
-        <div class="card-body">
-          <div class="row">
-            <p class="h5 d-flex align-items-center">Danh sách sản phẩm
-              <!-- <button type="button"
-                style="width: 2rem; height: 2rem; padding: 0; display: flex; justify-content: center; align-items: center;"
-                class="btn btn-info rounded-circle m-2 btn-link-create" data-bs-toggle="tooltip" data-bs-placement="top"
-                data-bs-title="Create new">
-                <i style="color: white;" class="fa-solid fa-circle-plus"></i>
-              </button> -->
-            </p>
+      <h2 class="mb-4">SmartChain</h2>
+      <div class="card shadow my-5">
+        <h5 class="m-3">Danh sách sản phẩm</h5>
+        <div class="table-responsive">
+          <div class="text-start">
+            <!--Table-->
+            <table id="productTable" class="table table-hover mb-0 rounded-bottom" style="width:100%">
+              <!--Table head-->
+              <thead>
+                <tr>
+                  <th scope="col">Tên SP</th>
+                  <th scope="col">Ảnh</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Giá tham khảo</th>
+                  <th scope="col">Mô tả</th>
+                  <th scope="col">Hành động</th>
+                </tr>
+              </thead>
+              <!--Table head-->
+
+              <!--Table body-->
+              <tbody>
+              </tbody>
+              <!--Table body-->
+
+              <!--Table foot-->
+              <tfoot>
+                <tr>
+                  <th scope="col">Tên SP</th>
+                  <th scope="col">Ảnh</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Giá tham khảo</th>
+                  <th scope="col">Mô tả</th>
+                  <th scope="col">Hành động</th>
+                </tr>
+              </tfoot>
+              <!--Table foot-->
+            </table>
+            <!--Table-->
           </div>
+        </div>
+        <div class="card-body">
           <div class="text-center">
-            <div class="table-responsive">
-              <!--Table-->
-              <table id="productTable" class="table table-hover table-bordered mb-0">
-
-                <!--Table head-->
-                <thead>
-                  <tr>
-                    <th class="th-lg">
-                      <a href="#">Name
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Image
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Product ID
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Price
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Description
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Actions
-                      </a>
-                    </th>
-                  </tr>
-                </thead>
-                <!--Table head-->
-
-                <!--Table body-->
-                <tbody>
-                </tbody>
-                <!--Table body-->
-
-                <!--Table foot-->
-                <tfoot>
-                  <tr>
-                    <th class="th-lg">
-                      <a href="#">Name
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Image
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Product ID
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Price
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Description
-                      </a>
-                    </th>
-                    <th class="th-lg">
-                      <a href="#">Actions
-                      </a>
-                    </th>
-                  </tr>
-                </tfoot>
-                <!--Table foot-->
-              </table>
-              <!--Table-->
-            </div>
             <div class="row">
               <div class="col">
                 <button type="button" class="btn w-100 btn-outline-dark m-2 btn-link-create" data-bs-toggle="tooltip"
                   data-bs-placement="top" data-bs-title="Create new">
-                  <i class="fa-solid fa-circle-plus"></i> Create New Product
+                  <i class="fa-solid fa-circle-plus"></i> Tạo Sản phẩm
                 </button>
               </div>
             </div>
@@ -125,14 +87,14 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="P-AttributesModalLabel">Attributes</h5>
+              <h5 class="modal-title" id="P-AttributesModalLabel">Thuộc tính</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="productAttributeModalBody">
               <p></p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đóng</button>
             </div>
           </div>
         </div>
@@ -151,6 +113,7 @@
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/sidebar.js"></script>
   <script src="./js/pages/products.js"></script>
 </body>
 
