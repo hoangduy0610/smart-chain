@@ -17,10 +17,10 @@ $(document).ready(function () {
       render: function (data, type, row, meta) {
         return `
           <div class="d-flex p-2 justify-content-center">
-            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Attributes" class="btn btn-primary btn-show-attributes m-1"><i class="fa-solid fa-circle-info"></i></button>
-            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete" class="btn btn-danger btn-delete-product m-1"><i class="fa-solid fa-trash"></i></button>
-            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Update" class="btn btn-indigo btn-update-product m-1"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Create Batch" class="btn btn-success btn-create-batch m-1"><i class="fa-solid fa-box"></i></button>
+            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Xem thuộc tính" class="btn btn-primary btn-show-attributes m-1"><i class="fa-solid fa-circle-info"></i></button>
+            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Xóa" class="btn btn-danger btn-delete-product m-1"><i class="fa-solid fa-trash"></i></button>
+            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sửa" class="btn btn-indigo btn-update-product m-1"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tạo mùa vụ mới" class="btn btn-success btn-create-batch m-1"><i class="fa-solid fa-box"></i></button>
           </div>
         `;
       }
@@ -30,6 +30,10 @@ $(document).ready(function () {
     '#productTable',
     { ajaxUrl: API_ENDPOINT.PRODUCT.LIST_PRODUCT },
     tableRenderColumns,
+    [],
+    () => {
+      signalStopPreloader();
+    }
   );
 
   $('#productTable tbody').on('click', '.btn-show-attributes', function () {

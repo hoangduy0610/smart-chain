@@ -52,26 +52,26 @@ $(document).ready(function () {
             <button
               type="button"
               class="btn btn-danger btn-delete-batch m-1"
-              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Xóa"
             ><i class="fa-solid fa-trash"></i></button>
             <button
               type="button" class="btn btn-primary btn-update-batch m-1"
-              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Update"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cập nhật"
             ><i class="fa-solid fa-pen-to-square"></i></button>
             <button
               type="button" class="btn btn-success btn-change-batch m-1"
-              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Biến động"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Biến động số lượng"
             ><i class="fa-solid fa-bolt"></i></button>
             <button
               type="button" class="btn btn-${dsb ? 'secondary' : 'indigo'} btn-forward-batch m-1" ${dsb}
-              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Chuyển tiếp"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Giao cho nhà vận chuyển"
             ><i class="fa-solid fa-forward-fast"></i></button>
           </div>
         `;
       }
     },
   ]
-  const BatchTable = initDataTable('#BatchTable', { ajaxUrl: API_ENDPOINT.BATCH.LIST_BATCH }, tableRenderColumns);
+  const BatchTable = initDataTable('#BatchTable', { ajaxUrl: API_ENDPOINT.BATCH.LIST_BATCH }, tableRenderColumns, [], () => { signalStopPreloader(); });
   // delete batch
   $('#BatchTable tbody').on('click', '.btn-delete-batch', function () {
     const row = $(this).parents('tr')[0];
@@ -86,11 +86,11 @@ $(document).ready(function () {
         request.setRequestHeader("Authorization", ACCESS_TOKEN);
       },
       success: function (result) {
-        alert('Xóa batch thành công');
+        alert('Xóa mùa vụ thành công');
         BatchTable.ajax.reload();
       },
       error: function (error) {
-        alert('Xóa batch thất bại');
+        alert('Xóa mùa vụ thất bại');
       }
     });
   });
@@ -165,13 +165,13 @@ $(document).ready(function () {
             action: actionText,
           },
           success: function () {
-            alert("Fluctuation thành công")
+            alert("Tạo biến động thành công")
 
             $('#Batch-change-Modal').modal('hide');
             BatchTable.ajax.reload();
           },
           error: function () {
-            alert("Fluctuation that bai")
+            alert("Tạo biến động thất bại")
 
             $('#Batch-change-Modal').modal('hide');
             BatchTable.ajax.reload();
@@ -179,7 +179,7 @@ $(document).ready(function () {
         });
       },
       error: function () {
-        alert("Fluctuation that bai")
+        alert("Tạo biến động thất bại")
         $('#Batch-change-Modal').modal('hide');
         BatchTable.ajax.reload();
       }
