@@ -44,7 +44,7 @@ $(document).ready(function () {
       $('#sidebar ul.components .submenu').removeClass('active');
     }
   });
-  
+
   // Toggle submenu visibility on click
   $('#sidebar ul li a').click(function () {
     $(this).next('ul.submenu').slideToggle();
@@ -53,5 +53,13 @@ $(document).ready(function () {
   // Collapse all submenus when the sidebar is collapsed
   $('#sidebarCollapse').click(function () {
     $('#sidebar ul.submenu').slideUp();
+  });
+
+  // Logout
+  $('body').on('click', '#logoutItem', function () {
+    localStorage.clear();
+
+    // Redirect to login page
+    window.location.href = 'login.html';
   });
 });

@@ -5,13 +5,13 @@ const showHiddenPass = (loginPass, loginEye) => {
     iconEye.addEventListener('click', () => {
         if (input.type === 'password') {
             input.type = 'text'
-            iconEye.classList.add('ri-eye-line')
-            iconEye.classList.remove('ri-eye-off-line')
+            iconEye.classList.add('fa-eye')
+            iconEye.classList.remove('fa-eye-slash')
         } else {
             input.type = 'password'
 
-            iconEye.classList.remove('ri-eye-line')
-            iconEye.classList.add('ri-eye-off-line')
+            iconEye.classList.remove('fa-eye')
+            iconEye.classList.add('fa-eye-slash')
         }
     })
 }
@@ -19,9 +19,8 @@ const showHiddenPass = (loginPass, loginEye) => {
 showHiddenPass('password-login', 'login-eye')
 
 $(document).ready(function () {
-    $('#login').submit(function (event) {
-        event.preventDefault();
-
+    $('#login-btn').click(function (event) {
+        $(".loader-container").addClass('active');
         var username = $('#login_email').val();
         var password = $('#password-login').val();
 
@@ -42,6 +41,9 @@ $(document).ready(function () {
             },
             error: function () {
                 alert('Login failed!');
+            },
+            complete: function () {
+                $(".loader-container").removeClass('active');
             }
         });
     });
