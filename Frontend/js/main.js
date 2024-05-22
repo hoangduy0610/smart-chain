@@ -5,9 +5,7 @@ $('.se-pre-con').css({ 'background': "url('./assets/" + preloaderImage[Math.floo
 const ACCESS_TOKEN = getToken();
 
 $(document).ready(function () {
-	if (!ACCESS_TOKEN) {
-		window.location.href = 'login.html';
-	}
+	checkPermission();
 });
 
 $.fn.dataTable.ext.errMode = 'none';

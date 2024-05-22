@@ -17,7 +17,6 @@ export class UserService {
 
     async listUser(user: UserInterfaces): Promise<UserModal[]> {
         const temp = await this.userRepository.listUser();
-        console.log(temp);
         return UserModal.fromUsers(temp);
     }
 

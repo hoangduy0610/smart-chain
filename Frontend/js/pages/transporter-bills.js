@@ -123,7 +123,7 @@ $(document).ready(function () {
         var answer = window.confirm(`Vui lòng xác nhận. Bạn có muốn tạo đơn vận cho lô hàng: ${batchId}?`);
         if (answer) {
             //some code
-            window.location.href = `form-transporter-bills.html?id=${batchId}`;
+            window.location.href = `form-transporter-bill.html?id=${batchId}`;
         }
         $("#html5-qrcode-button-camera-stop").click();
     }

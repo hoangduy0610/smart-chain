@@ -27,6 +27,76 @@
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
       <h2 class="mb-4">SmartChain</h2>
+
+      <div class="row row-cols-1 row-cols-md-4 g-4 my-5">
+        <div class="col">
+          <div class="card shadow analytics-gradient-1 mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Tổng số người dùng</h5>
+              <h1 id="totalUser">N/A</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow analytics-gradient-2 mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Tổng số sản phẩm</h5>
+              <h1 id="totalProduct">N/A</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow analytics-gradient-3">
+            <div class="card-body">
+              <h5 class="card-title">Số lượt quét mã</h5>
+              <h1 id="totalScanCount">N/A</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow analytics-gradient-4">
+            <div class="card-body">
+              <h5 class="card-title">Số người quét mã</h5>
+              <h1 id="totalScanUser">N/A</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 g-4 my-5">
+        <div class="col-md-3">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Đơn vận</h5>
+              <div style="max-height: 20.75rem;">
+                <canvas id="transporterChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Thống kê kho</h5>
+              <div style="max-height: 20.75rem;">
+                <canvas id="retailerChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Bán lẻ</h5>
+              <div style="width: 100%; overflow-x: auto; overflow-y: hidden; margin-left:3%">
+                <div style="width:41.5rem; height:20.75rem;">
+                  <canvas id="incomeChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -37,6 +107,7 @@
   <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
   <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
   <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>

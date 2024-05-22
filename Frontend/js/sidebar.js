@@ -11,6 +11,26 @@ $(document).ready(function () {
       $('#sidebar').toggleClass('active');
       $("#sidebarCollapse").html(`<span class="fa fa-fw fa-bars"></span> Mở rộng Menu`);
     }
+
+    // Remove element due to roles
+    const userInfo = JSON.parse(localStorage.getItem('@auth/userInfo'));
+    const roles = userInfo.roles;
+    if (!roles.includes('ROLE_ADMIN')) {
+      $('a[href="users.html"]').parent().remove();
+
+      if (!roles.includes('ROLE_SELLER')) {
+        $('a[href="retailer.html"]').parent().remove();
+      }
+
+      if (!roles.includes('ROLE_TRANSPORTER')) {
+        $('a[href="transporter-bills.html"]').parent().remove();
+      }
+
+      if (!roles.includes('ROLE_FARMER')) {
+        $('a[href="batchs.html"]').parent().remove();
+        $('a[href="products.html"]').parent().remove();
+      }
+    }
   });
 
   // Toggle submenu when clicking on parent item

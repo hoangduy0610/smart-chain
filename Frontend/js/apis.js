@@ -1,5 +1,5 @@
-// const API_HOST = 'http://10.10.12.55:8798';
-const API_HOST = 'https://hongdi.ddns.net'
+const API_HOST = 'http://10.10.12.55:8798';
+// const API_HOST = 'https://hongdi.ddns.net'
 
 const QR_TARGET_WEB = 'https://smartchain.ddns.net/ScanPage/scan.html?id=';
 const QR_HOST = `https://api.qrserver.com/v1/create-qr-code/?data=${QR_TARGET_WEB}`;
@@ -24,6 +24,7 @@ const API_ENDPOINT = {
         UPDATE_PRODUCT: `${API_HOST}/product/{{id}}`,
         DELETE_PRODUCT: `${API_HOST}/product/{{id}}`,
     },
+
     BATCH: {
         CREATE_BATCH: `${API_HOST}/batch-product`,
         LIST_BATCH: `${API_HOST}/batch-product/list`,
@@ -33,6 +34,7 @@ const API_ENDPOINT = {
         DELETE_BATCH: `${API_HOST}/batch-product/{{id}}`,
         FORWARD_BATCH: `${API_HOST}/batch-product/scan-forward/{{id}}`,
     },
+
     HISTORY: {
         CREATE_HISTORY: `${API_HOST}/history`,
         LIST_HISTORY: `${API_HOST}/history/list`,
@@ -56,6 +58,10 @@ const API_ENDPOINT = {
         SELL_PRODUCT: `${API_HOST}/seller/storage/sell/{{id}}`,
         ANALYTICS: `${API_HOST}/seller/storage/analytics`,
         REVENUE_DETAI: `${API_HOST}/seller/storage/revenue`,
+    },
+
+    ANALYTICS: {
+        OVERVIEW: `${API_HOST}/analytics/overview`,
     },
 
     GEOCODING: {

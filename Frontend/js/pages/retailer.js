@@ -67,6 +67,12 @@ $(document).ready(function () {
       }
     },
     {
+      data: "pricing",
+      render: function (data) {
+        return `<span class="badge bg-warning p-2" style="font-size:10pt;">${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data)}<span>`;
+      }
+    },
+    {
       data: 'createdAt',
       render: function (data) {
         return new Date(data).toLocaleString()

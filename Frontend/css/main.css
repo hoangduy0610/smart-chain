@@ -71,3 +71,8 @@ table.table-hover.rounded-bottom {
     background: linear-gradient(90deg, #ff5264 0%, #b91323 100%);
     color: #fff;
 }
+
+.analytics-gradient-4 {
+    background: linear-gradient(90deg, #ff9f00 0%, #ff4e00 100%);
+    color: #fff;
+}

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { EBatchCase } from 'src/commons/EnumBatchCase';
 import { CreateTransporterBillDto, EditTransporterBillDto } from 'src/dtos/TransporterBillDtos';
 import { TransporterBillInterfaces } from 'src/interfaces/TransporterBillInterfaces';
 
@@ -36,5 +37,22 @@ export class TransporterBillRepository {
 
     async findByTransporterId(transporterId: string): Promise<TransporterBillInterfaces[]> {
         return await this.transporterBillModel.find({ owner: transporterId }).exec();
+    }
+
+    async getAnalysis(): Promise<any> {
+        return await this.transporterBillModel.aggregate([
+            {
+                $facet: {
+                    inProgress: [
+                        { $match: { status: EBatchCase.StartTransport } },
+                        { $count: "count" }
+                    ],
+                    finished: [
+                        { $match: { status: EBatchCase.FinishTransport } },
+                        { $count: "count" }
+                    ]
+                }
+            }
+        ]);
     }
 }

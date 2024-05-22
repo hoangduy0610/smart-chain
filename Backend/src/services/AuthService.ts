@@ -1,7 +1,7 @@
 import { JwtService } from '@nestjs/jwt';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { UserService } from './UserService';
-import { AuthDto } from 'src/dtos/AuthDto';
+import { AuthDto, SetNewPasswordDto, ValidateOtpDto } from 'src/dtos/AuthDto';
 import { ApplicationException } from 'src/controllers/ExceptionController';
 import { AccountService } from './AccountService';
 import { UserModal } from 'src/modals/UserModals';
@@ -15,12 +15,12 @@ const bcrypt = require('bcrypt');
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
+    host: "smtp.gmail.com",
     port: 587,
     secure: false, // Use `true` for port 465, `false` for all other ports
     auth: {
-        user: "maddison53@ethereal.email",
-        pass: "jn7jnAPss4f63QBp6D",
+        user: "hoangduy06104@gmail.com",
+        pass: "ffgjiykuyumfvyqg",
     },
 });
 
@@ -81,24 +81,89 @@ export class AuthService {
                 throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.USER_NOT_REGISTER);
             }
             // generate new password
-            const newPassword = StringUtils.randomGeneratePassword(10);
-            // update new password
-            const hashPass = bcrypt.hashSync(newPassword, Constant.BCRYPT_ROUND);
-            await this.userRepository.resetPassword(user._id, hashPass);
+            const gen_OTP = StringUtils.randomGeneratePassword(6);
+            user.otp = gen_OTP;
+            user.otpValid = new Date(new Date().getTime() + 15 * 60000);
+            await user.save();
             // Send email to user
             await transporter.sendMail({
-                from: '"PTrack" <hoangduy06104@gmail.com>', // sender address
+                from: '"SmartChain" <hoangduy06104@gmail.com>', // sender address
                 to: user.email, // list of receivers
-                subject: "Reset Password", // Subject line
-                text: `Your new password is: ${newPassword}`, // plain text body
-                html: `Your new password is: ${newPassword}`, // html body
+                subject: "Mã OTP để đặt lại mật khẩu cho SmartChain", // Subject line
+                text: `Mã OTP có hiệu lực trong 15 phút. Mã của bạn là: ${gen_OTP}`, // plain text body
+                html: `Mã OTP có hiệu lực trong 15 phút. Mã của bạn là: ${gen_OTP}`, // html body
             });
             return { message: 'Reset success' }
         } catch (e) {
+            if (e instanceof ApplicationException) {
+                throw e;
+            }
             throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.UNKNOWN_ERROR)
         }
     }
 
+    async validateOtp(dto: ValidateOtpDto): Promise<any> {
+        try {
+            const user = await this.userRepository.findOneByUsername(dto.username);
+
+            if (!user) {
+                throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.USER_NOT_REGISTER);
+            }
+
+            if (user.otp !== dto.otp) {
+                throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.USER_OTP_ERROR);
+            }
+
+            if (user.otpValid < new Date()) {
+                throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.USER_OTP_EXPIRED);
+            }
+
+            const token = await StringUtils.randomGeneratePassword(20);
+            user.resetPasswordToken = token;
+            user.otp = '';
+            await user.save();
+
+            return {
+                message: 'OTP is valid',
+                token: token
+            }
+        } catch (e) {
+            Logger.log(e);
+            if (e instanceof ApplicationException) {
+                throw e;
+            }
+            throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.UNKNOWN_ERROR)
+        }
+    }
+
+    async setNewPassword(dto: SetNewPasswordDto): Promise<any> {
+        try {
+            const user = await this.userRepository.findOneByUsername(dto.username);
+
+            if (!user) {
+                throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.USER_NOT_REGISTER);
+            }
+
+            if (user.resetPasswordToken !== dto.token) {
+                throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.USER_INVALID_TOKEN);
+            }
+
+            const auth = await this.userRepository.findAuthInfo(dto.username);
+            const hash = await bcrypt.hashSync(dto.password, Constant.BCRYPT_ROUND);
+            auth.password = hash;
+            user.resetPasswordToken = '';
+            await auth.save();
+            await user.save();
+
+            return { message: 'Password has been reset' }
+        } catch (e) {
+            Logger.log(e);
+            if (e instanceof ApplicationException) {
+                throw e;
+            }
+            throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.UNKNOWN_ERROR)
+        }
+    }
 
     async validateUser(payload: any): Promise<UserModal> {
         return await this.userService.findOneByUsername(payload.username);

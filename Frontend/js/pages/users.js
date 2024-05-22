@@ -3,6 +3,7 @@ $(document).ready(function () {
     "name",
     "username",
     "phoneNumber",
+    "email",
     {
       data: 'id',
       render: function (data, type, row, meta) {

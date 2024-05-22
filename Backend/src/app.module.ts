@@ -8,6 +8,7 @@ import { HistoryModule } from './modules/HistoryModule';
 import { BatchProductModule } from './modules/BatchProductModule';
 import { TransporterBillModule } from './modules/TransporterBillModule';
 import { SellerStorageModule } from './modules/SellerStorageModule';
+import { AnalysisModule } from './modules/AnalysisModule';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SellerStorageModule } from './modules/SellerStorageModule';
     BatchProductModule,
     TransporterBillModule,
     SellerStorageModule,
+    AnalysisModule,
   ]
 })
 export class AppModule { }

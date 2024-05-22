@@ -95,3 +95,28 @@ function getDateArrayLabel(timestamp, count) {
 function signalStopPreloader() {
     $("#preloaderLayer").fadeOut("slow")
 }
+
+function checkPermission() {
+    if (!localStorage.getItem('token')) {
+        window.location.href = '/login.html';
+    }
+
+    const permissionMap = {
+        'batchs': ['ROLE_ADMIN', 'ROLE_FARMER'],
+        'products': ['ROLE_ADMIN', 'ROLE_FARMER'],
+        'users': ['ROLE_ADMIN'],
+        'retailer': ['ROLE_ADMIN', 'ROLE_SELLER'],
+        'transporter-bills': ['ROLE_ADMIN', 'ROLE_TRANSPORTER'],
+        'form-batch': ['ROLE_ADMIN', 'ROLE_FARMER'],
+        'form-product': ['ROLE_ADMIN', 'ROLE_FARMER'],
+        'form-user': ['ROLE_ADMIN'],
+        'form-transporter-bill': ['ROLE_ADMIN', 'ROLE_TRANSPORTER'],
+    }
+
+    const pathname = window.location.pathname;
+    const roles = JSON.parse(localStorage.getItem('@auth/userInfo')).roles;
+    const currentPage = Object.keys(permissionMap).find((key) => pathname.includes(key));
+    if (!permissionMap[currentPage].some((role) => roles.includes(role))) {
+        window.location.href = '/403.html';
+    }
+}
