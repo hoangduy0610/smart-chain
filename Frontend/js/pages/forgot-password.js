@@ -1,3 +1,6 @@
+const preloaderImage = ['Preloader_1.gif', 'Preloader_2.gif', 'Preloader_3.gif', 'Preloader_4.gif', 'Preloader_5.gif', 'Preloader_6.gif', 'Preloader_7.gif'];
+$('.se-pre-con').css({ 'background': "url('./assets/" + preloaderImage[Math.floor(Math.random() * preloaderImage.length)] + "') center no-repeat #ffffff" });
+
 $(document).ready(function () {
     const params = new window.URLSearchParams(window.location.search);
     const step = params.get('s');
@@ -10,6 +13,7 @@ $(document).ready(function () {
             const username = atob(params.get('q'));
             $("#step1").remove();
             $("#step3").remove();
+            signalStopPreloader();
 
             $('#validate-otp-btn').click(function () {
                 $(".loader-container").addClass('active');
@@ -41,6 +45,7 @@ $(document).ready(function () {
             const username = atob(params.get('q'));
             $("#step1").remove();
             $("#step2").remove();
+            signalStopPreloader();
 
             $('#set-new-pass-btn').click(function () {
                 $(".loader-container").addClass('active');
@@ -69,6 +74,7 @@ $(document).ready(function () {
         default: {
             $("#step2").remove();
             $("#step3").remove();
+            signalStopPreloader();
             $('#send-otp-btn').click(function () {
                 $(".loader-container").addClass('active');
                 var username = $('#username').val();
