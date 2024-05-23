@@ -20,7 +20,7 @@ export class EmailSendingProcessor {
 
         await this.mailService.sendMail({
             ...mailerInfo,
-            template: 'emails\\auth\\forgot-password',
+            template: 'emails/auth/forgot-password',
             context: {
                 ...extraData
             },
