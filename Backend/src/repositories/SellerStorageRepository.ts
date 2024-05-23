@@ -2,12 +2,16 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateSellerStorageDto, EditSellerStorageDto } from 'src/dtos/SellerStorageDtos';
+import { HistoryInterfaces } from 'src/interfaces/HistoryInterfaces';
+import { SellAnalyticsInterfaces } from 'src/interfaces/SellAnalyticsInterfaces';
 import { SellerStorageInterfaces } from 'src/interfaces/SellerStorageInterfaces';
 
 @Injectable()
 export class SellerStorageRepository {
     constructor(
         @InjectModel('SellerStorage') private readonly sellerStorageModel: Model<SellerStorageInterfaces>,
+        @InjectModel('History') private readonly historyModel: Model<HistoryInterfaces>,
+        @InjectModel('SellAnalytics') private readonly SellAnalyticsModel: Model<SellAnalyticsInterfaces>,
     ) { }
 
     async create(sellerStorage: CreateSellerStorageDto): Promise<SellerStorageInterfaces> {
@@ -191,5 +195,114 @@ export class SellerStorageRepository {
                 }
             }
         ]);
+    }
+
+    async findByOwnerAndGroupByProduct(sellerId: string): Promise<any> {
+        return await this.sellerStorageModel.aggregate([
+            {
+                $match: {
+                    owner: sellerId.toString()
+                }
+            },
+            {
+                $lookup: {
+                    from: 'batchproducts',
+                    localField: 'batchId',
+                    foreignField: 'batchId',
+                    as: 'batch'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'products',
+                    localField: 'batch.productId',
+                    foreignField: 'productId',
+                    as: 'product'
+                }
+            },
+            {
+                $unwind: '$batch'
+            },
+            {
+                $unwind: '$product'
+            },
+            {
+                $group: {
+                    _id: '$batch.productId',
+                    total: { $sum: '$quantity' },
+                    sold: { $sum: '$sold' },
+                    product: { $first: '$product' },
+                    batches: { $push: '$batch' },
+                }
+            }
+        ])
+    }
+
+    async createSellLog(batchId, pricing): Promise<SellAnalyticsInterfaces> {
+        return await this.SellAnalyticsModel.create({
+            batchId: batchId,
+            pricing: pricing,
+        });
+    }
+
+    async queryRetailerReportLastWeek(sellerId: string): Promise<any> {
+        return await this.sellerStorageModel.aggregate([
+            {
+                $match: {
+                    owner: sellerId.toString(),
+                }
+            },
+            {
+                $lookup: {
+                    from: 'sellanalytics',
+                    localField: 'batchId',
+                    foreignField: 'batchId',
+                    as: 'analytics'
+                }
+            },
+            {
+                $unwind: '$analytics'
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalRevenue: { $sum: { $toDouble: "$analytics.pricing" } },
+                    revenueEachDayLastWeek: {
+                        $push: {
+                            $cond: [
+                                { $lte: [{ $subtract: [new Date(), "$analytics.createdAt"] }, 604800000] },
+                                {
+                                    count: 1,
+                                    price: { $toDouble: "$analytics.pricing" },
+                                    date: "$analytics.createdAt"
+                                },
+                                '$$REMOVE'
+                            ]
+                        }
+                    }
+                }
+            },
+            // Group by date
+            {
+                $unwind: "$revenueEachDayLastWeek"
+            },
+            {
+                $group: {
+                    _id: {
+                        $dateToString: {
+                            format: "%Y-%m-%d",
+                            date: "$revenueEachDayLastWeek.date"
+                        }
+                    },
+                    revenue: { $sum: "$revenueEachDayLastWeek.price" },
+                    soldCount: { $sum: "$revenueEachDayLastWeek.count" }
+                }
+            },
+            {
+                $sort: {
+                    _id: 1
+                }
+            },
+        ])
     }
 }

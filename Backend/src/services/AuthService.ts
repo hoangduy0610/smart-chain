@@ -8,25 +8,15 @@ import { UserModal } from 'src/modals/UserModals';
 import { UserRepository } from 'src/repositories/UserRepository';
 import { MessageCode } from 'src/commons/MessageCode';
 import { StringUtils } from 'src/utils/StringUtils';
-import { Constant } from 'src/commons/Constant';
+import { Constant, EEnvName } from 'src/commons/Constant';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 const bcrypt = require('bcrypt');
-
-const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // Use `true` for port 465, `false` for all other ports
-    auth: {
-        user: "hoangduy06104@gmail.com",
-        pass: "ffgjiykuyumfvyqg",
-    },
-});
-
 @Injectable()
 export class AuthService {
     constructor(
+        @InjectQueue('emailSending') private readonly emailQueue: Queue,
         private readonly userService: UserService,
         private readonly jwtService: JwtService,
         private readonly accountService: AccountService,
@@ -80,19 +70,26 @@ export class AuthService {
             if (!user) {
                 throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.USER_NOT_REGISTER);
             }
-            // generate new password
+
             const gen_OTP = StringUtils.randomGeneratePassword(6);
             user.otp = gen_OTP;
             user.otpValid = new Date(new Date().getTime() + 15 * 60000);
             await user.save();
-            // Send email to user
-            await transporter.sendMail({
-                from: '"SmartChain" <hoangduy06104@gmail.com>', // sender address
-                to: user.email, // list of receivers
-                subject: "Mã OTP để đặt lại mật khẩu cho SmartChain", // Subject line
-                text: `Mã OTP có hiệu lực trong 15 phút. Mã của bạn là: ${gen_OTP}`, // plain text body
-                html: `Mã OTP có hiệu lực trong 15 phút. Mã của bạn là: ${gen_OTP}`, // html body
-            });
+
+            const mailData = {
+                from: Constant.getEnv(EEnvName.EMAIL_FROM),
+                to: user.email,
+                subject: Constant.EMAIL_SUBJECT.FORGOT_PASSWORD,
+                extraData: {
+                    otp: gen_OTP,
+                    name: user.name,
+                    username: user.username,
+                    url: `${Constant.getEnv(EEnvName.APP_URL)}/otp-confirm.html`,
+                },
+            };
+            await this.emailQueue.add('reset-password', { ...mailData });
+
+            // await transporter.sendMail(mailData);
             return { message: 'Reset success' }
         } catch (e) {
             if (e instanceof ApplicationException) {

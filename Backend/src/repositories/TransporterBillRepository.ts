@@ -55,4 +55,14 @@ export class TransporterBillRepository {
             }
         ]);
     }
+
+    async findOneByBatchId(batchId: string): Promise<TransporterBillInterfaces> {
+        return await this.transporterBillModel.findOne({
+            batchId: batchId,
+        }).exec();
+    }
+
+    async createDocumentFromDto(dto: CreateTransporterBillDto) {
+        return new this.transporterBillModel(dto);
+    }
 }

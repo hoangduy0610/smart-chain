@@ -57,7 +57,6 @@ const API_ENDPOINT = {
         LIST_RETAILER_PRODUCT: `${API_HOST}/seller/storage/self`,
         SELL_PRODUCT: `${API_HOST}/seller/storage/sell/{{id}}`,
         ANALYTICS: `${API_HOST}/seller/storage/analytics`,
-        REVENUE_DETAI: `${API_HOST}/seller/storage/revenue`,
     },
 
     ANALYTICS: {

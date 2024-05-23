@@ -11,6 +11,13 @@ export class AnalysisRepository {
         @InjectModel('Analysis') private readonly analysisModel: Model<AnalysisInterface>,
     ) { }
 
+    async createScanLog(batchId: string, ipAddress: string): Promise<AnalysisInterface> {
+        return await this.analysisModel.create({
+            batchId: batchId,
+            ipAddress: ipAddress,
+        })
+    }
+
     async getRetailerAnalysis(): Promise<any> {
         const revenueLastWeek = await this.sellerStorageModel.aggregate([
             {

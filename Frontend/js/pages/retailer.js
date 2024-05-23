@@ -271,15 +271,10 @@ $(document).ready(function () {
       const revenueBarChartLabels = getDateArrayLabel(new Date(), 7).reverse();
       const revenueBarChartData = [0, 0, 0, 0, 0, 0, 0];
       const countBarChartData = [0, 0, 0, 0, 0, 0, 0];
-      result.revenue.revenueDetail.forEach((e) => {
+      result.retailerReport.detail.forEach((e) => {
         const index = revenueBarChartLabels.indexOf(e._id);
         if (index !== -1) {
           revenueBarChartData[index] = e.revenue;
-        }
-      });
-      result.sellCount.detail.forEach((e) => {
-        const index = revenueBarChartLabels.indexOf(e._id);
-        if (index !== -1) {
           countBarChartData[index] = e.soldCount;
         }
       });

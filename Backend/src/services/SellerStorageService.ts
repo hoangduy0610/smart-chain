@@ -13,15 +13,14 @@ import { EProductStatus } from 'src/commons/EnumProductStatus';
 import { UserInterfaces } from 'src/interfaces/UserInterfaces';
 import { HistoryInterfaces } from 'src/interfaces/HistoryInterfaces';
 import { SellAnalyticsInterfaces } from 'src/interfaces/SellAnalyticsInterfaces';
+import { HistoryRepository } from 'src/repositories/HistoryRepository';
 
 @Injectable()
 export class SellerStorageService {
     constructor(
         private readonly sellerStorageRepository: SellerStorageRepository,
+        private readonly historyRepository: HistoryRepository,
         private readonly batchProductRepository: BatchProductRepository,
-        @InjectModel('SellerStorage') private readonly sellerStorageModel: Model<SellerStorageInterfaces>,
-        @InjectModel('History') private readonly historyModel: Model<HistoryInterfaces>,
-        @InjectModel('SellAnalytics') private readonly SellAnalyticsModel: Model<SellAnalyticsInterfaces>,
     ) { }
 
     async create(user: UserInterfaces, dto: CreateSellerStorageDto): Promise<SellerStorageInterfaces> {
@@ -42,12 +41,10 @@ export class SellerStorageService {
         batchProduct.retailer = user.id;
         batchProduct.incharge = EnumRoles.ROLE_SELLER;
         await batchProduct.save();
-        await this.historyModel.create({
+        await this.historyRepository.create({
             action: `Nhà bán lẻ ${user.name} đã nhập lô sản phẩm ${batchProduct.name} với số lượng ${batchProduct.quantity} vào kho lúc ${new Date().toLocaleString()}`,
-            actionBy: user.roles[0],
-            actionDate: new Date(),
             batchId: batchProduct.batchId,
-        })
+        }, user.roles[0])
         const saveObj = {
             ...dto,
             sold: 0,
@@ -87,48 +84,11 @@ export class SellerStorageService {
     }
 
     async findAndGroupByProduct(sellerId: string): Promise<any> {
-        return await this.sellerStorageModel.aggregate([
-            {
-                $match: {
-                    owner: sellerId.toString()
-                }
-            },
-            {
-                $lookup: {
-                    from: 'batchproducts',
-                    localField: 'batchId',
-                    foreignField: 'batchId',
-                    as: 'batch'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'products',
-                    localField: 'batch.productId',
-                    foreignField: 'productId',
-                    as: 'product'
-                }
-            },
-            {
-                $unwind: '$batch'
-            },
-            {
-                $unwind: '$product'
-            },
-            {
-                $group: {
-                    _id: '$batch.productId',
-                    total: { $sum: '$quantity' },
-                    sold: { $sum: '$sold' },
-                    product: { $first: '$product' },
-                    batches: { $push: '$batch' },
-                }
-            }
-        ])
+        return await this.sellerStorageRepository.findByOwnerAndGroupByProduct(sellerId);
     }
 
     async sellProduct(batchId: string): Promise<any> {
-        const batchProduct = await this.sellerStorageModel.findOne({ batchId: batchId }).exec();
+        const batchProduct = await this.sellerStorageRepository.findByBatchId(batchId);
         if (!batchProduct) {
             throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.SELLER_STORAGE_NOT_FOUND);
         }
@@ -138,144 +98,23 @@ export class SellerStorageService {
         }
 
         batchProduct.sold += 1;
-        await this.SellAnalyticsModel.create({
-            batchId: batchProduct.batchId,
-            pricing: batchProduct.pricing,
-        });
+        await this.sellerStorageRepository.createSellLog(batchProduct.batchId, batchProduct.pricing);
         return await batchProduct.save();
     }
 
     async analytics(sellerId: string): Promise<any> {
         return {
             ...(await this.sellerStorageRepository.analytics(sellerId))[0],
-            revenue: await this.getTotalRevenue(sellerId),
-            sellCount: await this.getTotalSellCount(sellerId),
+            retailerReport: await this.getRetailerReportLastWeek(sellerId),
         };
     }
 
-    async getTotalRevenue(sellerId: string): Promise<any> {
-        const revenueLastWeek = await this.sellerStorageModel.aggregate([
-            {
-                $match: {
-                    owner: sellerId.toString(),
-                }
-            },
-            {
-                $lookup: {
-                    from: 'sellanalytics',
-                    localField: 'batchId',
-                    foreignField: 'batchId',
-                    as: 'analytics'
-                }
-            },
-            {
-                $unwind: '$analytics'
-            },
-            {
-                $group: {
-                    _id: null,
-                    totalRevenue: { $sum: { $toDouble: "$analytics.pricing" } },
-                    revenueEachDayLastWeek: {
-                        $push: {
-                            $cond: [
-                                { $lte: [{ $subtract: [new Date(), "$analytics.createdAt"] }, 604800000] },
-                                {
-                                    price: { $toDouble: "$analytics.pricing" },
-                                    date: "$analytics.createdAt"
-                                },
-                                '$$REMOVE'
-                            ]
-                        }
-                    }
-                }
-            },
-            // Group by date
-            {
-                $unwind: "$revenueEachDayLastWeek"
-            },
-            {
-                $group: {
-                    _id: {
-                        $dateToString: {
-                            format: "%Y-%m-%d",
-                            date: "$revenueEachDayLastWeek.date"
-                        }
-                    },
-                    revenue: { $sum: "$revenueEachDayLastWeek.price" }
-                }
-            },
-            {
-                $sort: {
-                    _id: 1
-                }
-            },
-        ]);
+    async getRetailerReportLastWeek(sellerId: string): Promise<any> {
+        const revenueLastWeek = await this.sellerStorageRepository.queryRetailerReportLastWeek(sellerId);
         const sumRevenue = revenueLastWeek.reduce((sum, revenue) => sum + revenue.revenue, 0);
-        return {
-            totalRevenue: sumRevenue,
-            revenueDetail: revenueLastWeek,
-        }
-    }
-
-    async getTotalSellCount(sellerId: string): Promise<any> {
-        const revenueLastWeek = await this.sellerStorageModel.aggregate([
-            {
-                $match: {
-                    owner: sellerId.toString(),
-                }
-            },
-            {
-                $lookup: {
-                    from: 'sellanalytics',
-                    localField: 'batchId',
-                    foreignField: 'batchId',
-                    as: 'analytics'
-                }
-            },
-            {
-                $unwind: '$analytics'
-            },
-            {
-                $group: {
-                    _id: null,
-                    totalRevenue: { $sum: 1 },
-                    revenueEachDayLastWeek: {
-                        $push: {
-                            $cond: [
-                                { $lte: [{ $subtract: [new Date(), "$analytics.createdAt"] }, 604800000] },
-                                {
-                                    count: 1,
-                                    date: "$analytics.createdAt"
-                                },
-                                '$$REMOVE'
-                            ]
-                        }
-                    }
-                }
-            },
-            // Group by date
-            {
-                $unwind: "$revenueEachDayLastWeek"
-            },
-            {
-                $group: {
-                    _id: {
-                        $dateToString: {
-                            format: "%Y-%m-%d",
-                            date: "$revenueEachDayLastWeek.date"
-                        }
-                    },
-                    soldCount: { $sum: "$revenueEachDayLastWeek.count" }
-                }
-            },
-            {
-                $sort: {
-                    _id: 1
-                }
-            },
-        ]);
         const sumCount = revenueLastWeek.reduce((sum, revenue) => sum + revenue.soldCount, 0);
         return {
+            totalRevenue: sumRevenue,
             totalCount: sumCount,
             detail: revenueLastWeek,
         }

@@ -41,14 +41,6 @@ export class SellerStorageController {
         return res.status(200).json(await this.sellerStorageService.analytics(req.user.id));
     }
 
-    @Get('/revenue')
-    @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @ApiBearerAuth()
-    @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_SELLER)
-    async revenue(@Req() req, @Res() res) {
-        return res.status(200).json(await this.sellerStorageService.getTotalRevenue(req.user.id));
-    }
-
     @Get('/:id')
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @ApiBearerAuth()

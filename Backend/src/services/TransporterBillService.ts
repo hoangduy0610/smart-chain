@@ -20,12 +20,11 @@ export class TransporterBillService {
     constructor(
         private readonly transporterBillRepository: TransporterBillRepository,
         private readonly batchProductRepository: BatchProductRepository,
-        @InjectModel('TransporterBill') private readonly transporterBillModel: Model<TransporterBillInterfaces>,
     ) { }
 
     async create(owner: string, dto: CreateTransporterBillDto): Promise<TransporterBillInterfaces> {
         // return await this.transporterBillRepository.create(dto);
-        const billPresearch = await this.transporterBillModel.findOne({ batchId: dto.batchId }).exec();
+        const billPresearch = await this.transporterBillRepository.findOneByBatchId(dto.batchId);
         if (billPresearch) {
             throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.BILL_FOR_THIS_BATCH_FOUND);
         }
@@ -44,7 +43,7 @@ export class TransporterBillService {
             });
             const routingInfo = await axios.get(urlRoute);
             const distance = routingInfo.data.routes[0].distance;
-            const newTransporterBill = new this.transporterBillModel(dto);
+            const newTransporterBill = await this.transporterBillRepository.createDocumentFromDto(dto);
             newTransporterBill.owner = owner;
             newTransporterBill.status = EBatchCase.StartTransport;
             newTransporterBill.currentPos = dto.departure;
@@ -89,9 +88,7 @@ export class TransporterBillService {
     }
 
     async findByBatchIdAndUpdateStatus(batchId: string, status: EBatchCase): Promise<TransporterBillInterfaces> {
-        const bill = await this.transporterBillModel.findOne({
-            batchId: batchId
-        }).exec();
+        const bill = await this.transporterBillRepository.findOneByBatchId(batchId);
 
         if (!bill) {
             throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.BILL_NOT_FOUND);
