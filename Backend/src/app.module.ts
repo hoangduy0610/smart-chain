@@ -16,22 +16,26 @@ import { join } from 'path';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: ['local.env', 'test.env', 'product.env'],
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(process.env.DATABASE_HOST),
     BullModule.forRoot({
       redis: {
-        host: 'redis-14762.c15.us-east-1-4.ec2.redns.redis-cloud.com',
-        port: 14762,
-        username: 'default',
-        password: 'NGLpoW9zLcSnsHsVdoP9Qj2lbsSBmmX2'
+        host: process.env.REDIS_HOST,
+        port: parseInt(process.env.REDIS_PORT),
+        username: process.env.REDIS_USERNAME,
+        password: process.env.REDIS_PASSWORD,
       },
     }),
     MailerModule.forRoot({
       transport: {
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
+        host: process.env.MAIL_SMTP_HOST,
+        port: parseInt(process.env.MAIL_SMTP_PORT),
         auth: {
-          user: "hoangduy06104@gmail.com",
-          pass: "ffgjiykuyumfvyqg",
+          user: process.env.MAIL_SMTP_USER,
+          pass: process.env.MAIL_SMTP_PASS,
         },
       },
       template: {
@@ -39,11 +43,6 @@ import { join } from 'path';
         adapter: new HandlebarsAdapter(),
       },
     }),
-    ConfigModule.forRoot({
-      envFilePath: ['local.env', 'test.env', 'product.env'],
-      isGlobal: true,
-    }),
-    MongooseModule.forRoot(process.env.DATABASE_HOST),
     AuthModule,
     UserModule,
     ProductModule,
