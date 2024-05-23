@@ -1,0 +1,26 @@
+version: '3'
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./Backend:/app
+    depends_on:
+      - nginx
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 6570:6570
+      - 6571:6571
+      - 6572:6572
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./Backend:/app
+      - ./Frontend:/var/www/management
+      - ./ScanPage:/var/www/scanpage
+
