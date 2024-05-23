@@ -7,7 +7,12 @@ const QR_HOST = `https://api.qrserver.com/v1/create-qr-code/?data=${QR_TARGET_WE
 const LOCATIONIQ_KEY = 'pk.1389b74ff08f34d73ab9adbe8dd56d4b';
 
 const API_ENDPOINT = {
-    LOGIN: `${API_HOST}/auth/signin`,
+    AUTH: {
+        LOGIN: `${API_HOST}/auth/signin`,
+        FORGOT_PASSWORD: `${API_HOST}/auth/forgot-password`,
+        VALIDATE_OTP: `${API_HOST}/auth/validate-otp`,
+        SET_NEW_PASSWORD: `${API_HOST}/auth/set-new-password`,
+    },
 
     USER: {
         CREATE_USER: `${API_HOST}/user`,

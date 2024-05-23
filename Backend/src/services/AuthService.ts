@@ -83,8 +83,8 @@ export class AuthService {
                 extraData: {
                     otp: gen_OTP,
                     name: user.name,
-                    username: user.username,
-                    url: `${Constant.getEnv(EEnvName.APP_URL)}/otp-confirm.html`,
+                    username: username,
+                    url: `${Constant.getEnv(EEnvName.APP_URL)}/forgot-password.html?s=2&q=${btoa(username)}`,
                 },
             };
             await this.emailQueue.add('reset-password', { ...mailData });

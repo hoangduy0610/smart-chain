@@ -26,7 +26,7 @@ $(document).ready(function () {
 
         // Call API login here
         $.ajax({
-            url: API_ENDPOINT.LOGIN,
+            url: API_ENDPOINT.AUTH.LOGIN,
             method: 'POST',
             data: {
                 username: username,

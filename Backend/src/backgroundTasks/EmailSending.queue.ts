@@ -1,5 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Process, Processor } from '@nestjs/bull';
+import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
 import { Mail } from 'src/interfaces/MailInterfaces';
 
@@ -23,6 +24,10 @@ export class EmailSendingProcessor {
             context: {
                 ...extraData
             },
-        })
+        }).then((res) => {
+            Logger.log(res)
+        }).catch((e) => {
+            Logger.log(e)
+        });
     }
 }
