@@ -51,7 +51,7 @@ services:
       - 6571:6571
       - 6572:6572
     volumes:
-      - ./.docker-resources/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./.docker-resources/nginx/production.conf:/etc/nginx/conf.d/default.conf
       - ./Backend:/app
       - ./Frontend:/var/www/management
       - ./ScanPage:/var/www/scanpage
