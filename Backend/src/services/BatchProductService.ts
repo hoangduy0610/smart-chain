@@ -1,95 +1,30 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { BatchProductInterfaces } from '../interfaces/BatchProductInterfaces';
-import { BatchProductRepository } from '../repositories/BatchProductRepository';
-import { EnumRoles } from 'src/commons/EnumRoles';
-import { IdUtils } from 'src/utils/IdUtils';
-import { CreateBatchProductDto, EditBatchProductDto } from 'src/dtos/BatchProductDtos';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { AnalysisInterface } from 'src/interfaces/AnalysisInterfaces';
-import { UserInterfaces } from 'src/interfaces/UserInterfaces';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { EBatchCase } from 'src/commons/EnumBatchCase';
 import { EProductStatus } from 'src/commons/EnumProductStatus';
-import { ApplicationException } from 'src/controllers/ExceptionController';
+import { EnumRoles } from 'src/commons/EnumRoles';
 import { MessageCode } from 'src/commons/MessageCode';
-import { HistoryInterfaces } from 'src/interfaces/HistoryInterfaces';
+import { ApplicationException } from 'src/controllers/ExceptionController';
+import { CreateBatchProductDto, EditBatchProductDto } from 'src/dtos/BatchProductDtos';
+import { UserInterfaces } from 'src/interfaces/UserInterfaces';
+import { AnalysisRepository } from 'src/repositories/AnalysisRepository';
+import { HistoryRepository } from 'src/repositories/HistoryRepository';
+import { IdUtils } from 'src/utils/IdUtils';
+import { BatchProductInterfaces } from '../interfaces/BatchProductInterfaces';
+import { BatchProductRepository } from '../repositories/BatchProductRepository';
 import { TransporterBillService } from './TransporterBillService';
 
 @Injectable()
 export class BatchProductService {
     constructor(
         private readonly batchProductRepository: BatchProductRepository,
+        private readonly analysisRepository: AnalysisRepository,
+        private readonly historyRepository: HistoryRepository,
         private readonly transporterBillService: TransporterBillService,
-        @InjectModel('BatchProduct') private readonly batchProductModel: Model<BatchProductInterfaces>,
-        @InjectModel('Analysis') private readonly analysisModel: Model<AnalysisInterface>,
-        @InjectModel('History') private readonly historyModel: Model<HistoryInterfaces>,
     ) { }
 
     async scanStamp(batchId: string, ipAddress: string): Promise<any> {
-        await this.analysisModel.create({
-            batchId: batchId,
-            ipAddress: ipAddress,
-        })
-        return await this.batchProductModel.aggregate([
-            {
-                $match: {
-                    batchId: batchId
-                }
-            },
-            {
-                $lookup: {
-                    from: 'products',
-                    localField: 'productId',
-                    foreignField: 'productId',
-                    as: 'product'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'histories',
-                    localField: 'batchId',
-                    foreignField: 'batchId',
-                    as: 'history'
-                },
-            },
-            {
-                $lookup: {
-                    from: 'analyses',
-                    localField: 'batchId',
-                    foreignField: 'batchId',
-                    as: 'analyses'
-                }
-            },
-            {
-                $project: {
-                    _id: 0,
-                    owner: 1,
-                    name: 1,
-                    batchId: 1,
-                    productId: 1,
-                    status: 1,
-                    quantity: 1,
-                    createdAt: 1,
-                    updatedAt: 1,
-                    product: {
-                        name: 1,
-                        price: 1,
-                        description: 1,
-                        attributes: 1,
-                        imageUrl: 1,
-                        createdAt: 1,
-                        updatedAt: 1,
-                    },
-                    history: {
-                        action: 1,
-                        actionBy: 1,
-                        actionDate: 1,
-                    },
-                    totalScan: { $size: '$analyses' },
-                    totalUserScan: { $size: { $setUnion: "$analyses.ipAddress" } }
-                }
-            }
-        ]);
+        await this.analysisRepository.createScanLog(batchId, ipAddress);
+        return await this.batchProductRepository.getStampBatchDetail(batchId);
     }
 
     async create(owner: string, dto: CreateBatchProductDto): Promise<BatchProductInterfaces> {
@@ -138,7 +73,7 @@ export class BatchProductService {
 
     async forwardScan(user: UserInterfaces, id: string): Promise<BatchProductInterfaces> {
         let productHandler: EBatchCase = null;
-        const batchProduct: BatchProductInterfaces = await this.batchProductModel.findOne({ batchId: id, deletedAt: null }).exec();
+        const batchProduct: BatchProductInterfaces = await this.batchProductRepository.findByBatchId(id);
 
         if (!batchProduct) {
             throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.BATCH_NOT_FOUND);
@@ -164,37 +99,29 @@ export class BatchProductService {
 
         switch (productHandler) {
             case EBatchCase.ReadyForTransport:
-                await this.historyModel.create({
+                await this.historyRepository.create({
                     action: `Nông dân ${user.name} đã xuất kho lô sản phẩm ${batchProduct.name} với số lượng ${batchProduct.quantity} vào lúc ${new Date().toLocaleString()}`,
-                    actionBy: user.roles[0],
-                    actionDate: new Date(),
                     batchId: id,
-                })
-                return await this.batchProductModel.findOneAndUpdate({ batchId: id }, {
-                    status: EProductStatus.InTransportation,
-                    incharge: EnumRoles.ROLE_TRANSPORTER,
-                }, { new: true }).exec();
+                }, user.roles[0])
+                batchProduct.status = EProductStatus.InTransportation;
+                batchProduct.incharge = EnumRoles.ROLE_TRANSPORTER;
+                return await batchProduct.save();
             case EBatchCase.StartTransport:
-                return await this.batchProductModel.findOneAndUpdate({ batchId: id }, {
-                    transporter: user.id,
-                    incharge: EnumRoles.ROLE_TRANSPORTER,
-                }, { new: true }).exec();
+                batchProduct.transporter = user.id;
+                batchProduct.incharge = EnumRoles.ROLE_TRANSPORTER;
+                return await batchProduct.save();
             case EBatchCase.FinishTransport:
-                await this.historyModel.create({
+                await this.historyRepository.create({
                     action: `Nhà vận chuyển ${user.name} đã hoàn thành đơn vận chuyển lô sản phẩm ${batchProduct.name} với số lượng ${batchProduct.quantity} vào lúc ${new Date().toLocaleString()}`,
-                    actionBy: user.roles[0],
-                    actionDate: new Date(),
                     batchId: id,
-                })
+                }, user.roles[0])
                 await this.transporterBillService.findByBatchIdAndUpdateStatus(id, EBatchCase.FinishTransport);
-                return await this.batchProductModel.findOneAndUpdate({ batchId: id }, {
-                    status: EProductStatus.InStore,
-                }, { new: true }).exec();
+                batchProduct.status = EProductStatus.InStore;
+                return await batchProduct.save();
             case EBatchCase.ImportToStore:
-                return await this.batchProductModel.findOneAndUpdate({ batchId: id }, {
-                    retailer: user.id,
-                    incharge: EnumRoles.ROLE_SELLER,
-                }, { new: true }).exec();
+                batchProduct.retailer = user.id;
+                batchProduct.incharge = EnumRoles.ROLE_SELLER;
+                return await batchProduct.save();
             default:
                 throw new ApplicationException(HttpStatus.BAD_REQUEST, MessageCode.BATCH_FORWARD_INVALID);
         }

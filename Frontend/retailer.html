@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Provanence Tracking</title>
+  <title>SmartChain</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -18,6 +18,7 @@
 </head>
 
 <body>
+  <div class="se-pre-con" id="preloaderLayer"></div>
   <div class="loader-container">
     <div class="spinner-border text-primary" role="status">
       <span class="sr-only">Loading...</span>
@@ -26,7 +27,7 @@
   <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-      <h2 class="mb-4">Provanence Tracking</h2>
+      <h2 class="mb-4">SmartChain</h2>
       <div class="d-grid gap-2 d-md-block">
         <button class="btn btn-outline-primary" type="button" id="importProduct">
           Nhập hàng
@@ -44,19 +45,19 @@
         <div class="col">
           <div class="card shadow analytics-gradient-1 mb-3">
             <div class="card-body">
-              <h5 class="card-title">Total Product</h5>
+              <h5 class="card-title">Tổng số sản phẩm</h5>
               <h1 id="totalProduct">N/A</h1>
             </div>
           </div>
           <div class="card shadow analytics-gradient-2 mb-3">
             <div class="card-body">
-              <h5 class="card-title">Total Batch</h5>
+              <h5 class="card-title">Tổng số lô hàng</h5>
               <h1 id="totalBatch">N/A</h1>
             </div>
           </div>
           <div class="card shadow analytics-gradient-3">
             <div class="card-body">
-              <h5 class="card-title">Estimate Income (Total)</h5>
+              <h5 class="card-title">Doanh thu dự kiến</h5>
               <h1 id="estimateIncome">N/A</h1>
             </div>
           </div>
@@ -64,17 +65,7 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-body">
-              <h5 class="card-title">Retailer Chart</h5>
-              <div style="max-height: 20.75rem;">
-                <canvas id="retailerChart"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card shadow">
-            <div class="card-body">
-              <h5 class="card-title">Batch Chart</h5>
+              <h5 class="card-title">Tồn kho (Tổng quan)</h5>
               <div style="max-height: 20.75rem;">
                 <canvas id="batchChart"></canvas>
               </div>
@@ -84,7 +75,17 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-body">
-              <h5 class="card-title">Income Chart</h5>
+              <h5 class="card-title">Tồn kho (Tỉ lệ)</h5>
+              <div style="max-height: 20.75rem;">
+                <canvas id="retailerChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Doanh số</h5>
               <div style="max-height:20.75rem;">
                 <canvas id="incomeChart"></canvas>
               </div>
@@ -93,7 +94,7 @@
         </div>
       </div>
       <div class="card shadow my-5">
-        <h5 class="m-3">Store Analytics</h5>
+        <h5 class="m-3">Thống kê cửa hàng</h5>
         <div class="table-responsive">
           <div class="text-start">
             <!--Table-->
@@ -101,12 +102,12 @@
               <!--Table head-->
               <thead>
                 <tr>
-                  <th scope="col">Image</th>
-                  <th scope="col">Product Name</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Attributes</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Sold</th>
+                  <th scope="col">Ảnh</th>
+                  <th scope="col">Tên Sản phẩm</th>
+                  <th scope="col">Giá tham khảo</th>
+                  <th scope="col">Thuộc tính</th>
+                  <th scope="col">Tổng số lượng</th>
+                  <th scope="col">Đã bán</th>
                 </tr>
               </thead>
               <!--Table head-->
@@ -119,12 +120,12 @@
               <!--Table foot-->
               <tfoot>
                 <tr>
-                  <th scope="col">Image</th>
-                  <th scope="col">Product Name</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Attributes</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Sold</th>
+                  <th scope="col">Ảnh</th>
+                  <th scope="col">Tên Sản phẩm</th>
+                  <th scope="col">Giá tham khảo</th>
+                  <th scope="col">Thuộc tính</th>
+                  <th scope="col">Tổng số lượng</th>
+                  <th scope="col">Đã bán</th>
                 </tr>
               </tfoot>
               <!--Table foot-->
@@ -134,7 +135,7 @@
         </div>
       </div>
       <div class="card shadow">
-        <h5 class="m-3">Import Batch History</h5>
+        <h5 class="m-3">Lịch sử nhập hàng</h5>
         <div class="table-responsive">
           <div class="text-start">
             <!--Table-->
@@ -142,10 +143,11 @@
               <!--Table head-->
               <thead>
                 <tr>
-                  <th scope="col">Batch Name</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Sold</th>
-                  <th scope="col">Import Date</th>
+                  <th scope="col">Tên lô hàng</th>
+                  <th scope="col">Số lượng SP</th>
+                  <th scope="col">Đã bán</th>
+                  <th scope="col">Giá bán lẻ</th>
+                  <th scope="col">Ngày nhập hàng</th>
                 </tr>
               </thead>
               <!--Table head-->
@@ -158,10 +160,11 @@
               <!--Table foot-->
               <tfoot>
                 <tr>
-                  <th scope="col">Batch Name</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Sold</th>
-                  <th scope="col">Import Date</th>
+                  <th scope="col">Tên lô hàng</th>
+                  <th scope="col">Số lượng SP</th>
+                  <th scope="col">Đã bán</th>
+                  <th scope="col">Giá bán lẻ</th>
+                  <th scope="col">Ngày nhập hàng</th>
                 </tr>
               </tfoot>
               <!--Table foot-->
@@ -185,6 +188,7 @@
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/sidebar.js"></script>
   <script src="./js/pages/retailer.js"></script>
 </body>
 

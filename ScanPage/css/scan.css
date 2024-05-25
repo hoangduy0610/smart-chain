@@ -34,18 +34,18 @@
     position: relative;
 }
 
-.box_image{
+.box_image {
     width: 100%;
 }
 
-img{
-    width: 80% ;
+img {
+    width: 80%;
     height: 350px;
 }
 
-.bar1  {
-    height: 0.5px ;
-    max-width: 580px ;
+.bar1 {
+    height: 0.5px;
+    max-width: 580px;
     padding: 0.5px;
     margin-left: auto;
     margin-right: auto;
@@ -125,15 +125,15 @@ img{
     -moz-box-shadow: 0px 4px 14px -5px rgba(0, 0, 0, 0.52);
 }
 
-.para{
+.para {
     cursor: pointer;
 }
 
-.para:hover{
+.para:hover {
     color: rgba(0, 0, 255, 0.674);
 }
 
-.form_infor{
+.form_infor {
     border-radius: 4px;
     margin-bottom: 10px;
     box-shadow: 0px 4px 14px -5px rgba(0, 0, 0, 0.52);
@@ -153,12 +153,12 @@ img{
     bottom: 10%;
 }
 
-.att{
+.att {
     padding: 4px;
 }
-.att:hover{
+
+.att:hover {
     cursor: pointer;
     border-radius: 4px;
-    background-color: rgb(55, 55, 239);
+    background-color: rgba(203, 203, 203, 0.6);
 }
-

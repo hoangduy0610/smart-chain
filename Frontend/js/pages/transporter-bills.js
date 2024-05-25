@@ -96,23 +96,23 @@ $(document).ready(function () {
                             href="https://www.google.com/maps/dir/?api=1&origin=${dep[0]},${dep[1]}&destination=${des[0]},${des[1]}"
                             role="button"
                             class="btn btn-primary m-1"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Open Route"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mở điều hướng"
                         ><i class="fa-solid fa-route"></i></a>
                         <button
                             type="button"
                             class="btn btn-danger btn-update-pos m-1"
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Update Current Position"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cập nhật vị trí"
                         ><i class="fa-solid fa-location-dot"></i></button>
                         <button
                             type="button" class="btn btn-${dsb ? 'secondary' : 'indigo'} btn-forward-batch m-1" ${dsb}
-                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Chuyển tiếp"
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Chuyển cho nhà bán lẻ"
                         ><i class="fa-solid fa-forward-fast"></i></button>
                     </div>
                 `;
             }
         },
     ]
-    const billsTable = initDataTable('#billsTable', { ajaxUrl: API_ENDPOINT.TRANSPORTER_BILLS.LIST_TRANSPORTER_BILLS }, tableRenderColumns);
+    const billsTable = initDataTable('#billsTable', { ajaxUrl: API_ENDPOINT.TRANSPORTER_BILLS.LIST_TRANSPORTER_BILLS }, tableRenderColumns, [], () => { signalStopPreloader(); });
 
     var html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", { fps: 10, qrbox: 250 });
@@ -120,10 +120,10 @@ $(document).ready(function () {
     function onScanSuccess(decodedText, decodedResult) {
         // Handle on success condition with the decoded text or result.
         const batchId = decodedText.split("?id=")[1];
-        var answer = window.confirm(`Scanning batchId: ${batchId}`);
+        var answer = window.confirm(`Vui lòng xác nhận. Bạn có muốn tạo đơn vận cho lô hàng: ${batchId}?`);
         if (answer) {
             //some code
-            window.location.href = `form-transporter-bills.html?id=${batchId}`;
+            window.location.href = `form-transporter-bill.html?id=${batchId}`;
         }
         $("#html5-qrcode-button-camera-stop").click();
     }
@@ -168,12 +168,12 @@ $(document).ready(function () {
                             currentPos: `${lat};${lng};${data.display_name}`,
                         },
                         success: function (response) {
-                            alert("Update position successfully!")
+                            alert("Cập nhật vị trí hiện tại thành công")
                             $(".loader-container").removeClass('active');
                             billsTable.ajax.reload();
                         },
                         error: function (xhr, status, error) {
-                            alert("Update position failed!")
+                            alert("Cập nhật vị trí thất bại")
                             $(".loader-container").removeClass('active');
                         }
                     });

@@ -69,7 +69,6 @@ export class BatchProductController {
     @ApiBearerAuth()
     @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_FARMER)
     async delete(@Req() req, @Res() res, @Param('id') id: string) {
-        console.log(req.user);
         return res.status(200).json(await this.batchProductService.delete(req.user.username, id));
     }
 }

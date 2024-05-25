@@ -5,40 +5,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d6862fa655.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="./css/pages/login.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 
 <body>
-    <form id="login">
-        <div class="form login">
-            <h1 class="title login">Login</h1>
-
-            <div class="content login">
-
-                <div class="box login">
-                    <i class="ri-user-3-line icon"></i>
-                    <div class="box_input login">
-                        <input type="text" class="input login" id="login_email" placeholder="Username">
-                    </div>
-                </div>
-
-                <div class="box login">
-                    <i class="ri-lock-2-line icon"></i>
-                    <div class="box_input login">
-                        <input type="password" class="input login" id="password-login" placeholder="Password">
-                        <i class="ri-eye-off-line login_eye" id="login-eye"></i>
-                    </div>
-                </div>
+    <div class="loader-container">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="container-fluid mb-4" style="background-color: #fff; box-shadow: 0 20px 27px rgba(0, 0, 0, .05); ">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mx-4">
+            <div class="col-md-3 mb-2 mb-md-0">
+                <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+                    <strong>SmartChain</strong>
+                </a>
             </div>
 
-            <div class="confirm login">
-                <button class="button login">Login</button>
-                <p class="login_regis">Forgot your password? <a id="register_link" href="/register.html">Click here</a>
-                </p>
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 link-secondary"><i class="fa-solid fa-right-to-bracket"></i> Đăng
+                        nhập</a></li>
+                <li><a href="forgot-password.html" class="nav-link px-2"><i class="fa-solid fa-key"></i> Quên mật khẩu</a></li>
+            </ul>
+
+            <div class="col-md-3 text-end">
+                <a role="button" href="https://uit.edu.vn/" class="px-4 btn btn-primary rounded-pill"
+                    style="background-color: #1890ff; font-size:10pt; font-weight: 600;">UIT.EDU.VN</a>
+            </div>
+        </header>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" style="display: flex;flex-direction: column;justify-content: center;">
+                <h1 class="fw-bold">Đăng nhập</h1>
+                <p class="h5" style="color:#8c8c8c; font-weight:200;">Nhập tên đăng nhập và mật khẩu của bạn để tiến
+                    hành đăng nhập</p>
+                <div class="my-3">
+                    <label for="login_email" class="form-label"><strong>Tên đăng nhập</strong></label>
+                    <input type="text" class="form-control" id="login_email" placeholder="Tên đăng nhập">
+                </div>
+                <div class="my-3">
+                    <label for="password-login" class="form-label"><strong>Mật khẩu</strong></label>
+                    <div>
+                        <input type="password" class="form-control" id="password-login" placeholder="Mật khẩu">
+                        <i class="fa-solid fa-eye-slash" id="login-eye"
+                            style="float: right;position: relative;right: 10px;bottom: 25px;"></i>
+                    </div>
+                </div>
+                <div class="my-3">
+                    <div class="form-check form-switch d-flex align-items-center">
+                        <input class="form-check-input my-0" type="checkbox" role="switch" id="rememberMe"
+                            style="height: 22px;min-width: 44px;background-color: #1890ff;" checked>
+                        <label class="form-check-label ms-2" for="rememberMe" style="line-height: 22px;"> Ghi nhớ
+                            tôi</label>
+                    </div>
+                </div>
+                <div class="my-3">
+                    <button type="button" class="btn btn-primary w-100" id="login-btn"
+                        style="background-color: #1890ff; font-size:10pt; font-weight: 600; height:40px">Đăng
+                        nhập</button>
+                </div>
+                <div class="my-3">
+                    <p class="content">Bạn quên mật khẩu? <a href="forgot-password.html">Đặt lại mật khẩu</a></p>
+                </div>
+            </div>
+            <div class="col-md-8 text-center" style="padding-top:40px">
+                <img src="./assets/img-signin.jpeg" style="max-height: 85vh;" alt="login" class="img-fluid">
             </div>
         </div>
-    </form>
+    </div>
+
+    <footer class="mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">© 2024 SmartChain. All rights reserved.</span>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./js/apis.js"></script>

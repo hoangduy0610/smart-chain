@@ -3,12 +3,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EnumRoles } from 'src/commons/EnumRoles';
 import { CreateBatchProductDto, EditBatchProductDto } from 'src/dtos/BatchProductDtos';
+import { AnalysisInterface } from 'src/interfaces/AnalysisInterfaces';
 import { BatchProductInterfaces } from 'src/interfaces/BatchProductInterfaces';
+import { HistoryInterfaces } from 'src/interfaces/HistoryInterfaces';
 
 @Injectable()
 export class BatchProductRepository {
     constructor(
         @InjectModel('BatchProduct') private readonly batchProductModel: Model<BatchProductInterfaces>,
+        @InjectModel('Analysis') private readonly analysisModel: Model<AnalysisInterface>,
+        @InjectModel('History') private readonly historyModel: Model<HistoryInterfaces>,
     ) { }
 
     async create(batchProduct: CreateBatchProductDto): Promise<BatchProductInterfaces> {
@@ -64,5 +68,68 @@ export class BatchProductRepository {
 
     async findByRetailerId(retailerId: string): Promise<BatchProductInterfaces[]> {
         return await this.batchProductModel.find({ retailer: retailerId, deletedAt: null }).exec();
+    }
+
+    async getStampBatchDetail(batchId: string): Promise<any> {
+        return await this.batchProductModel.aggregate([
+            {
+                $match: {
+                    batchId: batchId
+                }
+            },
+            {
+                $lookup: {
+                    from: 'products',
+                    localField: 'productId',
+                    foreignField: 'productId',
+                    as: 'product'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'histories',
+                    localField: 'batchId',
+                    foreignField: 'batchId',
+                    as: 'history'
+                },
+            },
+            {
+                $lookup: {
+                    from: 'analyses',
+                    localField: 'batchId',
+                    foreignField: 'batchId',
+                    as: 'analyses'
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    owner: 1,
+                    name: 1,
+                    batchId: 1,
+                    productId: 1,
+                    status: 1,
+                    quantity: 1,
+                    createdAt: 1,
+                    updatedAt: 1,
+                    product: {
+                        name: 1,
+                        price: 1,
+                        description: 1,
+                        attributes: 1,
+                        imageUrl: 1,
+                        createdAt: 1,
+                        updatedAt: 1,
+                    },
+                    history: {
+                        action: 1,
+                        actionBy: 1,
+                        actionDate: 1,
+                    },
+                    totalScan: { $size: '$analyses' },
+                    totalUserScan: { $size: { $setUnion: "$analyses.ipAddress" } }
+                }
+            }
+        ])
     }
 }

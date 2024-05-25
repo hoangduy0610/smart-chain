@@ -1,14 +1,17 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AnalysisRepository } from 'src/repositories/AnalysisRepository';
 import { BatchProductRepository } from 'src/repositories/BatchProductRepository';
+import { HistoryRepository } from 'src/repositories/HistoryRepository';
+import { TransporterBillRepository } from 'src/repositories/TransporterBillRepository';
+import { AnalysisSchema } from 'src/schemas/AnalysisSchema';
 import { BatchProductSchema } from 'src/schemas/BatchProductSchema';
+import { HistorySchema } from 'src/schemas/HistorySchema';
+import { SellerStorageSchema } from 'src/schemas/SellerStorageSchema';
+import { TransporterBillSchema } from 'src/schemas/TransporterBillSchema';
+import { TransporterBillService } from 'src/services/TransporterBillService';
 import { BatchProductController } from '../controllers/BatchProductController';
 import { BatchProductService } from '../services/BatchProductService';
-import { AnalysisSchema } from 'src/schemas/AnalysisSchema';
-import { HistorySchema } from 'src/schemas/HistorySchema';
-import { TransporterBillService } from 'src/services/TransporterBillService';
-import { TransporterBillRepository } from 'src/repositories/TransporterBillRepository';
-import { TransporterBillSchema } from 'src/schemas/TransporterBillSchema';
 
 @Module({
     imports: [
@@ -16,8 +19,16 @@ import { TransporterBillSchema } from 'src/schemas/TransporterBillSchema';
         MongooseModule.forFeature([{ name: 'Analysis', schema: AnalysisSchema }]),
         MongooseModule.forFeature([{ name: 'History', schema: HistorySchema }]),
         MongooseModule.forFeature([{ name: 'TransporterBill', schema: TransporterBillSchema }]),
+        MongooseModule.forFeature([{ name: 'SellerStorage', schema: SellerStorageSchema }]),
     ],
-    providers: [BatchProductService, BatchProductRepository, TransporterBillService, TransporterBillRepository],
+    providers: [
+        BatchProductService,
+        BatchProductRepository,
+        TransporterBillService,
+        TransporterBillRepository,
+        AnalysisRepository,
+        HistoryRepository,
+    ],
     controllers: [BatchProductController],
     exports: [BatchProductService, BatchProductRepository]
 })

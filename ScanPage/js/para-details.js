@@ -3,7 +3,7 @@ $(document).ready(function () {
    const params = new window.URLSearchParams(window.location.search);
    const prefetch_id = params.get('id_batch')
    $.ajax({
-      url: `https://hongdi.ddns.net/batch-product/scan/${prefetch_id}`,
+      url: `${API_HOST}/batch-product/scan/${prefetch_id}`,
       method: 'GET',
       headers: {
       },

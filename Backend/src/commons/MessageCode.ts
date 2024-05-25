@@ -7,6 +7,8 @@ export enum MessageCode {
 	USER_PASSWORD_WRONG = 'Tên người dùng hoặc mật khẩu không chính xác',
 	USER_NOT_HAVE_PERMISSION = 'Bạn không có quyền truy cập chức năng này',
 	USER_INVALID_TOKEN = 'Token không hợp lệ hoặc đã hết hạn',
+	USER_OTP_ERROR = 'Mã OTP không chính xác',
+	USER_OTP_EXPIRED = 'Mã OTP đã hết hạn',
 
 	PRODUCT_NOT_FOUND = 'Không tìm thấy thông tin sản phẩm',
 

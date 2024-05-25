@@ -1,13 +1,18 @@
 // const API_HOST = 'http://10.10.12.55:8798';
-const API_HOST = 'https://hongdi.ddns.net'
+const API_HOST = 'https://api.smcsoft.online'
 
-const QR_TARGET_WEB = 'https://smartchain.ddns.net/ScanPage/scan.html?id=';
+const QR_TARGET_WEB = 'https://app.smcsoft.online/?id=';
 const QR_HOST = `https://api.qrserver.com/v1/create-qr-code/?data=${QR_TARGET_WEB}`;
 
 const LOCATIONIQ_KEY = 'pk.1389b74ff08f34d73ab9adbe8dd56d4b';
 
 const API_ENDPOINT = {
-    LOGIN: `${API_HOST}/auth/signin`,
+    AUTH: {
+        LOGIN: `${API_HOST}/auth/signin`,
+        FORGOT_PASSWORD: `${API_HOST}/auth/forgot-password`,
+        VALIDATE_OTP: `${API_HOST}/auth/validate-otp`,
+        SET_NEW_PASSWORD: `${API_HOST}/auth/set-new-password`,
+    },
 
     USER: {
         CREATE_USER: `${API_HOST}/user`,
@@ -24,6 +29,7 @@ const API_ENDPOINT = {
         UPDATE_PRODUCT: `${API_HOST}/product/{{id}}`,
         DELETE_PRODUCT: `${API_HOST}/product/{{id}}`,
     },
+
     BATCH: {
         CREATE_BATCH: `${API_HOST}/batch-product`,
         LIST_BATCH: `${API_HOST}/batch-product/list`,
@@ -33,6 +39,7 @@ const API_ENDPOINT = {
         DELETE_BATCH: `${API_HOST}/batch-product/{{id}}`,
         FORWARD_BATCH: `${API_HOST}/batch-product/scan-forward/{{id}}`,
     },
+
     HISTORY: {
         CREATE_HISTORY: `${API_HOST}/history`,
         LIST_HISTORY: `${API_HOST}/history/list`,
@@ -55,7 +62,10 @@ const API_ENDPOINT = {
         LIST_RETAILER_PRODUCT: `${API_HOST}/seller/storage/self`,
         SELL_PRODUCT: `${API_HOST}/seller/storage/sell/{{id}}`,
         ANALYTICS: `${API_HOST}/seller/storage/analytics`,
-        REVENUE_DETAI: `${API_HOST}/seller/storage/revenue`,
+    },
+
+    ANALYTICS: {
+        OVERVIEW: `${API_HOST}/analytics/overview`,
     },
 
     GEOCODING: {

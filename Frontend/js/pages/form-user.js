@@ -10,13 +10,13 @@ $(document).ready(function () {
         'Authorization': ACCESS_TOKEN,
       },
       success: function (userData) {
-        $("#password").parent().remove();
-        $('#roles').parent().remove();
+        $("#password").val('*******').attr('disabled', '');
+        $('#roles').val(userData.roles[0]).attr('disabled', '');
         $('#name').val(userData.name);
         $('#username').val(userData.username).prop('readonly', true); // Không cho chỉnh sửa username
         $('#phoneNumber').val(userData.phoneNumber);
 
-        $('form button[type="submit"]').html('Update User')
+        $('form button[type="submit"]').html('Cập nhật người dùng')
       },
       error: function (error) {
         console.log('Error:', error);
@@ -31,6 +31,7 @@ $(document).ready(function () {
     const commonField = {
       name: $('#name').val(),
       phoneNumber: $('#phoneNumber').val(),
+      email: $("#email").val(),
     };
 
     $.ajax({
@@ -46,12 +47,11 @@ $(document).ready(function () {
         roles: $('#roles').val()
       },
       success: function (response) {
-        const msg = userId ? 'User updated successfully!' : 'User created successfully!';
+        const msg = userId ? 'Cập nhật thành công' : 'Tạo thành công';
         alert(msg);
       },
       error: function (xhr, status, error) {
-        const msg = userId ? 'Error updating user. Please try again later.' : 'Error creating user. Please try again later.';
-        alert(msg);
+        alert('Có lỗi, vui lòng thử lại sau.');
       }
     });
   });

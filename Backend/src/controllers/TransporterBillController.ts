@@ -52,7 +52,6 @@ export class TransporterBillController {
     @ApiBearerAuth()
     @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_TRANSPORTER)
     async delete(@Req() req, @Res() res, @Param('id') id: string) {
-        console.log(req.user);
         return res.status(200).json(await this.transporterBillService.delete(req.user.username, id));
     }
 }
