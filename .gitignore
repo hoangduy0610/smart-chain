@@ -1,1 +1,5 @@
 .DS_Store
+.docker-resources/db/**
+.docker-resources/redis/**
+!.docker-resources/db/.DATA_PLACEHOLDER
+!.docker-resources/redis/.DATA_PLACEHOLDER
