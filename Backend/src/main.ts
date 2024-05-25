@@ -9,11 +9,23 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule, {
 		logger: process.env.LOGGER_ENABLE === 'false' ? ['warn', 'error'] : ['warn', 'error', 'debug', 'log', 'verbose'],
 	});
+
 	app.use('/swagger-ui.html', basicAuth({
 		challenge: process.env.LOCK === 'true',
-		users: { admin: 'Uit@2020' },
+		users: { admin: process.env.SWAGGER_PASSWORD },
 	}));
-	app.enableCors();
+
+	app.enableCors((process.env.MODE === 'production' ? {
+		origin: [
+			'https://management.smcsoft.online',
+			'https://smcsoft.online',
+			'https://app.smcsoft.online',
+			'https://www.management.smcsoft.online',
+			'https://www.smcsoft.online',
+			'https://www.app.smcsoft.online',
+		],
+	} : {}));
+	
 	const options = new DocumentBuilder()
 		.setTitle('Provenance Tracking')
 		.setVersion('1.0')

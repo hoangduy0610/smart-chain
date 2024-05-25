@@ -13,6 +13,7 @@ import { TransporterBillModule } from './modules/TransporterBillModule';
 import { SellerStorageModule } from './modules/SellerStorageModule';
 import { AnalysisModule } from './modules/AnalysisModule';
 import { join } from 'path';
+import { DevelopModule } from './develop/develop.module';
 
 @Module({
   imports: [
@@ -25,8 +26,9 @@ import { join } from 'path';
       redis: {
         host: process.env.REDIS_HOST,
         port: parseInt(process.env.REDIS_PORT),
-        username: process.env.REDIS_USERNAME,
-        password: process.env.REDIS_PASSWORD,
+        // Uncomment this to use custom user authentication for redis
+        // username: process.env.REDIS_USERNAME,
+        // password: process.env.REDIS_PASSWORD,
       },
     }),
     MailerModule.forRoot({
@@ -51,6 +53,11 @@ import { join } from 'path';
     TransporterBillModule,
     SellerStorageModule,
     AnalysisModule,
+
+    ...(process.env.MODE !== 'test' ? [] : [
+      // Test only module
+      DevelopModule,
+    ])
   ]
 })
 export class AppModule { }
