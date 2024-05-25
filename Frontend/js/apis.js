@@ -1,5 +1,5 @@
 // const API_HOST = 'http://10.10.12.55:8798';
-const API_HOST = 'https://hongdi.ddns.net'
+const API_HOST = 'https://api.smcsoft.online'
 
 const QR_TARGET_WEB = 'https://smartchain.ddns.net/ScanPage/scan.html?id=';
 const QR_HOST = `https://api.qrserver.com/v1/create-qr-code/?data=${QR_TARGET_WEB}`;
