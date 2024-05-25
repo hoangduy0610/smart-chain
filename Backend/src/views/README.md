@@ -1,0 +1,1 @@
+This folder contains views for all of the components

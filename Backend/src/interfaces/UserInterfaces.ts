@@ -5,6 +5,9 @@ export interface UserInterfaces extends Document {
     roles: string[];
     name: string;
     email: string;
+    otp?: string;
+    otpValid?: Date;
+    resetPasswordToken?: string;
     phoneNumber: string;
     username?: string;
     deletedAt?: Date;

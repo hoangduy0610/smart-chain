@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Provanence Tracking</title>
+  <title>SmartChain</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -17,41 +17,52 @@
 </head>
 
 <body>
+  <div class="loader-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
   <div id="page-wrapper" class="wrapper d-flex align-items-stretch">
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
       <h2 class="mb-4">Provenance Tracking</h2>
-      <p>Fill out the form below:</p>
 
       <form id="userForm">
-        <div class="mb-3">
-          <label for="fullName" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="name" placeholder="Enter full name" required>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="fullName" class="form-label">Họ và tên</label>
+            <input type="text" class="form-control" id="name" placeholder="Họ và tên" required>
+          </div>
+          <div class="col-md-4">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Username" required>
+          </div>
+          <div class="col-md-4">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" required>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="phoneNumber" class="form-label">Số điện thoại</label>
+            <input type="text" class="form-control" id="phoneNumber" placeholder="Số điện thoại" required>
+          </div>
+          <div class="col-md-4">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email" placeholder="Email" required>
+          </div>
+          <div class="col-md-4">
+            <label for="roles" class="form-label">Phân quyền</label>
+            <select class="form-select" id="roles" required>
+              <option value="">Select role</option>
+              <option value="ROLE_ADMIN">Admin</option>
+              <option value="ROLE_FARMER">Nông dân</option>
+              <option value="ROLE_TRANSPORTER">Vận chuyển</option>
+              <option value="ROLE_SELLER">Bán lẻ</option>
+            </select>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="phoneNumber" class="form-label">Phone number</label>
-          <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phoneNumber" required>
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Enter password" required>
-        </div>
-        <div class="mb-3">
-          <label for="roles" class="form-label">Role</label>
-          <select class="form-select" id="roles" required>
-            <option value="">Select role</option>
-            <option value="ROLE_ADMIN">Admin</option>
-            <option value="ROLE_FARMER">Farmer</option>
-            <option value="ROLE_TRANSPORTER">Transporter</option>
-            <option value="ROLE_SELLER">Seller</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Create User</button>
+        <button type="submit" class="btn btn-primary">Tạo Người dùng</button>
       </form>
     </div>
   </div>
@@ -66,6 +77,7 @@
   <script src="./js/apis.js"></script>
   <script src="./js/utils.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/sidebar.js"></script>
   <script src="./js/pages/form-user.js"></script>
 </body>
 

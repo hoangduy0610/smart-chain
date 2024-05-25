@@ -17,7 +17,7 @@ $(document).ready(function () {
                 $('#qty').val(response.quantity);
                 $('#status').parent().parent().remove();
 
-                $('form button[type="submit"]').html('Update Batch')
+                $('form button[type="submit"]').html('Cập nhật')
             }
         })
     }
@@ -41,11 +41,11 @@ $(document).ready(function () {
                 productId: product_id,
             },
             success: function () {
-                alert('thanh cong')
+                alert('Hành động thành công')
                 // window.location.href = 's.html';
             },
             error: function () {
-                alert("that bai")
+                alert("Hành động thất bại")
             }
 
         })

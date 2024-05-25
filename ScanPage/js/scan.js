@@ -4,7 +4,7 @@ $(document).ready(function () {
    // const prefetch_id = params.get('id')
 
    $.ajax({
-      url: 'https://hongdi.ddns.net/batch-product/scan/0A4IKDHU9YJZ1715739021',
+      url: 'https://api.smcsoft.online/batch-product/scan/0A4IKDHU9YJZ1715739021',
       method: 'GET',
       headers: {
       },
@@ -22,7 +22,7 @@ $(document).ready(function () {
    $('#show_para').click(function () {
       
       $.ajax({
-         url: 'https://hongdi.ddns.net/batch-product/scan/0A4IKDHU9YJZ1715739021',
+         url: 'https://api.smcsoft.online/batch-product/scan/0A4IKDHU9YJZ1715739021',
          method: 'GET',
          headers: {
          },

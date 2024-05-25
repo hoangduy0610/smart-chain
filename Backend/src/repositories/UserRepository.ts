@@ -138,7 +138,11 @@ export class UserRepository {
         return await this.userModel.create({
             name: dto.name,
             phoneNumber: dto.phoneNumber,
+            email: dto.email,
             roles: [dto.roles],
+            otp: '',
+            otpValid: new Date(),
+            resetPasswordToken: '',
         });
     }
 
