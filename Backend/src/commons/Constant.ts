@@ -11,7 +11,7 @@ export class Constant {
             case EEnvName.EMAIL_FROM:
                 return process.env.EMAIL_FROM || '"SmartChain" <hoangduy06104@gmail.com>';
             case EEnvName.APP_URL:
-                return process.env.APP_URL || 'https://smartchain.ddns.net/Frontend';
+                return process.env.APP_URL || 'https://management.smcsoft.online';
             default:
                 return '';
         }
