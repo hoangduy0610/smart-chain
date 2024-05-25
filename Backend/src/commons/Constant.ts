@@ -3,6 +3,9 @@ require('dotenv').config();
 export enum EEnvName {
     EMAIL_FROM = 'EMAIL_FROM',
     APP_URL = 'APP_URL',
+    OWNER_WALLET_SECRET = 'OWNER_WALLET_SECRET',
+    PROVIDER_KEY = 'PROVIDER_KEY',
+    CONTRACT_ADDRESS = 'CONTRACT_ADDRESS',
 }
 
 export class Constant {
@@ -12,6 +15,12 @@ export class Constant {
                 return process.env.EMAIL_FROM || '"SmartChain" <hoangduy06104@gmail.com>';
             case EEnvName.APP_URL:
                 return process.env.APP_URL || 'https://management.smcsoft.online';
+            case EEnvName.OWNER_WALLET_SECRET:
+                return process.env.OWNER_WALLET_SECRET || 'SECRET_KEY_GET_FROM_METAMASK';
+            case EEnvName.PROVIDER_KEY:
+                return process.env.PROVIDER_KEY || 'ETHERSCAN_KEY';
+            case EEnvName.CONTRACT_ADDRESS:
+                return process.env.CONTRACT_ADDRESS || '0xe003EA84cf279C158c04014078855D72173287d0';
             default:
                 return '';
         }
