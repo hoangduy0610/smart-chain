@@ -1,4 +1,6 @@
+import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
+import { Queue } from 'bull';
 import { EnumRoles } from 'src/commons/EnumRoles';
 import { ProductDto } from 'src/dtos/ProductDtos';
 import { ProductInterfaces } from 'src/interfaces/ProductInterfaces';
@@ -9,6 +11,7 @@ import { IdUtils } from 'src/utils/IdUtils';
 export class ProductService {
     constructor(
         private readonly productRepository: ProductRepository,
+        @InjectQueue('SmartContractHandling') private readonly smartContractHandlingQueue: Queue,
     ) { }
 
     async create(owner: string, product: ProductDto): Promise<ProductInterfaces> {
@@ -17,6 +20,7 @@ export class ProductService {
             owner,
             productId: IdUtils.generateId(12),
         }
+        await this.smartContractHandlingQueue.add('create-product', { ...createProduct });
         return await this.productRepository.create(createProduct);
     }
 
