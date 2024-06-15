@@ -44,7 +44,7 @@ export class TransporterBillController {
     @ApiBearerAuth()
     @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_TRANSPORTER)
     async update(@Req() req, @Res() res, @Param('id') id: string, @Body() dto: EditTransporterBillDto) {
-        return res.status(200).json(await this.transporterBillService.update(id, dto));
+        return res.status(200).json(await this.transporterBillService.update(req.user, id, dto));
     }
 
     @Delete('/:id')
@@ -52,6 +52,6 @@ export class TransporterBillController {
     @ApiBearerAuth()
     @Roles(EnumRoles.ROLE_ADMIN, EnumRoles.ROLE_TRANSPORTER)
     async delete(@Req() req, @Res() res, @Param('id') id: string) {
-        return res.status(200).json(await this.transporterBillService.delete(req.user.username, id));
+        return res.status(200).json(await this.transporterBillService.delete(req.user, id));
     }
 }
