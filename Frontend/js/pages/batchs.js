@@ -51,6 +51,11 @@ $(document).ready(function () {
           <div class="d-flex p-2 justify-content-center">
             <button
               type="button"
+              class="btn btn-primary btn-print-batch m-1"
+              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="In QR lô hàng"
+            ><i class="fa-solid fa-print"></i></button>
+            <button
+              type="button"
               class="btn btn-${dsb ? 'secondary' : 'danger'} btn-delete-batch m-1" ${dsb}
               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Xóa"
             ><i class="fa-solid fa-trash"></i></button>
@@ -234,5 +239,35 @@ $(document).ready(function () {
         alert("Tạo lịch sử thất bại")
       }
     });
+  });
+
+  $('#BatchTable tbody').on('click', '.btn-print-batch', function () {
+    const row = $(this).parents('tr')[0];
+    const data = BatchTable.row(row).data();
+    const stamps = Array.from({ length: data.quantity }, () => {
+      return `
+        <img style="width:3cm; height:3cm; margin:0.2cm;" src="${QR_HOST}${data.batchId}" />
+      `;
+    }).join('');
+    // console.log(data)
+    const printWindow = window.open('', '');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>QR Code</title>
+        </head>
+        <body>
+          ${stamps}
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.onload = function () {
+      printWindow.focus();
+      printWindow.print();
+      printWindow.addEventListener('afterprint', () => {
+        printWindow.close();
+      });
+    };
   });
 });
