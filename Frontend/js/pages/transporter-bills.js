@@ -95,18 +95,29 @@ $(document).ready(function () {
                             target="_blank"
                             href="https://www.google.com/maps/dir/?api=1&origin=${dep[0]},${dep[1]}&destination=${des[0]},${des[1]}"
                             role="button"
-                            class="btn btn-primary m-1"
+                            class="btn btn-success m-1"
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mở điều hướng"
                         ><i class="fa-solid fa-route"></i></a>
                         <button
                             type="button"
-                            class="btn btn-danger btn-update-pos m-1"
+                            class="btn btn-${dsb ? 'secondary' : 'warning'} btn-update-pos m-1" ${dsb}
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cập nhật vị trí"
-                        ><i class="fa-solid fa-location-dot"></i></button>
+                        ><i class="fa-solid text-white fa-location-dot"></i></button>
                         <button
                             type="button" class="btn btn-${dsb ? 'secondary' : 'indigo'} btn-forward-batch m-1" ${dsb}
                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Chuyển cho nhà bán lẻ"
                         ><i class="fa-solid fa-forward-fast"></i></button>
+                        <button
+                            type="button"
+                            data-id="${row._id.toString()}"
+                            class="btn btn-${dsb ? 'secondary' : 'danger'} btn-xoa-trb m-1" ${dsb}
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Xóa"
+                        ><i class="fa-solid fa-trash"></i></button>
+                        <button
+                            data-id="${row._id.toString()}"
+                            type="button" class="btn btn-${dsb ? 'secondary' : 'primary'} btn-sua-trb m-1" ${dsb}
+                            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sửa"
+                        ><i class="fa-solid fa-pen-to-square"></i></button>
                     </div>
                 `;
             }
@@ -217,4 +228,29 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#billsTable tbody').on('click', '.btn-xoa-trb', function () {
+        var id = $(this).data('id');
+        // console.log(id);
+    
+        $.ajax({
+          url: fillEndpointPlaceholder(API_ENDPOINT.TRANSPORTER_BILLS.DELETE_TRANSPORTER_BILLS, { id: id }),
+          type: 'DELETE',
+          beforeSend: function (request) {
+            request.setRequestHeader("Authorization", ACCESS_TOKEN);
+          },
+          success: function (result) {
+            alert('Xóa đơn vận thành công');
+            billsTable.ajax.reload();
+          },
+          error: function (error) {
+            alert('Xóa đơn vận thất bại');
+          }
+        });
+      });
+    
+      $('#billsTable tbody').on('click', '.btn-sua-trb', function () {
+        var id = $(this).data('id');
+        window.location.href = `form-transporter-bill.html?trb=${id}`;
+      });
 });
