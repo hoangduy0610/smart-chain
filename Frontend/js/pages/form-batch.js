@@ -1,5 +1,6 @@
 $(document).ready(function () {
     const params = new window.URLSearchParams(window.location.search);
+    $('#status').parent().parent().remove();
 
     const prefetch_id = params.get('id')
     const product_id = params.get('product_id');
@@ -14,8 +15,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $('#name').val(response.name);
-                $('#qty').val(response.quantity);
-                $('#status').parent().parent().remove();
+                $('#qty').parent().parent().remove();
 
                 $('form button[type="submit"]').html('Cập nhật')
             }
@@ -25,9 +25,7 @@ $(document).ready(function () {
     $('#btn-submit').click(function (e) {
         e.preventDefault();
         const commonField = {
-            name: $('#name').val(),
-            quantity: $('#qty').val(),
-            status: $('#status').val()
+            name: $('#name').val()
         };
 
         $.ajax({
@@ -39,13 +37,15 @@ $(document).ready(function () {
             data: prefetch_id ? commonField : {
                 ...commonField,
                 productId: product_id,
+                quantity: $('#qty').val(),
+                status: 'InFarm'
             },
             success: function () {
-                alert('Hành động thành công')
-                // window.location.href = 's.html';
+                alert(!!prefetch_id ? "Cập nhật thành công" : "Tạo mới thành công")
+                window.location.href = 'batchs.html';
             },
             error: function () {
-                alert("Hành động thất bại")
+                alert(!!prefetch_id ? "Cập nhật thất bại" : "Tạo mới thất bại")
             }
 
         })

@@ -145,6 +145,11 @@ $(document).ready(function () {
       status: batch.status
     };
 
+    if (commonField.quantity < 0) {
+      alert("Số lượng không hợp lệ. Vui lòng kiểm tra lại.");
+      return;
+    }
+
     $.ajax({
       url: fillEndpointPlaceholder(API_ENDPOINT.BATCH.UPDATE_BATCH, { id: batch._id }),
       method: 'PUT',

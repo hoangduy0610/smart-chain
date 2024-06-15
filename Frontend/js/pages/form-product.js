@@ -104,6 +104,31 @@ $(document).ready(function () {
         const description = $('#dscript').val();
         // const imgurl = $('#imgurl').val();
 
+        if (!name) {
+            alert('Vui lòng nhập tên sản phẩm');
+            return;
+        }
+
+        if (!price) {
+            alert('Vui lòng nhập giá sản phẩm');
+            return;
+        }
+
+        if (parseInt(price) < 0) {
+            alert('Giá sản phẩm không hợp lệ');
+            return;
+        }
+
+        if (!description) {
+            alert('Vui lòng nhập mô tả sản phẩm');
+            return;
+        }
+
+        if (!imgurl) {
+            alert('Vui lòng chọn ảnh sản phẩm');
+            return;
+        }
+
         const arr = [];
         $('.box-item').each(function () {
             let name = $(this).find('input').eq(0).val();

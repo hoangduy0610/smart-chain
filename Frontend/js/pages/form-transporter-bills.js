@@ -125,6 +125,7 @@ $("#submit-transporter-form").click(function () {
                 success: function () {
                     $(".loader-container").removeClass('active');
                     alert("Tạo thành công")
+                    window.location.href = 'transporter-bills.html';
                 },
                 error: function () {
                     $(".loader-container").removeClass('active');
