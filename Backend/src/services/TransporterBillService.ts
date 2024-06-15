@@ -90,7 +90,7 @@ export class TransporterBillService {
             throw new ApplicationException(HttpStatus.FORBIDDEN, MessageCode.BILL_FINISHED);
         }
 
-        if (transporterBill.owner !== user._id.toString() && !user.roles.includes(EnumRoles.ROLE_ADMIN)) {
+        if (transporterBill.owner !== user.id.toString() && !user.roles.includes(EnumRoles.ROLE_ADMIN)) {
             throw new ApplicationException(HttpStatus.FORBIDDEN, MessageCode.BILL_NOT_BELONG_TO_YOU);
         }
 
@@ -108,7 +108,7 @@ export class TransporterBillService {
     async delete(user: UserInterfaces, id: string): Promise<TransporterBillInterfaces> {
         const transporterBill = await this.transporterBillRepository.findById(id);
 
-        if (transporterBill.owner !== user._id.toString() && !user.roles.includes(EnumRoles.ROLE_ADMIN)) {
+        if (transporterBill.owner !== user.id.toString() && !user.roles.includes(EnumRoles.ROLE_ADMIN)) {
             throw new ApplicationException(HttpStatus.FORBIDDEN, MessageCode.BILL_NOT_BELONG_TO_YOU);
         }
 
