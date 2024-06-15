@@ -11,13 +11,13 @@ $(document).ready(function () {
 			const t0 = Date.now();
 			eval('debugger');
 			const t1 = Date.now();
-			if (t0 != t1) {
+			if (t1 - t0 > 100) {
 				$("body").html("");
 				alert("Developer Console is disabled");
 				window.location.href = 'about:blank';
 			}
 		}, 1000);
-		
+
 		$("script").remove();
 
 		// Disable right-click
