@@ -12,6 +12,8 @@ $(document).ready(function () {
          $('#image_product').attr('src', response[0].product[0].imageUrl)
          $('#p-price').html(response[0].product[0].price)
          $('#name-product').text(response[0].name)
+         $('#farmer-name').text(response[0].ownerDetail.name)
+         $('#serial-id').text(response[0].batchId)
          $('#total-scan').text(response[0].totalScan)
          $('#total-user').text(response[0].totalUserScan)
          batchData = response[0];
@@ -33,7 +35,7 @@ $(document).ready(function () {
    })
 
    $('.instruction').click(function () {
-      window.location.href = 'instruction.html'
+      window.location.href = `instruction.html?id_batch=${batchId}`
    })
 
    $('.para-detail').click(function () {

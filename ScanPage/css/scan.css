@@ -91,7 +91,7 @@ img {
 .inform {
     width: 90%;
     padding: 0.8rem;
-    border: 1px solid;
+    border: 1px hwb(120 0% 41%) solid;
     border-radius: 10px;
     margin-bottom: 2rem;
     background-color: hwb(120 10% 28%);

@@ -23,19 +23,13 @@ $(document).ready(function () {
                return showarr(attr)
                }).join('')}
                <div  class="bar1"> </div>
-               <div style ="font-weight: 700; font-size: 1.5rem !important; margin-bottom: 2px; " class="descript">
-                    Nhật ký
-               </div>
-               ${response[0].history.map((attr) => {
-                  return showhis(attr)
-                  }).join('')}
             `)
 
       },
    })
 
    $('.btn-back').click(function () {
-      window.location.href = 'scan.html'
+      history.back();
    })
 });
 
