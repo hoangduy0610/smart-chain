@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { EBatchCase } from 'src/commons/EnumBatchCase';
 import { CreateTransporterBillDto, EditTransporterBillDto } from 'src/dtos/TransporterBillDtos';
 import { TransporterBillInterfaces } from 'src/interfaces/TransporterBillInterfaces';
@@ -17,15 +17,14 @@ export class TransporterBillRepository {
     }
 
     async findAll(): Promise<TransporterBillInterfaces[]> {
-        return await this.transporterBillModel.find().exec();
+        return await this.transporterBillModel.find({ deletedAt: null }).exec();
     }
 
     async findById(id: string): Promise<TransporterBillInterfaces> {
-        return await this.transporterBillModel.findById(id).exec();
-    }
-
-    async update(id: string, transporterBill: EditTransporterBillDto): Promise<TransporterBillInterfaces> {
-        return await this.transporterBillModel.findByIdAndUpdate(id, transporterBill, { new: true }).exec();
+        return await this.transporterBillModel.findOne({
+            _id: new mongoose.mongo.ObjectId(id),
+            deletedAt: null,
+        }).exec();
     }
 
     async delete(username: string, id: string): Promise<TransporterBillInterfaces> {
@@ -36,11 +35,14 @@ export class TransporterBillRepository {
     }
 
     async findByTransporterId(transporterId: string): Promise<TransporterBillInterfaces[]> {
-        return await this.transporterBillModel.find({ owner: transporterId }).exec();
+        return await this.transporterBillModel.find({ owner: transporterId, deletedAt: null }).exec();
     }
 
     async getAnalysis(): Promise<any> {
         return await this.transporterBillModel.aggregate([
+            {
+                $match: { deletedAt: null }
+            },
             {
                 $facet: {
                     inProgress: [
@@ -59,6 +61,7 @@ export class TransporterBillRepository {
     async findOneByBatchId(batchId: string): Promise<TransporterBillInterfaces> {
         return await this.transporterBillModel.findOne({
             batchId: batchId,
+            deletedAt: null,
         }).exec();
     }
 

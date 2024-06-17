@@ -52,7 +52,7 @@
 .btn-back{
     cursor: pointer;
     font-size: 2rem;
-    color: blue;
+    /* color: blue; */
     position: absolute;
     left :0;
 }
