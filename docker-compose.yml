@@ -55,6 +55,7 @@ services:
       - ./Backend:/app
       - ./Frontend:/var/www/management
       - ./ScanPage:/var/www/scanpage
+      - ./LandingPage:/var/www/landingpage
 
 networks:
   app-network:

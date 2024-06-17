@@ -14,4 +14,4 @@ export class CreateTransporterBillDto {
     readonly destination: string;
 }
 
-export class EditTransporterBillDto extends OmitType(CreateTransporterBillDto, [] as const) { }
+export class EditTransporterBillDto extends OmitType(CreateTransporterBillDto, ['owner', 'batchId'] as const) { }

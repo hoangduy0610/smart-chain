@@ -14,6 +14,7 @@ import { ApplicationException } from 'src/controllers/ExceptionController';
 import { MessageCode } from 'src/commons/MessageCode';
 import { EProductStatus } from 'src/commons/EnumProductStatus';
 import { BatchProductRepository } from 'src/repositories/BatchProductRepository';
+import { UserInterfaces } from 'src/interfaces/UserInterfaces';
 
 @Injectable()
 export class TransporterBillService {
@@ -79,12 +80,39 @@ export class TransporterBillService {
         return await this.transporterBillRepository.findById(id);
     }
 
-    async update(id: string, transporterBill: EditTransporterBillDto): Promise<TransporterBillInterfaces> {
-        return await this.transporterBillRepository.update(id, transporterBill);
+    async update(user:UserInterfaces, id: string, dto: EditTransporterBillDto): Promise<TransporterBillInterfaces> {
+        const transporterBill = await this.transporterBillRepository.findById(id);
+        if (!transporterBill) {
+            throw new ApplicationException(HttpStatus.NOT_FOUND, MessageCode.BILL_NOT_FOUND);
+        }
+
+        if (transporterBill.status === EBatchCase.FinishTransport) {
+            throw new ApplicationException(HttpStatus.FORBIDDEN, MessageCode.BILL_FINISHED);
+        }
+
+        if (transporterBill.owner !== user.id.toString() && !user.roles.includes(EnumRoles.ROLE_ADMIN)) {
+            throw new ApplicationException(HttpStatus.FORBIDDEN, MessageCode.BILL_NOT_BELONG_TO_YOU);
+        }
+
+        if (dto.destination) {
+            transporterBill.destination = dto.destination;
+        }
+
+        if (dto.departure) {
+            transporterBill.departure = dto.departure;
+        }
+
+        return await transporterBill.save();
     }
 
-    async delete(username: string, id: string): Promise<TransporterBillInterfaces> {
-        return await this.transporterBillRepository.delete(username, id);
+    async delete(user: UserInterfaces, id: string): Promise<TransporterBillInterfaces> {
+        const transporterBill = await this.transporterBillRepository.findById(id);
+
+        if (transporterBill.owner !== user.id.toString() && !user.roles.includes(EnumRoles.ROLE_ADMIN)) {
+            throw new ApplicationException(HttpStatus.FORBIDDEN, MessageCode.BILL_NOT_BELONG_TO_YOU);
+        }
+
+        return await this.transporterBillRepository.delete(user.username, id);
     }
 
     async findByBatchIdAndUpdateStatus(batchId: string, status: EBatchCase): Promise<TransporterBillInterfaces> {

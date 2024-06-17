@@ -34,6 +34,42 @@ $(document).ready(function () {
       email: $("#email").val(),
     };
 
+    if (!commonField.name) {
+      alert('Vui lòng nhập tên');
+      return;
+    }
+
+    if (!commonField.phoneNumber) {
+      alert('Vui lòng nhập số điện thoại');
+      return;
+    }
+
+    if (!/^\d{10}$/.test(commonField.phoneNumber)) {
+      alert('Số điện thoại không hợp lệ. Vui lòng nhập đúng số điện thoại (Định dạng 10 số)');
+      return;
+    }
+
+    if (!commonField.email) {
+      alert('Vui lòng nhập email');
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(commonField.email)) {
+      alert('Email không hợp lệ. Vui lòng nhập đúng định dạng email');
+      return;
+    }
+
+    if (!userId && !$('#password').val()) {
+      alert('Vui lòng nhập mật khẩu');
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    if (!userId && !passwordRegex.test($('#password').val())) {
+      alert('Mật khẩu không hợp lệ. Vui lòng nhập mật khẩu có ít nhất 8 ký tự, bao gồm ít nhất một chữ cái viết thường, một chữ cái viết hoa và một số');
+      return;
+    }
+
     $.ajax({
       url: userId ? fillEndpointPlaceholder(API_ENDPOINT.USER.UPDATE_USER, { id: userId }) : API_ENDPOINT.USER.CREATE_USER,
       method: userId ? 'PUT' : 'POST',
@@ -49,6 +85,7 @@ $(document).ready(function () {
       success: function (response) {
         const msg = userId ? 'Cập nhật thành công' : 'Tạo thành công';
         alert(msg);
+        window.location.href = 'users.html';
       },
       error: function (xhr, status, error) {
         alert('Có lỗi, vui lòng thử lại sau.');
