@@ -87,6 +87,30 @@ export class BatchProductRepository {
             },
             {
                 $lookup: {
+                    let: {
+                        "userObjId": {
+                            $toObjectId: "$owner"
+                        }
+                    },
+                    from: "users",
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ["$_id", "$$userObjId"]
+                                }
+                            }
+                        },
+                        { $limit: 1 },
+                    ],
+                    as: "ownerDetail"
+                }
+            },
+            {
+                $unwind: "$ownerDetail"
+            },
+            {
+                $lookup: {
                     from: 'histories',
                     localField: 'batchId',
                     foreignField: 'batchId',
@@ -105,6 +129,9 @@ export class BatchProductRepository {
                 $project: {
                     _id: 0,
                     owner: 1,
+                    ownerDetail: {
+                        name: 1,
+                    },
                     name: 1,
                     batchId: 1,
                     productId: 1,
